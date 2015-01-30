@@ -1,4 +1,4 @@
-from openedx.pylint.checkers import register_checkers
+from edx_lint.pylint.checkers import register_checkers
 
 
 def register(linter):
