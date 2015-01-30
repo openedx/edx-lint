@@ -15,6 +15,9 @@ MESSAGES = {
     'E%d01' % BASE_ID: ("super(...).setUp() not called (%s)",
                         'super-setup-not-called',
                         "setUp() must called super(...).setUp()"),
+    'E%d02' % BASE_ID: ("setUp() was called from a non-parent class (%s)"
+                        "non-parent-setup-called",
+                        "setUp() should only be called for parent classes"),
 }
 
 class UnitTestSetupSuperChecker(BaseChecker):
