@@ -10,6 +10,8 @@ from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 # Load our plugin.
 linter.load_plugin_modules(['edx_lint.pylint'])
 
+# Configure the linter that runs the tests.
+
 # This line prevents pylint from complaining about missing __revision__ in all
 # the test files. But is this removing other required attributes that maybe we
 # do want to check for?

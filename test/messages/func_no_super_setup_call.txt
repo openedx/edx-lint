@@ -1,0 +1,1 @@
+E:  8:BadTestCase.setUp: super(...).setUp() not called (TestCase)
