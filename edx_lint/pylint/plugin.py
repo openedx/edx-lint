@@ -1,4 +1,4 @@
-from edx_lint.pylint.checkers import register_checkers
+from edx_lint.pylint import checkers, i18n_check
 
 
 def register(linter):
@@ -6,4 +6,5 @@ def register(linter):
     However, we will also use it to amend existing checker config.
     """
     # add all of the checkers
-    register_checkers(linter)
+    for mod in [checkers, i18n_check]:
+        mod.register_checkers(linter)
