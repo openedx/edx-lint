@@ -7,6 +7,10 @@ default: test
 test:
 	python -m unittest discover
 
+coverage:
+	coverage run -m unittest discover
+	coverage report -m
+
 clean:
 	-rm -rf *.egg-info
 	-rm -f *.pyc */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc */*/*/*/*/*.pyc
