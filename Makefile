@@ -5,7 +5,7 @@
 default: test
 
 test:
-	python test/test_pylint_plugins.py
+	python -m unittest discover
 
 clean:
 	-rm -rf *.egg-info
