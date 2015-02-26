@@ -1,3 +1,5 @@
+"""Pylint plugin: check that tests have used super() properly in setUp()."""
+
 import astroid
 import six
 
@@ -5,20 +7,13 @@ from pylint.checkers import BaseChecker
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.classes import _ancestors_to_call
 
-BASE_ID = 76
+from .common import BASE_ID
+
 
 def register_checkers(linter):
     """Register checkers."""
     linter.register_checker(UnitTestSetupSuperChecker(linter))
 
-MESSAGES = {
-    'E%d01' % BASE_ID: ("super(...).setUp() not called (%s)",
-                        'super-setup-not-called',
-                        "setUp() must called super(...).setUp()"),
-    'E%d02' % BASE_ID: ("setUp() was called from a non-parent class (%s)"
-                        "non-parent-setup-called",
-                        "setUp() should only be called for parent classes"),
-}
 
 class UnitTestSetupSuperChecker(BaseChecker):
 
@@ -28,7 +23,19 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     MESSAGE_ID = 'super-setup-not-called'
     METHOD_NAME = 'setUp'
-    msgs = MESSAGES
+
+    msgs = {
+        'E%d01' % BASE_ID: (
+            "super(...).setUp() not called (%s)",
+            "super-setup-not-called",
+            "setUp() must called super(...).setUp()",
+        ),
+        'E%d02' % BASE_ID: (
+            "setUp() was called from a non-parent class (%s)",
+            "non-parent-setup-called",
+            "setUp() should only be called for parent classes",
+        ),
+    }
 
     def visit_function(self, node):
         """check method arguments, overriding"""

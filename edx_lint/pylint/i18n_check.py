@@ -3,7 +3,8 @@ import astroid
 from pylint.checkers import BaseChecker
 from pylint.interfaces import IAstroidChecker
 
-BASE_ID = 76  # get this from a common place
+from .common import BASE_ID
+
 
 def register_checkers(linter):
     """Register checkers."""
