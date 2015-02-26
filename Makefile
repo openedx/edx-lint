@@ -5,7 +5,7 @@
 default: test
 
 test:
-	python test/test_func.py
+	python test/test_pylint_plugins.py
 
 clean:
 	-rm -rf *.egg-info
