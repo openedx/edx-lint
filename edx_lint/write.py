@@ -42,8 +42,7 @@ def main(argv=None):
 
     filename = argv[0]
     resource_name = "files/" + filename
-    base, ext = os.path.splitext(filename)
-    tweaks_name = base + "_tweaks" + ext
+    tweaks_name = amend_filename(filename, "_tweaks")
 
     if not pkg_resources.resource_exists("edx_lint", resource_name):
         print "Don't have file %r to write." % filename
@@ -53,8 +52,12 @@ def main(argv=None):
         print "Checking existing copy of %s" % filename
         tef = TamperEvidentFile(filename)
         if not tef.validate():
-            print "Your copy of %s seems to have been edited. Not writing it." % filename
-            return 3
+            bak_name = amend_filename(filename, "_backup")
+            print "Your copy of %s seems to have been edited, renaming it to %s" % (filename, bak_name)
+            if os.path.exists(bak_name):
+                print "A previous %s exists, deleting it" % bak_name
+                os.remove(bak_name)
+            os.rename(filename, bak_name)
 
     print "Reading edx_lint/files/%s" % filename
     cfg = ConfigParser.RawConfigParser()
@@ -79,3 +82,14 @@ def main(argv=None):
     out_tef.write(output_text.getvalue())
 
     return 0
+
+
+def amend_filename(filename, amend):
+    """Amend a filename with a suffix.
+
+    amend_filename("foo.txt", "_tweak") --> "foo_tweak.txt"
+
+    """
+    base, ext = os.path.splitext(filename)
+    amended_name = base + amend + ext
+    return amended_name
