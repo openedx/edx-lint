@@ -1,4 +1,4 @@
-"""The edx_lint_write command."""
+"""The edx_lint write command."""
 
 import ConfigParser
 import cStringIO as StringIO
