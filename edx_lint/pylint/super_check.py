@@ -86,6 +86,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
                                          node=expr, args=klass.name)
             except astroid.InferenceError:
                 continue
+
         for klass, method in six.iteritems(not_called_yet):
             if klass.name == 'object' or method.parent.name == 'object':
                 continue

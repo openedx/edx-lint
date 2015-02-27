@@ -31,8 +31,8 @@ class TranslationStringConstantsChecker(BaseChecker):
     msgs = {
         'E%d10' % BASE_ID: (
             "i18n function %s() must be called with a literal string",
-            'translation-of-non-string',
-            "i18n functions must be called with a literal string"
+            "translation-of-non-string",
+            "i18n functions must be called with a literal string",
         ),
     }
 
