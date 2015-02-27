@@ -11,6 +11,9 @@ coverage:
 	coverage run -m unittest discover
 	coverage report -m
 
+pylint:
+	pylint edx_lint test setup.py
+
 clean:
 	-rm -rf *.egg-info
 	-rm -f *.pyc */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc */*/*/*/*/*.pyc
