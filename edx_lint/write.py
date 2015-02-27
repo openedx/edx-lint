@@ -32,10 +32,7 @@ WARNING_HEADER = """\
 # ------------------------------
 """
 
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv[1:]
-
+def write(argv):
     if len(argv) != 1:
         print "Please provide the name of a file to write."
         return 1

@@ -21,7 +21,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'edx_lint_write = edx_lint.write:main',
+            'edx_lint = edx_lint.main:main',
         ],
     },
 
