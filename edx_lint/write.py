@@ -3,7 +3,6 @@
 import ConfigParser
 import cStringIO as StringIO
 import os
-import sys
 
 import pkg_resources
 
@@ -32,7 +31,7 @@ WARNING_HEADER = """\
 # ------------------------------
 """
 
-def write(argv):
+def write_main(argv):
     if len(argv) != 1:
         print "Please provide the name of a file to write."
         return 1

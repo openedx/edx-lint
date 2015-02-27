@@ -1,12 +1,11 @@
 """The edx_lint check command."""
 
 import os
-import sys
 
 from edx_lint.tamper_evident import TamperEvidentFile
 
 
-def check(argv):
+def check_main(argv):
     if len(argv) != 1:
         print "Please provide the name of a file to check."
         return 1
