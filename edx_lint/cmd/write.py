@@ -7,6 +7,7 @@ import os
 import pkg_resources
 
 from edx_lint.tamper_evident import TamperEvidentFile
+from edx_lint.configfile import merge_configs
 
 
 WARNING_HEADER = """\
@@ -68,10 +69,7 @@ def write_main(argv):
         cfg_tweaks = ConfigParser.RawConfigParser()
         cfg_tweaks.read([tweaks_name])
 
-        for section in cfg_tweaks.sections():
-            for option in cfg_tweaks.options(section):
-                value = cfg_tweaks.get(section, option)
-                cfg.set(section, option, value)
+        merge_configs(cfg, cfg_tweaks)
 
     print "Writing %s" % filename
     output_text = StringIO.StringIO()

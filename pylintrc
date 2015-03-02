@@ -23,7 +23,7 @@
 # ------------------------------
 [MASTER]
 profile = no
-ignore = input
+ignore = ,input
 persistent = yes
 load-plugins = edx_lint.pylint
 
@@ -150,4 +150,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# d30e40fda1c6c6397530c67540e6f345a9fb49e3
+# 8a78bceb242c86c9cfd2b40e131185afa82c0b1a
