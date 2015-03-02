@@ -10,6 +10,7 @@ setup(
 
     packages=[
         'edx_lint',
+        'edx_lint.cmd',
         'edx_lint.pylint',
     ],
 
