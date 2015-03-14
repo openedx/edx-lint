@@ -21,21 +21,26 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     name = 'unit-test-super-checker'
 
-    MESSAGE_ID = 'super-method-not-called'
-    METHOD_NAMES = ['setUp', 'tearDown']
+    NOT_CALLED_MESSAGE_ID = 'super-method-not-called'
+    NON_PARENT_MESSAGE_ID = 'non-parent-method-called'
+
+    METHOD_NAMES = ['setUp', 'tearDown', 'setUpClass', 'tearDownClass']
 
     msgs = {
         'E%d01' % BASE_ID: (
             "super(...).%s() not called (%s)",
-            "super-method-not-called",
+            NOT_CALLED_MESSAGE_ID,
             "setUp() must call super(...).setUp()",
         ),
         'E%d02' % BASE_ID: (
-            "setUp() was called from a non-parent class (%s)",
-            "non-parent-method-called",
+            "%s() was called from a non-parent class (%s)",
+            NON_PARENT_MESSAGE_ID,
             "setUp() should only be called for parent classes",
         ),
     }
+
+    def msg_enabled(self, msg):
+        return self.linter.is_message_enabled(msg)
 
     def visit_function(self, node):
         """check method arguments, overriding"""
@@ -47,7 +52,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
         if method_name not in self.METHOD_NAMES:
             return
 
-        if not self.linter.is_message_enabled(self.MESSAGE_ID):
+        if not any(self.msg_enabled(v[1]) for v in self.msgs.values()):
             return
 
         klass_node = node.parent.frame()
@@ -56,18 +61,22 @@ class UnitTestSetupSuperChecker(BaseChecker):
         not_called_yet = dict(to_call)
         for stmt in node.nodes_of_class(astroid.CallFunc):
             expr = stmt.func
-            if not isinstance(expr, astroid.Getattr) \
-                   or expr.attrname != method_name:
+            if not isinstance(expr, astroid.Getattr):
                 continue
-            # skip the test if using super
-            if isinstance(expr.expr, astroid.CallFunc) and \
-                   isinstance(expr.expr.func, astroid.Name) and \
-               expr.expr.func.name == 'super':
+            if expr.attrname != method_name:
+                continue
+
+            # Skip the test if using super
+            if (isinstance(expr.expr, astroid.CallFunc) and
+                    isinstance(expr.expr.func, astroid.Name) and
+                    expr.expr.func.name == 'super'):
                 return
+
             try:
                 klass = next(expr.expr.infer())
                 if klass is astroid.YES:
                     continue
+
                 # The infered klass can be super(), which was
                 # assigned to a variable and the `__init__` was called later.
                 #
@@ -83,12 +92,19 @@ class UnitTestSetupSuperChecker(BaseChecker):
                     del not_called_yet[klass]
                 except KeyError:
                     if klass not in to_call:
-                        self.add_message('non-parent-method-called',
-                                         node=expr, args=klass.name)
+                        self.add_message(
+                            self.NON_PARENT_MESSAGE_ID,
+                            node=expr,
+                            args=(method_name, klass.name),
+                        )
             except astroid.InferenceError:
                 continue
 
         for klass, method in six.iteritems(not_called_yet):
             if klass.name == 'object' or method.parent.name == 'object':
                 continue
-            self.add_message(self.MESSAGE_ID, args=(method_name, klass.name), node=node)
+            self.add_message(
+                self.NOT_CALLED_MESSAGE_ID,
+                args=(method_name, klass.name),
+                node=node,
+            )
