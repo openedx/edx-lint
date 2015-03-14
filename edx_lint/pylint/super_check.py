@@ -21,18 +21,18 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     name = 'unit-test-super-checker'
 
-    MESSAGE_ID = 'super-setup-not-called'
-    METHOD_NAME = 'setUp'
+    MESSAGE_ID = 'super-method-not-called'
+    METHOD_NAMES = ['setUp', 'tearDown']
 
     msgs = {
         'E%d01' % BASE_ID: (
-            "super(...).setUp() not called (%s)",
-            "super-setup-not-called",
-            "setUp() must called super(...).setUp()",
+            "super(...).%s() not called (%s)",
+            "super-method-not-called",
+            "setUp() must call super(...).setUp()",
         ),
         'E%d02' % BASE_ID: (
             "setUp() was called from a non-parent class (%s)",
-            "non-parent-setup-called",
+            "non-parent-method-called",
             "setUp() should only be called for parent classes",
         ),
     }
@@ -43,20 +43,21 @@ class UnitTestSetupSuperChecker(BaseChecker):
         if not node.is_method():
             return
 
-        if not node.name == 'setUp':
+        method_name = node.name
+        if method_name not in self.METHOD_NAMES:
             return
 
         if not self.linter.is_message_enabled(self.MESSAGE_ID):
             return
 
         klass_node = node.parent.frame()
-        to_call = _ancestors_to_call(klass_node, self.METHOD_NAME)
+        to_call = _ancestors_to_call(klass_node, method_name)
 
         not_called_yet = dict(to_call)
         for stmt in node.nodes_of_class(astroid.CallFunc):
             expr = stmt.func
             if not isinstance(expr, astroid.Getattr) \
-                   or expr.attrname != self.METHOD_NAME:
+                   or expr.attrname != method_name:
                 continue
             # skip the test if using super
             if isinstance(expr.expr, astroid.CallFunc) and \
@@ -82,7 +83,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
                     del not_called_yet[klass]
                 except KeyError:
                     if klass not in to_call:
-                        self.add_message('non-parent-setup-called',
+                        self.add_message('non-parent-method-called',
                                          node=expr, args=klass.name)
             except astroid.InferenceError:
                 continue
@@ -90,4 +91,4 @@ class UnitTestSetupSuperChecker(BaseChecker):
         for klass, method in six.iteritems(not_called_yet):
             if klass.name == 'object' or method.parent.name == 'object':
                 continue
-            self.add_message(self.MESSAGE_ID, args=klass.name, node=node)
+            self.add_message(self.MESSAGE_ID, args=(method_name, klass.name), node=node)
