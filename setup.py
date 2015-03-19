@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='edx_lint',
-    version='0.2.1',
+    version='0.2.2',
     description='edX-authored pylint checkers',
     url='https://github.com/edx/edx-lint',
 

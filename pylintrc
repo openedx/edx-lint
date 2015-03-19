@@ -28,8 +28,11 @@ persistent = yes
 load-plugins = edx_lint.pylint
 
 [MESSAGES CONTROL]
+enable = 
+	useless-suppression
 disable = 
 	locally-disabled,
+	locally-enabled,
 	too-few-public-methods,
 	bad-builtin,
 	star-args,
@@ -150,4 +153,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 8a78bceb242c86c9cfd2b40e131185afa82c0b1a
+# 90e212f6c1a3ba9a82d288b7cf966a5b6141313a
