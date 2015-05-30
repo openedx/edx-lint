@@ -11,8 +11,6 @@ a file name to write them to:
 
 import os
 
-import astroid
-
 from pylint.checkers import BaseChecker
 from pylint.interfaces import IAstroidChecker
 
