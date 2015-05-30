@@ -23,7 +23,7 @@ class RangeChecker(BaseChecker):
 
     MESSAGE_ID = 'simplifiable-range'
     msgs = {
-        'E%d20' % BASE_ID: (
+        'C%d20' % BASE_ID: (
             "%s() call could be single-argument",
             MESSAGE_ID,
             "range() call could be single-argument",
