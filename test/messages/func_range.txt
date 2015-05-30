@@ -1,0 +1,4 @@
+E:  5: range() call could be simplified
+E:  6: range() call could be simplified
+E:  7: range() call could be simplified
+E:  8: xrange() call could be simplified
