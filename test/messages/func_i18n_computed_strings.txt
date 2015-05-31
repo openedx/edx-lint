@@ -1,3 +1,4 @@
 E:  8:welcome: i18n function _() must be called with a literal string
 E:  9:welcome: i18n function _() must be called with a literal string
 E: 10:welcome: i18n function _() must be called with a literal string
+E: 14:welcome: i18n function gettext() must be called with a literal string

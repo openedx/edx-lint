@@ -1,6 +1,6 @@
 import astroid
 
-from pylint.checkers import BaseChecker
+from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID
@@ -36,6 +36,7 @@ class TranslationStringConstantsChecker(BaseChecker):
         ),
     }
 
+    @utils.check_messages(MESSAGE_ID)
     def visit_callfunc(self, node):
         if not isinstance(node.func, astroid.Name):
             # It isn't a simple name, can't deduce what function it is.
@@ -45,7 +46,7 @@ class TranslationStringConstantsChecker(BaseChecker):
             # Not a function we care about.
             return
 
-        if not self.linter.is_message_enabled(self.MESSAGE_ID):
+        if not self.linter.is_message_enabled(self.MESSAGE_ID, line=node.fromlineno):
             return
 
         first = node.args[0]

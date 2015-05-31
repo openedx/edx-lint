@@ -2,3 +2,4 @@ C:  5: range() call could be single-argument
 C:  6: range() call could be single-argument
 C:  7: range() call could be single-argument
 C:  8: xrange() call could be single-argument
+C: 13: range() call could be single-argument

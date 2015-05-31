@@ -3,7 +3,7 @@
 import astroid
 import six
 
-from pylint.checkers import BaseChecker
+from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.classes import _ancestors_to_call
 
@@ -39,9 +39,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
         ),
     }
 
-    def msg_enabled(self, msg):
-        return self.linter.is_message_enabled(msg)
-
+    @utils.check_messages(NOT_CALLED_MESSAGE_ID, NON_PARENT_MESSAGE_ID)
     def visit_function(self, node):
         """check method arguments, overriding"""
         # ignore actual functions
@@ -50,9 +48,6 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
         method_name = node.name
         if method_name not in self.METHOD_NAMES:
-            return
-
-        if not any(self.msg_enabled(v[1]) for v in self.msgs.values()):
             return
 
         klass_node = node.parent.frame()
