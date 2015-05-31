@@ -80,7 +80,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
                 if (isinstance(klass, astroid.Instance) and
                         isinstance(klass._proxied, astroid.Class) and
-                        is_builtin_object(klass._proxied) and
+                        utils.is_builtin_object(klass._proxied) and
                         klass._proxied.name == 'super'):
                     return
                 try:
