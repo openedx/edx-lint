@@ -1,2 +1,2 @@
-E:  6:do_things: getattr used with a literal attribute name
-E:  8:do_things: setattr used with a literal attribute name
+C:  6:do_things: getattr using a literal attribute name
+C:  8:do_things: setattr using a literal attribute name

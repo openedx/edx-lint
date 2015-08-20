@@ -21,10 +21,10 @@ class GetSetAttrLiteralChecker(BaseChecker):
 
     MESSAGE_ID = 'literal-used-as-attribute'
     msgs = {
-        'E%d30' % BASE_ID: (
-            "%s used with a literal attribute name",
+        'C%d30' % BASE_ID: (
+            "%s using a literal attribute name",
             MESSAGE_ID,
-            "getattr or setattr used with a literal attribute name",
+            "getattr or setattr using with a literal attribute name",
         ),
     }
 
