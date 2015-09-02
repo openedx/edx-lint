@@ -1,0 +1,2 @@
+E: 14:DerivedTestCase: test class DerivedTestCase inherits tests from TestCase
+E: 43:TestsWithHelpers2: test class TestsWithHelpers2 inherits tests from TestHelpers2
