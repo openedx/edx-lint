@@ -58,6 +58,7 @@ disable=
     too-many-branches,
     too-many-arguments,
     too-many-locals,
+    unused-wildcard-import,
     duplicate-code
 
 
