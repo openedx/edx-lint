@@ -1,5 +1,11 @@
 """Bad uses of range()."""
 
+import six
+
+if six.PY3:
+    def xrange(*args_unused):       # pylint: disable=unused-argument, redefined-builtin
+        """Just to keep PY3 happy."""
+
 i = 12
 
 range(0, 10)

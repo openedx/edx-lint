@@ -2,7 +2,11 @@
 
 # pylint: disable=missing-docstring
 
-from string import lower as _, upper as gettext
+def _(text):
+    return text
+
+def gettext(text):
+    return text
 
 def welcome(name):
     _("Hello"+"There")

@@ -1,3 +1,5 @@
+import six
+
 import astroid
 
 from pylint.checkers import BaseChecker, utils
@@ -51,7 +53,7 @@ class TranslationStringConstantsChecker(BaseChecker):
 
         first = node.args[0]
         if isinstance(first, astroid.Const):
-            if isinstance(first.value, basestring):
+            if isinstance(first.value, six.string_types):
                 # The first argument is a constant string! All is well!
                 return
 

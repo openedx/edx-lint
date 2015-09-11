@@ -1,6 +1,8 @@
 """These are all good uses of _()"""
 
-from string import lower as _
+def _(text):
+    """A dummy _() to use."""
+    return text
 
 _("Hello")
 

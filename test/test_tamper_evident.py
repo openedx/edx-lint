@@ -23,60 +23,60 @@ class TamperEvidentFileTest(unittest.TestCase):
     def test_writing(self):
         # The contents are written, with a hash.
         # Different contents produce different hashes.
-        filename1 = self.write_tamper_evident("Hello!")
+        filename1 = self.write_tamper_evident(b"Hello!")
 
-        with open(filename1) as f:
+        with open(filename1, "rb") as f:
             self.assertEqual(
                 f.read(),
-                "Hello!\n# a8d191538209e335154750d2df575b9ddfb16fc7\n"
+                b"Hello!\n# a8d191538209e335154750d2df575b9ddfb16fc7\n"
             )
 
-        filename2 = self.write_tamper_evident("Hello?")
+        filename2 = self.write_tamper_evident(b"Hello?")
 
-        with open(filename2) as f:
+        with open(filename2, "rb") as f:
             self.assertEqual(
                 f.read(),
-                "Hello?\n# 4820175d44ef1a2c92e52bd1b3b7f05020d66e1c\n"
+                b"Hello?\n# 4820175d44ef1a2c92e52bd1b3b7f05020d66e1c\n"
             )
 
     def test_hashline_formatting(self):
-        filename1 = self.write_tamper_evident("Hello!", hashline="XXX {} YYY")
+        filename1 = self.write_tamper_evident(b"Hello!", hashline=b"XXX {} YYY")
 
-        with open(filename1) as f:
+        with open(filename1, "rb") as f:
             self.assertEqual(
                 f.read(),
-                "Hello!\nXXX a8d191538209e335154750d2df575b9ddfb16fc7 YYY\n"
+                b"Hello!\nXXX a8d191538209e335154750d2df575b9ddfb16fc7 YYY\n"
             )
 
     def test_validating_a_good_file(self):
-        filename = self.write_tamper_evident("Am I OK?")
+        filename = self.write_tamper_evident(b"Am I OK?")
         tef = TamperEvidentFile(filename)
         self.assertTrue(tef.validate())
 
     def test_appending_is_detected(self):
-        filename = self.write_tamper_evident("Am I OK?")
+        filename = self.write_tamper_evident(b"Am I OK?")
 
-        with open(filename, "a") as f:
-            f.write("tamper\n")
+        with open(filename, "ab") as f:
+            f.write(b"tamper\n")
 
         tef = TamperEvidentFile(filename)
         self.assertFalse(tef.validate())
 
     def test_editing_is_detected(self):
-        filename = self.write_tamper_evident("Line 1\nLine 2\nLine 3\n")
-        with open(filename, "r") as f:
+        filename = self.write_tamper_evident(b"Line 1\nLine 2\nLine 3\n")
+        with open(filename, "rb") as f:
             text = f.read()
-        with open(filename, "w") as f:
-            f.write("X")
+        with open(filename, "wb") as f:
+            f.write(b"X")
             f.write(text[1:])
         tef = TamperEvidentFile(filename)
         self.assertFalse(tef.validate())
 
     def test_oneline_file_is_detected(self):
-        filename = self.write_tamper_evident("Am I OK?")
+        filename = self.write_tamper_evident(b"Am I OK?")
 
-        with open(filename, "w") as f:
-            f.write("tamper")
+        with open(filename, "wb") as f:
+            f.write(b"tamper")
 
         tef = TamperEvidentFile(filename)
         self.assertFalse(tef.validate())
