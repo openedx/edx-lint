@@ -12,7 +12,11 @@ A collection of code quality tools:
 Using edx_lint
 --------------
 
-The ``edx_lint`` command can generate config files from its own master file.
+The ``edx_lint`` command can generate config files from its own master file. Install
+the package using ``pip``::
+
+    $ pip install edx-lint
+
 The ``write`` sub-command will write a config file based on the contents of the
 edx_lint master file::
 
