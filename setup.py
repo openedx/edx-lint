@@ -3,10 +3,13 @@
 from setuptools import setup
 
 setup(
-    name='edx_lint',
+    name='edx-lint',
     version='0.2.7',
     description='edX-authored pylint checkers',
     url='https://github.com/edx/edx-lint',
+    author='edX',
+    author_email='oscm@edx.org',
+    license='Apache',
 
     packages=[
         'edx_lint',
