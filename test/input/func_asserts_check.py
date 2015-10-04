@@ -30,10 +30,10 @@ class TestStringMethods(unittest.TestCase):
         right_assert should throw an error for each line here.
         """
         self.assertTrue('foo'.upper() == 'FOO')
-        self.assertFalse(500 != 500)
+        self.assertFalse(500 == 501)
 
         self.assertTrue("a" in "lala")
-        self.assertFalse("b" in "lala")
+        self.assertFalse("b" not in "lala")
 
         self.assertTrue(1 > 0)
-        self.assertFalse(1 > 2)
+        self.assertFalse(1 < 2)

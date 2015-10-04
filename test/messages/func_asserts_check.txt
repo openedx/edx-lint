@@ -1,6 +1,6 @@
-C: 32:TestStringMethods.test_wrong_usage: 'foo'.upper() == 'FOO' is a comparison, use assertEqual.
-C: 33:TestStringMethods.test_wrong_usage: 500 != 500 is a comparison, use assertEqual.
-C: 35:TestStringMethods.test_wrong_usage: 'a' in 'lala' is an in statement, use assertIn.
-C: 36:TestStringMethods.test_wrong_usage: 'b' in 'lala' is an in statement, use assertIn.
-C: 38:TestStringMethods.test_wrong_usage: 1 > 0 is a comparison, use assertGreater or assertLess.
-C: 39:TestStringMethods.test_wrong_usage: 1 > 2 is a comparison, use assertGreater or assertLess.
+C: 32:TestStringMethods.test_wrong_usage: assertTrue('foo'.upper() == 'FOO') should be assertEqual or assertNotEqual
+C: 33:TestStringMethods.test_wrong_usage: assertFalse(500 == 501) should be assertEqual or assertNotEqual
+C: 35:TestStringMethods.test_wrong_usage: assertTrue('a' in 'lala') should be assertIn or assertNotIn
+C: 36:TestStringMethods.test_wrong_usage: assertFalse('b' not in 'lala') should be assertIn or assertNotIn
+C: 38:TestStringMethods.test_wrong_usage: assertTrue(1 > 0) should be assertGreater or assertLess
+C: 39:TestStringMethods.test_wrong_usage: assertFalse(1 < 2) should be assertGreater or assertLess
