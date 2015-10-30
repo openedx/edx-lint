@@ -209,6 +209,11 @@ ignored-classes=SQLObject
 # to generated-members.
 zope=no
 
+# C Extension modules must be imported to be inspected.  For security reasons,
+# this # is not done by default, but we expect all imported code to be run at
+# some point anyway, so we explicitly allow it here
+unsafe-load-any-extension=yes
+
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E0201 when accessed. Python regular
 # expressions are accepted.
