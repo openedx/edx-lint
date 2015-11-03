@@ -36,8 +36,7 @@ Developing edx_lint
 
 To run the tests::
 
-    $ pip install -r requirements.txt
-    $ pip install -e .
+    $ pip install -r dev-requirements.txt
     $ make
 
 
