@@ -30,6 +30,7 @@ setup(
     },
 
     install_requires=[
-        'pylint>=1.4.0',
+        'pylint==1.4.4',
+        'pylint-django==0.6.1',
     ],
 )
