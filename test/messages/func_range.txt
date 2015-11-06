@@ -1,5 +1,5 @@
-C:  5: range() call could be single-argument
-C:  6: range() call could be single-argument
-C:  7: range() call could be single-argument
-C:  8: xrange() call could be single-argument
+C: 11: range() call could be single-argument
+C: 12: range() call could be single-argument
 C: 13: range() call could be single-argument
+C: 14: xrange() call could be single-argument
+C: 19: range() call could be single-argument

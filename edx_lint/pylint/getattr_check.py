@@ -1,5 +1,7 @@
 """Check that getattr and setattr aren't being used with literal attribute names."""
 
+import six
+
 import astroid
 
 from pylint.checkers import BaseChecker, utils
@@ -49,7 +51,7 @@ class GetSetAttrLiteralChecker(BaseChecker):
 
         second = node.args[1]
         if isinstance(second, astroid.Const):
-            if isinstance(second.value, basestring):
+            if isinstance(second.value, six.string_types):
                 # The first argument is a constant string! Bad!
                 self.add_message(self.MESSAGE_ID, args=node.func.name, node=node)
 

@@ -15,7 +15,7 @@ class TamperEvidentFile(object):
     def __init__(self, filename):
         self.filename = filename
 
-    def write(self, text, hashline="# {}"):
+    def write(self, text, hashline=b"# {}"):
         """
         Write `text` to the file.
 
@@ -25,16 +25,22 @@ class TamperEvidentFile(object):
         The last line is written with the `hashline` format string, which can
         be changed to accommodate different file syntaxes.
 
+        Arguments:
+            text (byte string): the contents of the file to write.
+
+            hashline (byte string): the format of the last line to append to
+                the file, with "{}" replaced with the hash.
+
         """
-        if not text.endswith("\n"):
-            text += "\n"
+        if not text.endswith(b"\n"):
+            text += b"\n"
 
         hash = hashlib.sha1(text).hexdigest()
 
-        with open(self.filename, "w") as f:
+        with open(self.filename, "wb") as f:
             f.write(text)
-            f.write(hashline.format(hash))
-            f.write("\n")
+            f.write(hashline.decode("ascii").format(hash).encode("ascii"))
+            f.write(b"\n")
 
     def validate(self):
         """
@@ -44,18 +50,18 @@ class TamperEvidentFile(object):
         with.
         """
 
-        with open(self.filename, "r") as f:
+        with open(self.filename, "rb") as f:
             text = f.read()
 
-        start_last_line = text.rfind("\n", 0, -1)
+        start_last_line = text.rfind(b"\n", 0, -1)
         if start_last_line == -1:
             return False
 
         original_text = text[:start_last_line+1]
         last_line = text[start_last_line+1:]
 
-        expected_hash = hashlib.sha1(original_text).hexdigest()
-        match = re.search(r"[0-9a-f]{40}", last_line)
+        expected_hash = hashlib.sha1(original_text).hexdigest().encode("ascii")
+        match = re.search(br"[0-9a-f]{40}", last_line)
         if not match:
             return False
         actual_hash = match.group(0)
