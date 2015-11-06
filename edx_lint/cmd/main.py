@@ -1,4 +1,5 @@
 """The edx_lint command."""
+from __future__ import print_function
 
 import sys
 
@@ -20,12 +21,12 @@ def main(argv=None):
     elif argv[0] == "write":
         return write_main(argv[1:])
     else:
-        print "Don't understand {!r}".format(" ".join(argv))
+        print("Don't understand {!r}".format(" ".join(argv)))
         help()
 
 
 def help():
-    print """\
+    print("""\
 Manage local config files from masters in edx_lint.
 
 Commands:
@@ -37,4 +38,4 @@ Commands:
 
     list
         List the FILENAMEs that edx_lint can provide.
-"""
+""")

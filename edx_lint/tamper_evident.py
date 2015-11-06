@@ -15,7 +15,7 @@ class TamperEvidentFile(object):
     def __init__(self, filename):
         self.filename = filename
 
-    def write(self, text, hashline=b"# {}"):
+    def write(self, text, hashline=u"# {}"):
         """
         Write `text` to the file.
 
@@ -26,21 +26,21 @@ class TamperEvidentFile(object):
         be changed to accommodate different file syntaxes.
 
         Arguments:
-            text (byte string): the contents of the file to write.
+            text (unicode string): the contents of the file to write.
 
-            hashline (byte string): the format of the last line to append to
+            hashline (unicode string): the format of the last line to append to
                 the file, with "{}" replaced with the hash.
 
         """
-        if not text.endswith(b"\n"):
-            text += b"\n"
+        if not text.endswith(u"\n"):
+            text += u"\n"
 
-        hash = hashlib.sha1(text).hexdigest()
+        hash = hashlib.sha1(text.encode("ascii")).hexdigest()
 
-        with open(self.filename, "wb") as f:
+        with open(self.filename, "w") as f:
             f.write(text)
-            f.write(hashline.decode("ascii").format(hash).encode("ascii"))
-            f.write(b"\n")
+            f.write(hashline.format(hash))
+            f.write(u"\n")
 
     def validate(self):
         """
@@ -50,10 +50,10 @@ class TamperEvidentFile(object):
         with.
         """
 
-        with open(self.filename, "rb") as f:
+        with open(self.filename, "r") as f:
             text = f.read()
 
-        start_last_line = text.rfind(b"\n", 0, -1)
+        start_last_line = text.rfind(u"\n", 0, -1)
         if start_last_line == -1:
             return False
 
@@ -61,7 +61,7 @@ class TamperEvidentFile(object):
         last_line = text[start_last_line+1:]
 
         expected_hash = hashlib.sha1(original_text).hexdigest().encode("ascii")
-        match = re.search(br"[0-9a-f]{40}", last_line)
+        match = re.search(r"[0-9a-f]{40}", last_line)
         if not match:
             return False
         actual_hash = match.group(0)
