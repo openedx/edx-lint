@@ -1,8 +1,11 @@
 """The edx_lint write command."""
+from __future__ import print_function
 
-import ConfigParser
-import cStringIO as StringIO
 import os
+
+from six.moves import configparser
+from six.moves import cStringIO
+from io import TextIOWrapper
 
 import pkg_resources
 
@@ -38,7 +41,7 @@ WARNING_HEADER = """\
 
 def write_main(argv):
     if len(argv) != 1:
-        print "Please provide the name of a file to write."
+        print("Please provide the name of a file to write.")
         return 1
 
     filename = argv[0]
@@ -46,33 +49,38 @@ def write_main(argv):
     tweaks_name = amend_filename(filename, "_tweaks")
 
     if not pkg_resources.resource_exists("edx_lint", resource_name):
-        print "Don't have file %r to write." % filename
+        print("Don't have file %r to write." % filename)
         return 2
 
     if os.path.exists(filename):
-        print "Checking existing copy of %s" % filename
+        print("Checking existing copy of %s" % filename)
         tef = TamperEvidentFile(filename)
         if not tef.validate():
             bak_name = amend_filename(filename, "_backup")
-            print "Your copy of %s seems to have been edited, renaming it to %s" % (filename, bak_name)
+            print("Your copy of %s seems to have been edited, renaming it to %s" % (filename, bak_name))
             if os.path.exists(bak_name):
-                print "A previous %s exists, deleting it" % bak_name
+                print("A previous %s exists, deleting it" % bak_name)
                 os.remove(bak_name)
             os.rename(filename, bak_name)
 
-    print "Reading edx_lint/files/%s" % filename
-    cfg = ConfigParser.RawConfigParser()
-    cfg.readfp(pkg_resources.resource_stream("edx_lint", resource_name), resource_name)
+    print("Reading edx_lint/files/%s" % filename)
+    cfg = configparser.RawConfigParser()
+
+    # pkg_resources always reads binary data (in both python2 and python3).
+    # ConfigParser.read_string only exists in python3, so we have to wrap the string
+    # from pkg_resources in a cStringIO so that we can pass it into ConfigParser.readfp.
+    resource_string = pkg_resources.resource_string("edx_lint", resource_name).decode("ascii")
+    cfg.readfp(cStringIO(resource_string), resource_name)
 
     if os.path.exists(tweaks_name):
-        print "Applying local tweaks from %s" % tweaks_name
-        cfg_tweaks = ConfigParser.RawConfigParser()
+        print("Applying local tweaks from %s" % tweaks_name)
+        cfg_tweaks = configparser.RawConfigParser()
         cfg_tweaks.read([tweaks_name])
 
         merge_configs(cfg, cfg_tweaks)
 
-    print "Writing %s" % filename
-    output_text = StringIO.StringIO()
+    print("Writing %s" % filename)
+    output_text = cStringIO()
     output_text.write(WARNING_HEADER)
     cfg.write(output_text)
 
