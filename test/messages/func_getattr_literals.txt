@@ -1,2 +1,3 @@
 C:  6:do_things: getattr using a literal attribute name
 C:  8:do_things: setattr using a literal attribute name
+C: 10:do_things: delattr using a literal attribute name

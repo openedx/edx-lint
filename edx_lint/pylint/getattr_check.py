@@ -40,7 +40,7 @@ class GetSetAttrLiteralChecker(BaseChecker):
             if len(node.args) != 2:
                 # We only attend to 2-argument getattr()
                 return
-        elif node.func.name == "setattr":
+        elif node.func.name in ["setattr", "delattr"]:
             pass
         else:
             # Not a function we care about.
