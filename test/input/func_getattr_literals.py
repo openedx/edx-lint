@@ -7,3 +7,5 @@ def do_things(name):
     world = getattr(name, "hello", 17)
     setattr(name, "hello", hello)
     setattr(name, "h" + "ello", world)
+    delattr(name, "something")
+    delattr(name, "FOO".lower())
