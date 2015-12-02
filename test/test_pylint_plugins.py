@@ -14,13 +14,6 @@ def load_tests(loader, tests, pattern):
     # Load our plugin.
     linter.load_plugin_modules(['edx_lint.pylint'])
 
-    # Configure the linter that runs the tests.
-
-    # This line prevents pylint from complaining about missing __revision__ in
-    # all the test files. But is this removing other required attributes that
-    # maybe we do want to check for?
-    linter.global_set_option('required-attributes', ())
-
     here = os.path.dirname(os.path.abspath(__file__))
 
     tests = make_tests(

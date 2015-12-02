@@ -58,7 +58,6 @@ evaluation = 10.0 - ((float(5 * error + warning + refactor + convention) / state
 comment = no
 
 [BASIC]
-required-attributes = 
 bad-functions = map,filter,apply,input
 module-rgx = (([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
 const-rgx = (([A-Z_][A-Z0-9_]*)|(__.*__)|log|urlpatterns)$
