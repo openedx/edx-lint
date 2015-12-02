@@ -32,15 +32,15 @@ class TamperEvidentFile(object):
                 the file, with "{}" replaced with the hash.
 
         """
-        if not text.endswith(u"\n"):
-            text += u"\n"
+        if not text.endswith("\n"):
+            text += "\n"
 
         hash = hashlib.sha1(text.encode("ascii")).hexdigest()
 
         with open(self.filename, "w") as f:
             f.write(text)
             f.write(hashline.format(hash))
-            f.write(u"\n")
+            f.write("\n")
 
     def validate(self):
         """
@@ -53,18 +53,16 @@ class TamperEvidentFile(object):
         with open(self.filename, "r") as f:
             text = f.read()
 
-        start_last_line = text.rfind(u"\n", 0, -1)
+        start_last_line = text.rfind("\n", 0, -1)
         if start_last_line == -1:
             return False
 
         original_text = text[:start_last_line+1]
         last_line = text[start_last_line+1:]
 
-        expected_hash = hashlib.sha1(original_text).hexdigest().encode("ascii")
+        expected_hash = hashlib.sha1(original_text.encode("utf-8")).hexdigest()
         match = re.search(r"[0-9a-f]{40}", last_line)
         if not match:
             return False
         actual_hash = match.group(0)
-        if actual_hash != expected_hash:
-            return False
-        return True
+        return str(actual_hash) == str(expected_hash)

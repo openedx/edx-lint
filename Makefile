@@ -19,3 +19,6 @@ clean:
 	-rm -f *.pyc */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc */*/*/*/*/*.pyc
 	-rm -rf __pycache__ */__pycache__ */*/__pycache__ */*/*/__pycache__ */*/*/*/__pycache__ */*/*/*/*/__pycache__
 	-rm -f MANIFEST
+
+requirements:
+	pip install -r dev-requirements.txt

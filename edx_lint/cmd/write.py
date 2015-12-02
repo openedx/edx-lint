@@ -85,7 +85,7 @@ def write_main(argv):
     cfg.write(output_text)
 
     out_tef = TamperEvidentFile(filename)
-    out_tef.write(output_text.getvalue())
+    out_tef.write(str(output_text.getvalue()))
 
     return 0
 
