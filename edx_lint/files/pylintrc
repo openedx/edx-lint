@@ -102,25 +102,25 @@ const-rgx=(([A-Z_][A-Z0-9_]*)|(__.*__)|log|urlpatterns)$
 class-rgx=[A-Z_][a-zA-Z0-9]+$
 
 # Regular expression which should only match correct function names
-# Normally limited to 30 chars, but test names can be as long as they want
-function-rgx=([a-z_][a-z0-9_]{2,30}|test_[a-z0-9_]+)$
+# Normally limited to 40 chars, but test names can be as long as they want
+function-rgx=([a-z_][a-z0-9_]{2,40}|test_[a-z0-9_]+)$
 
 # Regular expression which should only match correct method names
 # Normally, should be all lower, but some exceptions for unittest methods
 method-rgx=([a-z_][a-z0-9_]{2,40}|setUp|set[Uu]pClass|tearDown|tear[Dd]ownClass|assert[A-Z]\w*|maxDiff|test_[a-z0-9_]+)$
 
 # Regular expression which should only match correct instance attribute names
-attr-rgx=[a-z_][a-z0-9_]{2,30}$
+attr-rgx=[a-z_][a-z0-9_]{2,40}$
 
 # Regular expression which should only match correct argument names
-argument-rgx=[a-z_][a-z0-9_]{2,30}$
+argument-rgx=[a-z_][a-z0-9_]{2,40}$
 
 # Regular expression which should only match correct variable names
-variable-rgx=[a-z_][a-z0-9_]{2,30}$
+variable-rgx=[a-z_][a-z0-9_]{2,40}$
 
 # Regular expression which should only match correct attribute names in class
 # bodies
-class-attribute-rgx=([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$
+class-attribute-rgx=([A-Za-z_][A-Za-z0-9_]{2,40}|(__.*__))$
 
 # Regular expression which should only match correct list comprehension /
 # generator expression variable names
