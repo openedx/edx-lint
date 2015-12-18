@@ -23,7 +23,7 @@ class TamperEvidentFileTest(unittest.TestCase):
     def test_writing(self):
         # The contents are written, with a hash.
         # Different contents produce different hashes.
-        filename1 = self.write_tamper_evident(b"Hello!")
+        filename1 = self.write_tamper_evident("Hello!")
 
         with open(filename1, "rb") as f:
             self.assertEqual(
@@ -31,7 +31,7 @@ class TamperEvidentFileTest(unittest.TestCase):
                 b"Hello!\n# a8d191538209e335154750d2df575b9ddfb16fc7\n"
             )
 
-        filename2 = self.write_tamper_evident(b"Hello?")
+        filename2 = self.write_tamper_evident("Hello?")
 
         with open(filename2, "rb") as f:
             self.assertEqual(
@@ -40,7 +40,7 @@ class TamperEvidentFileTest(unittest.TestCase):
             )
 
     def test_hashline_formatting(self):
-        filename1 = self.write_tamper_evident(b"Hello!", hashline=b"XXX {} YYY")
+        filename1 = self.write_tamper_evident("Hello!", hashline="XXX {} YYY")
 
         with open(filename1, "rb") as f:
             self.assertEqual(
@@ -49,12 +49,12 @@ class TamperEvidentFileTest(unittest.TestCase):
             )
 
     def test_validating_a_good_file(self):
-        filename = self.write_tamper_evident(b"Am I OK?")
+        filename = self.write_tamper_evident("Am I OK?")
         tef = TamperEvidentFile(filename)
         self.assertTrue(tef.validate())
 
     def test_appending_is_detected(self):
-        filename = self.write_tamper_evident(b"Am I OK?")
+        filename = self.write_tamper_evident("Am I OK?")
 
         with open(filename, "ab") as f:
             f.write(b"tamper\n")
@@ -63,7 +63,7 @@ class TamperEvidentFileTest(unittest.TestCase):
         self.assertFalse(tef.validate())
 
     def test_editing_is_detected(self):
-        filename = self.write_tamper_evident(b"Line 1\nLine 2\nLine 3\n")
+        filename = self.write_tamper_evident("Line 1\nLine 2\nLine 3\n")
         with open(filename, "rb") as f:
             text = f.read()
         with open(filename, "wb") as f:
@@ -73,7 +73,7 @@ class TamperEvidentFileTest(unittest.TestCase):
         self.assertFalse(tef.validate())
 
     def test_oneline_file_is_detected(self):
-        filename = self.write_tamper_evident(b"Am I OK?")
+        filename = self.write_tamper_evident("Am I OK?")
 
         with open(filename, "wb") as f:
             f.write(b"tamper")

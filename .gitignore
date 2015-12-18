@@ -3,6 +3,7 @@
 *.pyc
 local_settings.py
 *.egg-info
+*.egg/
 .treerc
 .coverage
 htmlcov

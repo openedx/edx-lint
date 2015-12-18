@@ -1,5 +1,7 @@
-edx-lint
-========
+edx-lint  |Travis|_
+===================
+.. |Travis| image:: https://travis-ci.org/edx/edx-lint.svg?branch=master
+.. _Travis: https://travis-ci.org/edx/edx-lint
 
 A collection of code quality tools:
 
@@ -36,8 +38,8 @@ Developing edx_lint
 
 To run the tests::
 
-    $ pip install -r dev-requirements.txt
-    $ make
+    $ make requirements
+    $ make test
 
 
 License
