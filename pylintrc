@@ -68,6 +68,7 @@ disable =
 	abstract-class-little-used,
 	no-init,
 	fixme,
+	logging-format-interpolation,
 	too-many-lines,
 	no-self-use,
 	too-many-ancestors,
@@ -179,4 +180,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 1dd7b8e7b54fea4e8c6a3d2f09aaf6e4822256f3
+# 63f6290e4a2b5990f37c31ad564b50ce0bcabd15

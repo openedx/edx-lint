@@ -45,6 +45,7 @@ disable=
     abstract-class-little-used,
     no-init,
     fixme,
+    logging-format-interpolation,
     too-many-lines,
     no-self-use,
     too-many-ancestors,
