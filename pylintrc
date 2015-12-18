@@ -55,7 +55,7 @@
 [MASTER]
 ignore = ,input
 persistent = yes
-load-plugins = edx_lint.pylint,pylint_django
+load-plugins = edx_lint.pylint,pylint_django,pylint_celery
 
 [MESSAGES CONTROL]
 disable = 
@@ -179,4 +179,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 3dd01da1adbb2cac2fbed3cbc578b3f647b792c7
+# 1dd7b8e7b54fea4e8c6a3d2f09aaf6e4822256f3

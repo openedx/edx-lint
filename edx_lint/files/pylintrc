@@ -16,7 +16,7 @@ persistent=yes
 
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
-load-plugins=edx_lint.pylint,pylint_django
+load-plugins=edx_lint.pylint,pylint_django,pylint_celery
 
 
 [MESSAGES CONTROL]
