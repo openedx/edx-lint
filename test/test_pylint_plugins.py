@@ -11,8 +11,9 @@ def load_tests(loader, tests, pattern):
     # initialization on import! ugh.
     from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 
-    # Load our plugin.
+    # Load our plugin, and disable messages we don't want noising up our tests.
     linter.load_plugin_modules(['edx_lint.pylint'])
+    linter.disable("missing-module-attribute")
 
     here = os.path.dirname(os.path.abspath(__file__))
 

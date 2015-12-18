@@ -1,3 +1,2 @@
 coverage
-logilab-common
 -e .
