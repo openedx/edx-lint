@@ -8,7 +8,7 @@ test:
 	tox -e py27,py35
 
 pylint:
-	pylint edx_lint test setup.py
+	tox -e pylint
 
 clean:
 	-rm -rf *.egg-info
@@ -16,6 +16,7 @@ clean:
 	-find . -name '*.pyc' -delete
 	-rm -f MANIFEST
 	-rm -rf .coverage .coverage.* htmlcov
+	-rm -rf .tox
 
 requirements:
 	pip install -r dev-requirements.txt
