@@ -5,11 +5,7 @@
 default: test
 
 test:
-	python -m unittest discover
-
-coverage:
-	coverage run -m unittest discover
-	coverage report -m
+	tox -e py27,py35
 
 pylint:
 	pylint edx_lint test setup.py

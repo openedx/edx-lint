@@ -2,5 +2,6 @@
 branch = True
 source = .
 omit = 
+    .tox/*
     setup.py
     test/input/*
