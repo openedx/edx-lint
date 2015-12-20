@@ -16,9 +16,10 @@ pylint:
 
 clean:
 	-rm -rf *.egg-info
-	-rm -f *.pyc */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc */*/*/*/*/*.pyc
-	-rm -rf __pycache__ */__pycache__ */*/__pycache__ */*/*/__pycache__ */*/*/*/__pycache__ */*/*/*/*/__pycache__
+	-find . -name '__pycache__' -prune -exec rm -rf "{}" \;
+	-find . -name '*.pyc' -delete
 	-rm -f MANIFEST
+	-rm -rf .coverage .coverage.* htmlcov
 
 requirements:
 	pip install -r dev-requirements.txt
