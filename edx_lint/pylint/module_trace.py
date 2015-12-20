@@ -17,9 +17,13 @@ from pylint.interfaces import IAstroidChecker
 from .common import BASE_ID
 
 
+FILENAME = os.environ.get("PYLINT_RECORD_FILES", "")
+
+
 def register_checkers(linter):
     """Register checkers."""
-    linter.register_checker(ModuleTracingChecker(linter))
+    if FILENAME:
+        linter.register_checker(ModuleTracingChecker(linter))
 
 
 class ModuleTracingChecker(BaseChecker):
@@ -37,8 +41,6 @@ class ModuleTracingChecker(BaseChecker):
     }
 
     def visit_module(self, node):
-        filename = os.environ.get("PYLINT_RECORD_FILES", "")
-        if filename:
-            with open(filename, "a") as f:
-                f.write(node.file)
-                f.write("\n")
+        with open(FILENAME, "a") as f:
+            f.write(node.file)
+            f.write("\n")
