@@ -7,6 +7,10 @@ from edx_lint.tamper_evident import TamperEvidentFile
 
 
 def check_main(argv):
+    """
+    check FILENAME
+        Check that FILENAME has not been edited since writing.
+    """
     if len(argv) != 1:
         print("Please provide the name of a file to check.")
         return 1

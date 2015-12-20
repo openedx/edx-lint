@@ -6,7 +6,6 @@ import os
 
 from six.moves import configparser
 from six.moves import cStringIO
-from io import TextIOWrapper
 
 import pkg_resources
 
@@ -72,6 +71,10 @@ WARNING_HEADER = """\
 """
 
 def write_main(argv):
+    """
+    write FILENAME
+        Write a local copy of FILENAME using FILENAME_tweaks for local tweaks.
+    """
     if len(argv) != 1:
         print("Please provide the name of a file to write.")
         return 1
