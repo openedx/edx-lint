@@ -8,14 +8,34 @@ from edx_lint.tamper_evident import TamperEvidentFile
 
 
 class TamperEvidentFileTest(unittest.TestCase):
+    """Tests for TamperEvidentFile."""
+
     def temp_filename(self):
-        """Make a temporary filename that will be deleted after the test."""
-        fd, filename = tempfile.mkstemp(suffix=".txt", prefix="tamper_evident_")
-        os.close(fd)
+        """
+        Make a temporary filename that will be deleted after the test.
+
+        Returns:
+            The name of the temp file.
+
+        """
+        fdesc, filename = tempfile.mkstemp(suffix=".txt", prefix="tamper_evident_")
+        os.close(fdesc)
         self.addCleanup(os.remove, filename)
         return filename
 
     def write_tamper_evident(self, text, **kwargs):
+        """
+        Helper to write a tamper-evident temp file.
+
+        Args:
+            text (byte string): the content of the file.
+
+            kwargs: any other arguments to `TamperEvidentFile.write`.
+
+        Returns:
+            The name of the temp file.
+
+        """
         filename = self.temp_filename()
         TamperEvidentFile(filename).write(text, **kwargs)
         return filename
