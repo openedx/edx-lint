@@ -17,12 +17,20 @@ from pylint.interfaces import IAstroidChecker
 from .common import BASE_ID
 
 
+FILENAME = os.environ.get("PYLINT_RECORD_FILES", "")
+
+
 def register_checkers(linter):
     """Register checkers."""
-    linter.register_checker(ModuleTracingChecker(linter))
+    if FILENAME:
+        linter.register_checker(ModuleTracingChecker(linter))
 
 
 class ModuleTracingChecker(BaseChecker):
+    """
+    Not really a checker, it doesn't generate any messages.  There's probably
+    a better way to hook into pylint to do this.
+    """
 
     __implements__ = (IAstroidChecker,)
 
@@ -37,8 +45,7 @@ class ModuleTracingChecker(BaseChecker):
     }
 
     def visit_module(self, node):
-        filename = os.environ.get("PYLINT_RECORD_FILES", "")
-        if filename:
-            with open(filename, "a") as f:
-                f.write(node.file)
-                f.write("\n")
+        """Called for each module being examined."""
+        with open(FILENAME, "a") as f:
+            f.write(node.file)
+            f.write("\n")

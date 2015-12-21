@@ -5,20 +5,18 @@
 default: test
 
 test:
-	python -m unittest discover
-
-coverage:
-	coverage run -m unittest discover
-	coverage report -m
+	tox -e py27,py35
 
 pylint:
-	pylint edx_lint test setup.py
+	tox -e pylint
 
 clean:
 	-rm -rf *.egg-info
-	-rm -f *.pyc */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc */*/*/*/*/*.pyc
-	-rm -rf __pycache__ */__pycache__ */*/__pycache__ */*/*/__pycache__ */*/*/*/__pycache__ */*/*/*/*/__pycache__
+	-find . -name '__pycache__' -prune -exec rm -rf "{}" \;
+	-find . -name '*.pyc' -delete
 	-rm -f MANIFEST
+	-rm -rf .coverage .coverage.* htmlcov
+	-rm -rf .tox
 
 requirements:
 	pip install -r dev-requirements.txt

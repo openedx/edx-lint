@@ -1,24 +1,15 @@
-*.log
-*.pot
+.tox
 *.pyc
-local_settings.py
 *.egg-info
 *.egg/
-.treerc
 .coverage
+.coverage.*
 htmlcov
-*~
 
 # Documentation
-doc/_build
-.pip_cache
 nosetests.xml
 coverage.xml
-pep8.report
-pylint.report
-diff_cover.html
-diff_quality_pep8.html
-diff_quality_pylint.html
 
 # IDE
 .idea
+*~
