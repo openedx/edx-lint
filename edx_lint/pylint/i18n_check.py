@@ -1,3 +1,5 @@
+"""Checker for incorrect string translation functions."""
+
 import six
 
 import astroid
@@ -14,6 +16,21 @@ def register_checkers(linter):
 
 
 class TranslationStringConstantsChecker(BaseChecker):
+    """
+    Checks for i18n translation functions (_, ugettext, ungettext, and many
+    others) being called on something that isn't a string literal.
+
+    Bad:
+        _("hello {}".format(name))
+        ugettext("Hello " + name)
+        ugettext(value_from_database)
+
+    OK:
+        _("hello {}").format(name)
+
+    The message id is `translation-of-non-string`.
+
+    """
 
     __implements__ = (IAstroidChecker,)
 
@@ -40,6 +57,7 @@ class TranslationStringConstantsChecker(BaseChecker):
 
     @utils.check_messages(MESSAGE_ID)
     def visit_callfunc(self, node):
+        """Called for every function call in the source code."""
         if not isinstance(node.func, astroid.Name):
             # It isn't a simple name, can't deduce what function it is.
             return

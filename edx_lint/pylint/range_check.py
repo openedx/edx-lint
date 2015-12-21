@@ -14,6 +14,21 @@ def register_checkers(linter):
 
 
 class RangeChecker(BaseChecker):
+    """
+    Checks for range() and xrange() used with unneeded arguments.
+
+    Bad:
+        range(0, N)
+        range(0, N, 1)
+
+    OK:
+        range(N)
+        range(1, N)
+        range(1, N, 2)
+
+    The message id is simplifiable-range.
+
+    """
 
     __implements__ = (IAstroidChecker,)
 
@@ -32,6 +47,7 @@ class RangeChecker(BaseChecker):
 
     @utils.check_messages(MESSAGE_ID)
     def visit_callfunc(self, node):
+        """Called for every function call in the source code."""
         if not isinstance(node.func, astroid.Name):
             # It isn't a simple name, can't deduce what function it is.
             return

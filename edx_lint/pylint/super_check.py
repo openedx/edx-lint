@@ -1,4 +1,4 @@
-"""Pylint plugin: check that tests have used super() properly in setUp()."""
+"""Pylint plugin: check that tests have used super() properly."""
 
 import astroid
 import six
@@ -16,6 +16,15 @@ def register_checkers(linter):
 
 
 class UnitTestSetupSuperChecker(BaseChecker):
+    """
+    Checks that unittest methods have used super() properly.
+
+    It examines `setUp`, `tearDown`, `setUpClass`, and `tearDownClass` for
+    correct use of super.  If there is no super, it issues a
+    `super-method-not-called` error.  If super is used, but with the wrong
+    class name, it issues a `non-parent-method-called` error.
+
+    """
 
     __implements__ = (IAstroidChecker,)
 
@@ -41,7 +50,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     @utils.check_messages(NOT_CALLED_MESSAGE_ID, NON_PARENT_MESSAGE_ID)
     def visit_function(self, node):
-        """check method arguments, overriding"""
+        """Called for every function definition in the source code."""
         # ignore actual functions
         if not node.is_method():
             return
@@ -78,6 +87,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
                 # base = super()
                 # base.__init__(...)
 
+                # pylint: disable=protected-access
                 if (isinstance(klass, astroid.Instance) and
                         isinstance(klass._proxied, astroid.Class) and
                         utils.is_builtin_object(klass._proxied) and

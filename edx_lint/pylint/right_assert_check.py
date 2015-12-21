@@ -57,21 +57,33 @@ class AssertChecker(BaseChecker):
 
         if first_arg.ops[0][0] in ["==", "!="]:
             # An assertTrue/False with a compare should be assertEqual:
-            self.add_message(self.MESSAGE_ID,
-                             args="%s(%s) should be assertEqual or assertNotEqual" % (node.func.attrname,
-                                                                                      first_arg.as_string()),
-                             node=node)
+            self.add_message(
+                self.MESSAGE_ID,
+                args="%s(%s) should be assertEqual or assertNotEqual" % (
+                    node.func.attrname,
+                    first_arg.as_string(),
+                ),
+                node=node,
+            )
 
         elif first_arg.ops[0][0] in ["in", "not in"]:
             # An assertTrue/False with an in statement should be assertIn:
-            self.add_message(self.MESSAGE_ID,
-                             args="%s(%s) should be assertIn or assertNotIn" % (node.func.attrname,
-                                                                                first_arg.as_string()),
-                             node=node)
+            self.add_message(
+                self.MESSAGE_ID,
+                args="%s(%s) should be assertIn or assertNotIn" % (
+                    node.func.attrname,
+                    first_arg.as_string(),
+                ),
+                node=node,
+            )
 
         elif "<" in first_arg.ops[0][0] or ">" in first_arg.ops[0][0]:
             # An assertTrue/False with a comparison should be assertGreater or assertLess:
-            self.add_message(self.MESSAGE_ID,
-                             args="%s(%s) should be assertGreater or assertLess" % (node.func.attrname,
-                                                                                    first_arg.as_string()),
-                             node=node)
+            self.add_message(
+                self.MESSAGE_ID,
+                args="%s(%s) should be assertGreater or assertLess" % (
+                    node.func.attrname,
+                    first_arg.as_string(),
+                ),
+                node=node,
+            )
