@@ -1,9 +1,7 @@
 language: python
 python:
   - "2.7"
-  - "3.4"
-  # pylint 1.4.4 doesn't yet support 3.5
-  #- "3.5"
+  - "3.5"
 sudo: false
 
 install:

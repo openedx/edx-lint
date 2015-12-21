@@ -40,9 +40,9 @@ setup(
     },
 
     install_requires=[
-        'pylint==1.4.4',
-        'astroid==1.3.8',   # pylint doesn't pin astroid!?
-        'pylint-django==0.6.1',
+        'pylint==1.5.2',
+        'astroid==1.4.2',
+        'pylint-django==0.7.1',
         'pylint-celery==0.3',
         'six>=1.10.0,<2.0.0',
     ],
