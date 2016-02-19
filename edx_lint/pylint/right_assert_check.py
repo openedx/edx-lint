@@ -28,6 +28,40 @@ class AssertChecker(BaseChecker):
 
     AFFECTED_ASSERTS = ["assertTrue", "assertFalse"]
 
+    BETTER_COMPARES = {
+        "==": "assertEqual",
+        "!=": "assertNotEqual",
+        "in": "assertIn",
+        "not in": "assertNotIn",
+        "<": "assertLess",
+        "<=": "assertLessEqual",
+        ">": "assertGreater",
+        ">=": "assertGreaterEqual",
+        "is": "assertIs",
+        "is not": "assertIsNot",
+    }
+
+    BETTER_NONE_COMPARES = {
+        "==": "assertIsNone",
+        "is": "assertIsNone",
+        "!=": "assertIsNotNone",
+        "is not": "assertIsNotNone",
+    }
+
+    INVERTED_PAIRS = [
+        ("assertEqual", "assertNotEqual"),
+        ("assertIn", "assertNotIn"),
+        ("assertLess", "assertGreaterEqual"),
+        ("assertGreater", "assertLessEqual"),
+        ("assertIs", "assertIsNot"),
+        ("assertIsNone", "assertIsNotNone"),
+    ]
+
+    INVERTED = {}
+    for yup, nope in INVERTED_PAIRS:
+        INVERTED[yup] = nope
+        INVERTED[nope] = yup
+
     MESSAGE_ID = 'wrong-assert-type'
     msgs = {
         'C%d90' % BASE_ID: (
@@ -51,39 +85,21 @@ class AssertChecker(BaseChecker):
             return
 
         first_arg = node.args[0]
-        if not isinstance(first_arg, astroid.Compare):
-            # Not a comparison, so this is probably ok:
-            return
+        existing_code = "%s(%s)" % (node.func.attrname, first_arg.as_string())
 
-        if first_arg.ops[0][0] in ["==", "!="]:
-            # An assertTrue/False with a compare should be assertEqual:
+        if isinstance(first_arg, astroid.Compare):
+            compare = first_arg.ops[0][0]
+            right = first_arg.ops[0][1]
+            if isinstance(right, astroid.Const) and right.value is None:
+                # Comparing to None, handle specially.
+                better = self.BETTER_NONE_COMPARES[compare]
+            else:
+                better = self.BETTER_COMPARES[compare]
+
+            if node.func.attrname == "assertFalse":
+                better = self.INVERTED[better]
             self.add_message(
                 self.MESSAGE_ID,
-                args="%s(%s) should be assertEqual or assertNotEqual" % (
-                    node.func.attrname,
-                    first_arg.as_string(),
-                ),
-                node=node,
-            )
-
-        elif first_arg.ops[0][0] in ["in", "not in"]:
-            # An assertTrue/False with an in statement should be assertIn:
-            self.add_message(
-                self.MESSAGE_ID,
-                args="%s(%s) should be assertIn or assertNotIn" % (
-                    node.func.attrname,
-                    first_arg.as_string(),
-                ),
-                node=node,
-            )
-
-        elif "<" in first_arg.ops[0][0] or ">" in first_arg.ops[0][0]:
-            # An assertTrue/False with a comparison should be assertGreater or assertLess:
-            self.add_message(
-                self.MESSAGE_ID,
-                args="%s(%s) should be assertGreater or assertLess" % (
-                    node.func.attrname,
-                    first_arg.as_string(),
-                ),
+                args="%s should be %s" % (existing_code, better),
                 node=node,
             )

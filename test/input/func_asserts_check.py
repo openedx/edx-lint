@@ -37,3 +37,22 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertTrue(1 > 0)
         self.assertFalse(1 < 2)
+
+        my_zero = 0
+
+        self.assertTrue(my_zero is 0)
+        self.assertFalse(my_zero is 1)
+        self.assertTrue(my_zero is not 1)
+        self.assertFalse(my_zero is not 0)
+
+        my_none = None
+
+        self.assertTrue(my_none is None)
+        self.assertFalse(my_zero is None)
+        self.assertTrue(my_zero != None)
+
+    def test_wrong_but_with_pragma(self):
+        """
+        This uses the wrong assert, but has a pragma to quiet the message.
+        """
+        self.assertTrue("a" in "lala")      # pylint: disable=wrong-assert-type
