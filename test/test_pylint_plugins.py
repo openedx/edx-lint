@@ -17,6 +17,7 @@ def load_tests(unused_loader, tests, unused_pattern):
 
     # Load our plugin.
     linter.load_plugin_modules(['edx_lint.pylint'])
+    linter.global_set_option('required-attributes', ())
 
     here = os.path.dirname(os.path.abspath(__file__))
 
