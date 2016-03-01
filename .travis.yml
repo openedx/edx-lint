@@ -15,3 +15,12 @@ install:
 
 script:
     - tox $TOXARG
+
+deploy:
+  provider: pypi
+  user: edx
+  password:
+    secure: sQ2Ct0BA5JAhj6cNt+MFcbeCa/SJW2PlWiuD5/KLgszx7D58yrPnP/E87YF5JAtyUhzpaEt92G1hKWXEi2HW6jE6IfMye75kqMK1Wy7JCYXZNxxIYC6MfXH0kHfNasT1rJ7MpHFDV5EdcSInSJMY6oWbMHQ5CU+2K3d5zUz1EpY=
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true

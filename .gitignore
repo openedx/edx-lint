@@ -13,3 +13,5 @@ coverage.xml
 # IDE
 .idea
 *~
+build/
+dist/
