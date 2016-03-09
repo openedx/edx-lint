@@ -24,13 +24,22 @@ edx_lint master file::
 
     $ edx_lint write pylintrc
 
-You can customize the resulting file by creating a pylintrc_tweaks file in the
-current directory.  It should contain only the settings you want to override.
-
 The file written contains a hash of its contents, to detect subsequent editing.
 ``edx_lint`` will detect this when it next tries to write the file.  If editing
 is detected, the edited file will be moved aside so it can be compared to the
 newly written file.
+
+Customizing edx_lint
+--------------------
+You can customize the resulting pylintrc file by creating a pylintrc_tweaks file in the
+current directory before running the ``write`` sub-command.  It should contain only the
+settings you want to override.
+
+**Note:** If your project is not a Django project, you'll want to disable the django plugins with
+your pylintrc_tweaks file::
+
+    [MASTER]
+    load-plugins = edx_lint.pylint
 
 
 Developing edx_lint
