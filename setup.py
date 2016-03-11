@@ -51,8 +51,8 @@ setup(
     },
 
     install_requires=[
-        'pylint==1.4.5',
-        'pylint-django==0.6.1',
+        'pylint==1.5.4',
+        'pylint-django>=0.6.1,<1.0.0',
         'pylint-celery==0.3',
         'six>=1.10.0,<2.0.0',
     ],
