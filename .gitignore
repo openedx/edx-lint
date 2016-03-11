@@ -5,6 +5,7 @@
 .coverage
 .coverage.*
 htmlcov
+test/pylintrc
 
 # Documentation
 nosetests.xml

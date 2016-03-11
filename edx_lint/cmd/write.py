@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import os
 
+import six
 from six.moves import configparser
 from six.moves import cStringIO
 
@@ -118,12 +119,12 @@ def write_main(argv):
         merge_configs(cfg, cfg_tweaks)
 
     print("Writing %s" % filename)
-    output_text = cStringIO()
+    output_text = six.BytesIO()
     output_text.write(WARNING_HEADER.format(filename=filename, tweaks_name=tweaks_name))
     cfg.write(output_text)
 
     out_tef = TamperEvidentFile(filename)
-    out_tef.write(str(output_text.getvalue()))
+    out_tef.write(output_text.getvalue())
 
     return 0
 
