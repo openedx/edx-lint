@@ -5,7 +5,7 @@
 default: test
 
 test:
-	tox -e py27,py35
+	tox -e py27,py35,coverage
 
 pylint:
 	tox -e pylint
