@@ -1,5 +1,8 @@
 """ Tests for the command line executable. """
+
 import os
+import shutil
+import tempfile
 import unittest
 
 from edx_lint.cmd import main
@@ -7,6 +10,18 @@ from edx_lint.cmd import main
 
 class WriteCommandTest(unittest.TestCase):
     """ Tests for the write command. """
+
+    def setUp(self):
+        super(WriteCommandTest, self).setUp()
+
+        # Make a temporary directory to work in, and rm-rf it when we're done.
+        tempdir = tempfile.mkdtemp(suffix="_edx_lint_test")
+        self.addCleanup(shutil.rmtree, tempdir)
+
+        # Change into the temp directory, and change back when we are done.
+        thisdir = os.getcwd()
+        self.addCleanup(os.chdir, thisdir)
+        os.chdir(tempdir)
 
     def call_command(self, argv=None):
         """ Call an edx_lint script command.
@@ -16,18 +31,12 @@ class WriteCommandTest(unittest.TestCase):
         """
         return main.main(argv)
 
-    @unittest.skip('Default test runners have issues finding the file.')
     def test_pylintrc_file_created(self):
         """ Verify the command writes a pylintrc file. """
         filename = 'pylintrc'
-        filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
-        # Ensure the file does not already exist.
-        if os.path.isfile(filepath):
-            os.remove(filepath)
+        # Assure the file does not already exist.
+        self.assertFalse(os.path.isfile(filename))
 
         self.assertEqual(0, self.call_command(['write', filename]))
-        self.assertTrue(os.path.isfile(filepath))
-
-        # Cleanup after ourselves
-        os.remove(filepath)
+        self.assertTrue(os.path.isfile(filename))
