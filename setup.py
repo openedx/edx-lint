@@ -15,7 +15,7 @@ from setuptools import setup
 
 setup(
     name='edx-lint',
-    version='0.4.3',
+    version='0.5.0',
     description='edX-authored pylint checkers',
     url='https://github.com/edx/edx-lint',
     author='edX',
@@ -51,8 +51,8 @@ setup(
     },
 
     install_requires=[
-        'pylint==1.4.5',
-        'pylint-django==0.6.1',
+        'pylint==1.5.4',
+        'pylint-django>=0.6.1,<1.0.0',
         'pylint-celery==0.3',
         'six>=1.10.0,<2.0.0',
     ],
