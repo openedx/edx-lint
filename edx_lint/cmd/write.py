@@ -119,12 +119,12 @@ def write_main(argv):
         merge_configs(cfg, cfg_tweaks)
 
     print("Writing %s" % filename)
-    output_text = six.BytesIO()
+    output_text = six.StringIO()
     output_text.write(WARNING_HEADER.format(filename=filename, tweaks_name=tweaks_name))
     cfg.write(output_text)
 
     out_tef = TamperEvidentFile(filename)
-    out_tef.write(output_text.getvalue())
+    out_tef.write(output_text.getvalue().encode('utf8'))
 
     return 0
 

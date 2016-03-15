@@ -16,15 +16,15 @@ class WriteCommandTest(unittest.TestCase):
         """
         return main.main(argv)
 
-    @unittest.skip('Default test runners have issues finding the file.')
+    # @unittest.skip('Default test runners have issues finding the file.')
     def test_pylintrc_file_created(self):
         """ Verify the command writes a pylintrc file. """
         filename = 'pylintrc'
         filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), filename)
 
         # Ensure the file does not already exist.
-        if os.path.isfile(filepath):
-            os.remove(filepath)
+        # if os.path.isfile(filepath):
+        #     os.remove(filepath)
 
         self.assertEqual(0, self.call_command(['write', filename]))
         self.assertTrue(os.path.isfile(filepath))
