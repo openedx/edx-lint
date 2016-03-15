@@ -101,15 +101,12 @@ def write_main(argv):
 
     print("Reading edx_lint/files/%s" % filename)
     cfg = configparser.RawConfigParser()
-    resource_string = pkg_resources.resource_string("edx_lint", resource_name).decode("ascii")
+    resource_string = pkg_resources.resource_string("edx_lint", resource_name).decode("utf8")
 
-    if hasattr(cfg, 'read_string'):
-        cfg.read_string(resource_string, resource_name)  # pylint: disable=no-member
-    else:
-        # pkg_resources always reads binary data (in both python2 and python3).
-        # ConfigParser.read_string only exists in python3, so we have to wrap the string
-        # from pkg_resources in a cStringIO so that we can pass it into ConfigParser.readfp.
-        cfg.readfp(cStringIO(resource_string), resource_name)   # pylint: disable=deprecated-method
+    # pkg_resources always reads binary data (in both python2 and python3).
+    # ConfigParser.read_string only exists in python3, so we have to wrap the string
+    # from pkg_resources in a cStringIO so that we can pass it into ConfigParser.readfp.
+    cfg.readfp(cStringIO(resource_string), resource_name)   # pylint: disable=deprecated-method
 
     if os.path.exists(tweaks_name):
         print("Applying local tweaks from %s" % tweaks_name)
@@ -119,12 +116,16 @@ def write_main(argv):
         merge_configs(cfg, cfg_tweaks)
 
     print("Writing %s" % filename)
-    output_text = six.BytesIO()
+    output_text = cStringIO()
     output_text.write(WARNING_HEADER.format(filename=filename, tweaks_name=tweaks_name))
     cfg.write(output_text)
 
     out_tef = TamperEvidentFile(filename)
-    out_tef.write(output_text.getvalue())
+    if six.PY2:
+        output_bytes = output_text.getvalue()
+    else:
+        output_bytes = output_text.getvalue().encode("utf8")
+    out_tef.write(output_bytes)
 
     return 0
 
