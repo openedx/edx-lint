@@ -18,8 +18,8 @@ def register_checkers(linter):
 
 class AssertChecker(BaseChecker):
     """
-    Implements a few pylint checks on unitests asserts - making sure the right assert is used if assertTrue or
-    assertFalse are misused.
+    Implements a few pylint checks on unitests asserts - making sure the right
+    assert is used if assertTrue or assertFalse are misused.
     """
 
     __implements__ = (IAstroidChecker,)
@@ -77,7 +77,8 @@ class AssertChecker(BaseChecker):
         Check that various assertTrue/False functions are not misused.
         """
         if not isinstance(node.func, astroid.Getattr):
-            # If it isn't a getattr ignore this. All the assertMethods are attrs of self:
+            # If it isn't a getattr ignore this. All the assertMethods are
+            # attributes of self:
             return
 
         if node.func.attrname not in self.AFFECTED_ASSERTS:
@@ -88,6 +89,10 @@ class AssertChecker(BaseChecker):
         existing_code = "%s(%s)" % (node.func.attrname, first_arg.as_string())
 
         if isinstance(first_arg, astroid.Compare):
+            if len(first_arg.ops) > 1:
+                # This is a chained comparison, which we can't do anything with.
+                return
+
             compare = first_arg.ops[0][0]
             right = first_arg.ops[0][1]
             if isinstance(right, astroid.Const) and right.value is None:

@@ -56,3 +56,13 @@ class TestStringMethods(unittest.TestCase):
         This uses the wrong assert, but has a pragma to quiet the message.
         """
         self.assertTrue("a" in "lala")      # pylint: disable=wrong-assert-type
+
+    def test_chained_comparisons(self):
+        """
+        These uses of assertTrue and assertFalse are fine, because we can't
+        pick apart the chained comparisons.
+        """
+        my_value = my_other_value = 10
+        self.assertTrue(0 < my_value < 1000)
+        self.assertFalse(0 < my_value < 5)
+        self.assertTrue(my_value == my_other_value == 10)
