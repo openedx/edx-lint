@@ -1,6 +1,7 @@
 """Pylint plugin: test classes derived from test classes."""
 
 import astroid
+from astroid.scoped_nodes import get_locals     # not sure this is the right import
 
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
@@ -41,7 +42,7 @@ class LayeredTestClassChecker(BaseChecker):
         if not node.is_subtype_of('unittest.case.TestCase'):
             return False
 
-        dunder_test = node.locals.get("__test__")
+        dunder_test = get_locals(node).get("__test__")
         if dunder_test:
             if isinstance(dunder_test[0], astroid.AssName):
                 value = list(dunder_test[0].assigned_stmts())

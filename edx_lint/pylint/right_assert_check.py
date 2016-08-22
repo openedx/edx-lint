@@ -76,7 +76,7 @@ class AssertChecker(BaseChecker):
         """
         Check that various assertTrue/False functions are not misused.
         """
-        if not isinstance(node.func, astroid.Getattr):
+        if not isinstance(node.func, astroid.Attribute):
             # If it isn't a getattr ignore this. All the assertMethods are
             # attributes of self:
             return
