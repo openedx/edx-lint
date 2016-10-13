@@ -14,6 +14,26 @@ def register_checkers(linter):
     linter.register_checker(LayeredTestClassChecker(linter))
 
 
+def is_test_case_class(node):
+    """Is this node a test class?
+
+    To be a test class, it has to derive from unittest.TestCase, and not
+    have __test__ defined as False.
+
+    """
+    if not node.is_subtype_of('unittest.case.TestCase'):
+        return False
+
+    dunder_test = get_locals(node).get("__test__")
+    if dunder_test:
+        if isinstance(dunder_test[0], astroid.AssName):
+            value = list(dunder_test[0].assigned_stmts())
+            if len(value) == 1 and isinstance(value[0], astroid.Const):
+                return bool(value[0].value)
+
+    return True
+
+
 class LayeredTestClassChecker(BaseChecker):
     """Pylint checker for tests inheriting test methods from other tests."""
 
@@ -32,32 +52,13 @@ class LayeredTestClassChecker(BaseChecker):
     }
 
     @utils.check_messages(MESSAGE_ID)
-    def is_test_case_class(self, node):
-        """Is this node a test class?
-
-        To be a test class, it has to derive from unittest.TestCase, and not
-        have __test__ defined as False.
-
-        """
-        if not node.is_subtype_of('unittest.case.TestCase'):
-            return False
-
-        dunder_test = get_locals(node).get("__test__")
-        if dunder_test:
-            if isinstance(dunder_test[0], astroid.AssName):
-                value = list(dunder_test[0].assigned_stmts())
-                if len(value) == 1 and isinstance(value[0], astroid.Const):
-                    return value[0].value
-
-        return True
-
     def visit_class(self, node):
         """Check each class."""
-        if not self.is_test_case_class(node):
+        if not is_test_case_class(node):
             return
 
         for anc in node.ancestors():
-            if not self.is_test_case_class(anc):
+            if not is_test_case_class(anc):
                 continue
             for meth in anc.mymethods():
                 if meth.name.startswith("test_"):

@@ -63,3 +63,13 @@ class EmptyTestCase(unittest.TestCase):
 class ActualTestCase(EmptyTestCase):
     def test_something(self):
         pass
+
+# Bizzaro __test__ examples to complete branch coverage.
+
+class WhatIsThis(unittest.TestCase):
+    def __test__(self):
+        return self.fail("I don't know what I'm doing.")
+
+
+class TooTrickyForTheirOwnGood(unittest.TestCase):
+    __test__ = 1 - 1
