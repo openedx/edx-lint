@@ -2,9 +2,6 @@
 
 import collections
 
-import astroid
-from astroid.scoped_nodes import get_locals     # not sure this is the right import
-
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
@@ -47,6 +44,7 @@ class RequiredBaseClassChecker(BaseChecker):
         self.class_map = collections.defaultdict(set)
 
     def open(self):
+        # pylint: disable=no-member
         if self.config.required_base_class:
             for pair in self.config.required_base_class:
                 child, parent = pair.split(":")
@@ -55,5 +53,22 @@ class RequiredBaseClassChecker(BaseChecker):
     @utils.check_messages(MESSAGE_ID)
     def visit_class(self, node):
         """Check each class."""
-        if self.class_map:
-            self.add_message(self.MESSAGE_ID, args=("Foo", self.class_map['Foo']), node=node)
+        if not self.class_map:
+            return
+
+        all_bases = [usable_class_name(c) for c in node.mro()]
+        for base in all_bases:
+            required = self.class_map.get(base)
+            if required is not None:
+                if not all(r in all_bases for r in required):
+                    nice_required = ", ".join(sorted(required))
+                    self.add_message(self.MESSAGE_ID, args=(node.name, nice_required), node=node)
+
+
+def usable_class_name(node):
+    """Make a reasonable class name for a class node."""
+    name = node.qname()
+    for prefix in ["__builtin__.", "builtins."]:
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+    return name
