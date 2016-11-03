@@ -56,7 +56,12 @@ class RequiredBaseClassChecker(BaseChecker):
         if not self.class_map:
             return
 
-        all_bases = [usable_class_name(c) for c in node.mro()]
+        try:
+            all_bases = [usable_class_name(c) for c in node.mro()]
+        except NotImplementedError:
+            # Old-style 2.x classes have no mro.
+            all_bases = []
+
         for base in all_bases:
             required = self.class_map.get(base)
             if required is not None:

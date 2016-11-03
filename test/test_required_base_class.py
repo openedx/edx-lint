@@ -67,3 +67,14 @@ class RequiredBaseClassTestCase(CheckerTestCase):
         ''')
         with self.assertNoMessages():
             self.checker.visit_class(node)
+
+    @set_config(required_base_class=["unittest.case.TestCase:.MyTestMixin"])
+    def test_old_style_classes(self):
+        # We don't support base class checking on old-style classes, but we
+        # have to be sure not to fall over at least.
+        node = self.get_class_node('''
+            class MyClass:
+                pass
+        ''')
+        with self.assertNoMessages():
+            self.checker.visit_class(node)
