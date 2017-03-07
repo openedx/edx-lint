@@ -87,7 +87,6 @@ class UnitTestSetupSuperChecker(BaseChecker):
                 # base = super()
                 # base.__init__(...)
 
-                # pylint: disable=protected-access
                 if (isinstance(klass, astroid.Instance) and
                         isinstance(klass._proxied, astroid.Class) and
                         utils.is_builtin_object(klass._proxied) and

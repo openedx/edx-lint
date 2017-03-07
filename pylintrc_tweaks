@@ -1,3 +1,4 @@
 # Local tweaks to pylintrc for edx_lint's own code.
 [MASTER]
 ignore+ = ,input
+load-plugins = edx_lint.pylint
