@@ -29,6 +29,26 @@ The file written contains a hash of its contents, to detect subsequent editing.
 is detected, the edited file will be moved aside so it can be compared to the
 newly written file.
 
+Using lint-amnesty
+------------------
+
+The ``lint-amnesty`` command can be used to squash all existing pylint errors
+in a codebase, so that from then the repository can maintain pylint-cleanliness.
+Install the package using ``pip``::
+
+    $ pip install edx-lint
+
+The ``lint-amnesty`` command expects pylint errors in the ``--output-format=parseable``
+format::
+
+    $ pylint my.python.package --output-format=parseable | lint-amnesty
+
+This will add comments for every existing pylint violation that look like::
+
+    # pylint: disable=some-error  # lint-amnesty
+
+It will also remove any existing suppressions that pylint flags as being ``useless-suppressions``.
+
 Customizing edx_lint
 --------------------
 You can customize the resulting pylintrc file by creating a pylintrc_tweaks file in the

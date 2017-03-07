@@ -47,6 +47,7 @@ setup(
     entry_points={
         'console_scripts': [
             'edx_lint = edx_lint.cmd.main:main',
+            'lint-amnesty = edx_lint.cmd.amnesty:pylint_amnesty',
         ],
     },
 
@@ -55,5 +56,7 @@ setup(
         'pylint-django>=0.7.2,<1.0.0',
         'pylint-celery==0.3',
         'six>=1.10.0,<2.0.0',
+        'click>=6.0',
+        'click-log==0.1.8',
     ],
 )

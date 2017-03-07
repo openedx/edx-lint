@@ -260,16 +260,11 @@ disable=
     bad-continuation,
     invalid-name,
     misplaced-comparison-constant,
-    too-many-lines,
     file-ignored,
     bad-indentation,
     lowercase-l-suffix,
     unused-wildcard-import,
     global-statement
-
-    # This is specific to python3 compatibility
-    long-suffix,
-    reload-builtin,
 
     # These are disabled by pylint by default
     apply-builtin,
