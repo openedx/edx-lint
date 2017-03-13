@@ -1,0 +1,18 @@
+# This is a file to standardize editor settings: http://EditorConfig.org
+
+# Unix-style newlines with a newline ending every file
+# Set default charset
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+# Tab indentation (no size specified)
+[{Makefile, *.mk}]
+indent_style = tab
+
+# Matches the exact files either package.json or .travis.yml
+[{*.yml, *.yaml, *.json}]
+indent_size = 2
