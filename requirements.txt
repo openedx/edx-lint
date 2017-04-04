@@ -1,0 +1,7 @@
+git+https://github.com/cpennington/astroid.git@edx#egg=astroid
+git+https://github.com/PyCQA/pylint.git@master#egg=pylint
+pylint-django>=0.7.2,<1.0.0
+pylint-celery==0.3
+six>=1.10.0,<2.0.0
+click>=6.0
+click-log==0.1.8
