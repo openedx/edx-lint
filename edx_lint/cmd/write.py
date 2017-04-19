@@ -106,7 +106,7 @@ def write_main(argv):
     # pkg_resources always reads binary data (in both python2 and python3).
     # ConfigParser.read_string only exists in python3, so we have to wrap the string
     # from pkg_resources in a cStringIO so that we can pass it into ConfigParser.readfp.
-    cfg.readfp(cStringIO(resource_string), resource_name)  # pylint: disable=deprecated-method
+    cfg.readfp(cStringIO(resource_string), resource_name)
 
     if os.path.exists(tweaks_name):
         print("Applying local tweaks from %s" % tweaks_name)

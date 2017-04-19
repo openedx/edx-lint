@@ -4,7 +4,7 @@ from __future__ import print_function
 import pkg_resources
 
 
-def list_main(argv_unused):
+def list_main(argv_unused):  # pylint: disable=unused-argument
     """
     list
         List the FILENAMEs that edx_lint can provide.

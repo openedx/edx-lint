@@ -273,7 +273,8 @@ disable =
 	bad-indentation,
 	lowercase-l-suffix,
 	unused-wildcard-import,
-	global-statement
+	global-statement,
+	no-else-return,
 	
 	apply-builtin,
 	backtick,
@@ -439,4 +440,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 6eb8ad6e6d8cfc8d0aaa08b832cbd7b957662448
+# aebe69bb7440000dc1b4b9c5b162438a75e22d9d
