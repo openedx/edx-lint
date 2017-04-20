@@ -1,5 +1,5 @@
-git+https://github.com/cpennington/astroid.git@edx#egg=astroid
-git+https://github.com/PyCQA/pylint.git@master#egg=pylint
+pylint==1.7.1
+astroid==1.5.2
 pylint-django>=0.7.2,<1.0.0
 pylint-celery==0.3
 six>=1.10.0,<2.0.0

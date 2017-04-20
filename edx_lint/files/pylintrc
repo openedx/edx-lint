@@ -264,7 +264,8 @@ disable=
     bad-indentation,
     lowercase-l-suffix,
     unused-wildcard-import,
-    global-statement
+    global-statement,
+    no-else-return,
 
     # These are disabled by pylint by default
     apply-builtin,
