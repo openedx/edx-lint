@@ -5,7 +5,7 @@ import astroid
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
-from .common import BASE_ID
+from .common import BASE_ID, check_visitors
 
 
 def register_checkers(linter):
@@ -13,6 +13,7 @@ def register_checkers(linter):
     linter.register_checker(RangeChecker(linter))
 
 
+@check_visitors
 class RangeChecker(BaseChecker):
     """
     Checks for range() and xrange() used with unneeded arguments.
@@ -46,7 +47,7 @@ class RangeChecker(BaseChecker):
     }
 
     @utils.check_messages(MESSAGE_ID)
-    def visit_callfunc(self, node):
+    def visit_call(self, node):
         """Called for every function call in the source code."""
         if not isinstance(node.func, astroid.Name):
             # It isn't a simple name, can't deduce what function it is.

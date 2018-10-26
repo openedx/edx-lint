@@ -14,7 +14,7 @@ import os
 from pylint.checkers import BaseChecker
 from pylint.interfaces import IAstroidChecker
 
-from .common import BASE_ID
+from .common import BASE_ID, check_visitors
 
 
 FILENAME = os.environ.get("PYLINT_RECORD_FILES", "")
@@ -26,6 +26,7 @@ def register_checkers(linter):
         linter.register_checker(ModuleTracingChecker(linter))
 
 
+@check_visitors
 class ModuleTracingChecker(BaseChecker):
     """
     Not really a checker, it doesn't generate any messages.  There's probably

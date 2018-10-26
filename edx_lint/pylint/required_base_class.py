@@ -5,7 +5,7 @@ import collections
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
-from .common import BASE_ID
+from .common import BASE_ID, check_visitors
 
 
 def register_checkers(linter):
@@ -13,6 +13,7 @@ def register_checkers(linter):
     linter.register_checker(RequiredBaseClassChecker(linter))
 
 
+@check_visitors
 class RequiredBaseClassChecker(BaseChecker):
     """Pylint checker for required base classes."""
 
@@ -51,7 +52,7 @@ class RequiredBaseClassChecker(BaseChecker):
                 self.class_map[child].add(parent)
 
     @utils.check_messages(MESSAGE_ID)
-    def visit_class(self, node):
+    def visit_classdef(self, node):
         """Check each class."""
         if not self.class_map:
             return

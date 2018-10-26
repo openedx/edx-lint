@@ -7,7 +7,7 @@ from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.classes import _ancestors_to_call
 
-from .common import BASE_ID
+from .common import BASE_ID, check_visitors
 
 
 def register_checkers(linter):
@@ -15,6 +15,7 @@ def register_checkers(linter):
     linter.register_checker(UnitTestSetupSuperChecker(linter))
 
 
+@check_visitors
 class UnitTestSetupSuperChecker(BaseChecker):
     """
     Checks that unittest methods have used super() properly.
@@ -49,7 +50,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
     }
 
     @utils.check_messages(NOT_CALLED_MESSAGE_ID, NON_PARENT_MESSAGE_ID)
-    def visit_function(self, node):
+    def visit_functiondef(self, node):
         """Called for every function definition in the source code."""
         # ignore actual functions
         if not node.is_method():
