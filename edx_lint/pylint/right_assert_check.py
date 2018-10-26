@@ -8,7 +8,7 @@ import astroid
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers import BaseChecker, utils
 
-from .common import BASE_ID
+from .common import BASE_ID, check_visitors
 
 
 def register_checkers(linter):
@@ -16,6 +16,7 @@ def register_checkers(linter):
     linter.register_checker(AssertChecker(linter))
 
 
+@check_visitors
 class AssertChecker(BaseChecker):
     """
     Implements a few pylint checks on unitests asserts - making sure the right
@@ -72,7 +73,7 @@ class AssertChecker(BaseChecker):
     }
 
     @utils.check_messages(MESSAGE_ID)
-    def visit_callfunc(self, node):
+    def visit_call(self, node):
         """
         Check that various assertTrue/False functions are not misused.
         """

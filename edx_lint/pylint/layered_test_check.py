@@ -5,7 +5,7 @@ import astroid
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
-from .common import BASE_ID
+from .common import BASE_ID, check_visitors
 
 
 def register_checkers(linter):
@@ -33,6 +33,7 @@ def is_test_case_class(node):
     return True
 
 
+@check_visitors
 class LayeredTestClassChecker(BaseChecker):
     """Pylint checker for tests inheriting test methods from other tests."""
 
@@ -51,7 +52,7 @@ class LayeredTestClassChecker(BaseChecker):
     }
 
     @utils.check_messages(MESSAGE_ID)
-    def visit_class(self, node):
+    def visit_classdef(self, node):
         """Check each class."""
         if not is_test_case_class(node):
             return
