@@ -6,7 +6,7 @@ from pylint.testutils import CheckerTestCase, Message, set_config
 from edx_lint.pylint.required_base_class import RequiredBaseClassChecker
 
 
-class RequiredBaseClassTestCase(CheckerTestCase):
+class TestRequiredBaseClass(CheckerTestCase):
     """Unittest tests of RequiredBaseClassChecker."""
 
     CHECKER_CLASS = RequiredBaseClassChecker
