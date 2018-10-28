@@ -5,7 +5,7 @@ from pylint.testutils import CheckerTestCase, Message
 import pytest
 
 from edx_lint.pylint.range_check import RangeChecker
-from .utils import get_module
+from ..utils import get_module
 
 
 class TestRangeCheckerTest(CheckerTestCase):
