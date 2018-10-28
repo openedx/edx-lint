@@ -67,9 +67,6 @@ class TranslationStringConstantsChecker(BaseChecker):
             # Not a function we care about.
             return
 
-        if not self.linter.is_message_enabled(self.MESSAGE_ID, line=node.fromlineno):
-            return
-
         first = node.args[0]
         if isinstance(first, astroid.Const):
             if isinstance(first.value, six.string_types):
