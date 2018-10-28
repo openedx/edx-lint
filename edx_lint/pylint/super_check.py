@@ -64,15 +64,15 @@ class UnitTestSetupSuperChecker(BaseChecker):
         to_call = _ancestors_to_call(klass_node, method_name)
 
         not_called_yet = dict(to_call)
-        for stmt in node.nodes_of_class(astroid.CallFunc):
+        for stmt in node.nodes_of_class(astroid.Call):
             expr = stmt.func
-            if not isinstance(expr, astroid.Getattr):
+            if not isinstance(expr, astroid.Attribute):
                 continue
             if expr.attrname != method_name:
                 continue
 
             # Skip the test if using super
-            if (isinstance(expr.expr, astroid.CallFunc) and
+            if (isinstance(expr.expr, astroid.Call) and
                     isinstance(expr.expr.func, astroid.Name) and
                     expr.expr.func.name == 'super'):
                 return
@@ -90,9 +90,11 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
                 # pylint: disable=protected-access
                 if (isinstance(klass, astroid.Instance) and
-                        isinstance(klass._proxied, astroid.Class) and
+                        isinstance(klass._proxied, astroid.ClassDef) and
                         utils.is_builtin_object(klass._proxied) and
                         klass._proxied.name == 'super'):
+                    return
+                if isinstance(klass, astroid.objects.Super):
                     return
                 try:
                     del not_called_yet[klass]

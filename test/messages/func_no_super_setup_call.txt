@@ -1,3 +1,0 @@
-E:  8:BadTestCase.setUp: super(...).setUp() not called (TestCase)
-E: 11:BadTestCase.tearDown: super(...).tearDown() not called (TestCase)
-E: 20:AllowedToBeHalfBadTestCase.tearDown: super(...).tearDown() not called (TestCase)
