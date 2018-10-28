@@ -5,7 +5,7 @@ import collections
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
-from .common import BASE_ID, check_visitors
+from .common import BASE_ID, check_visitors, usable_class_name
 
 
 def register_checkers(linter):
@@ -69,12 +69,3 @@ class RequiredBaseClassChecker(BaseChecker):
                 if not all(r in all_bases for r in required):
                     nice_required = ", ".join(sorted(required))
                     self.add_message(self.MESSAGE_ID, args=(node.name, nice_required), node=node)
-
-
-def usable_class_name(node):
-    """Make a reasonable class name for a class node."""
-    name = node.qname()
-    for prefix in ["__builtin__.", "builtins."]:
-        if name.startswith(prefix):
-            name = name[len(prefix):]
-    return name

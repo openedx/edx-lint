@@ -20,3 +20,12 @@ def check_visitors(cls):
             if name[6:] not in CLASS_NAMES:
                 raise Exception("Method {} doesn't correspond to a node class".format(name))
     return cls
+
+
+def usable_class_name(node):
+    """Make a reasonable class name for a class node."""
+    name = node.qname()
+    for prefix in ["__builtin__.", "builtins.", "."]:
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+    return name
