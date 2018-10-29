@@ -61,9 +61,6 @@ class GetSetAttrLiteralChecker(BaseChecker):
             # Not a function we care about.
             return
 
-        if not self.linter.is_message_enabled(self.MESSAGE_ID, line=node.fromlineno):
-            return
-
         second = node.args[1]
         if isinstance(second, astroid.Const):
             if isinstance(second.value, six.string_types):

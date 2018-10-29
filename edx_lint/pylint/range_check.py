@@ -57,9 +57,6 @@ class RangeChecker(BaseChecker):
             # Not a function we care about.
             return
 
-        if not self.linter.is_message_enabled(self.MESSAGE_ID, line=node.fromlineno):
-            return
-
         first = node.args[0]
         if not isinstance(first, astroid.Const):
             # Computed first argument, can't tell what it is.

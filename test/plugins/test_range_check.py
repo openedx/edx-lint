@@ -5,10 +5,10 @@ from pylint.testutils import CheckerTestCase, Message
 import pytest
 
 from edx_lint.pylint.range_check import RangeChecker
-from .utils import get_module
+from ..utils import get_module
 
 
-class TestRangeCheckerTest(CheckerTestCase):
+class TestRangeChecker(CheckerTestCase):
     CHECKER_CLASS = RangeChecker
 
     @pytest.mark.parametrize("range_name", ["range", "xrange"])
