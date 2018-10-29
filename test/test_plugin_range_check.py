@@ -1,18 +1,17 @@
 """Test range_check.py"""
 
 import astroid
-import ddt
-from pylint.testutils import Message
+from pylint.testutils import CheckerTestCase, Message
+import pytest
 
 from edx_lint.pylint.range_check import RangeChecker
-from .utils import PluginUnittestTestCase, get_module
+from .utils import get_module
 
 
-@ddt.ddt
-class RangeCheckerTest(PluginUnittestTestCase):
+class TestRangeCheckerTest(CheckerTestCase):
     CHECKER_CLASS = RangeChecker
 
-    @ddt.data("range", "xrange")
+    @pytest.mark.parametrize("range_name", ["range", "xrange"])
     def test_range(self, range_name):
         bad_nodes = astroid.extract_node("""
             START, STOP, STEP = 0, 10, 1
