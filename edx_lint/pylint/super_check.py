@@ -7,7 +7,7 @@ from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 from pylint.checkers.classes import _ancestors_to_call
 
-from .common import BASE_ID, check_visitors
+from .common import BASE_ID, check_visitors, usable_class_name
 
 
 def register_checkers(linter):
@@ -34,7 +34,11 @@ class UnitTestSetupSuperChecker(BaseChecker):
     NOT_CALLED_MESSAGE_ID = 'super-method-not-called'
     NON_PARENT_MESSAGE_ID = 'non-parent-method-called'
 
-    METHOD_NAMES = ['setUp', 'tearDown', 'setUpClass', 'tearDownClass']
+    METHOD_NAMES = [
+        'setUp', 'tearDown',
+        'setUpClass', 'tearDownClass',
+        'setUpTestData',
+    ]
 
     msgs = {
         'E%d01' % BASE_ID: (
@@ -103,7 +107,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
                         self.add_message(
                             self.NON_PARENT_MESSAGE_ID,
                             node=expr,
-                            args=(method_name, klass.name),
+                            args=(method_name, usable_class_name(klass)),
                         )
             except astroid.InferenceError:
                 continue
@@ -113,6 +117,6 @@ class UnitTestSetupSuperChecker(BaseChecker):
                 continue
             self.add_message(
                 self.NOT_CALLED_MESSAGE_ID,
-                args=(method_name, klass.name),
+                args=(method_name, usable_class_name(klass)),
                 node=node,
             )

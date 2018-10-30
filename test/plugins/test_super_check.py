@@ -19,7 +19,7 @@ class TestUnitTestSetupSuperChecker(CheckerTestCase):
         "setUpClass",
         "tearDownClass",
     ])
-    def test_super_check(self, method):
+    def test_unittest_super_check(self, method):
         bad_node = astroid.extract_node("""
             import unittest
 
@@ -45,7 +45,32 @@ class TestUnitTestSetupSuperChecker(CheckerTestCase):
         expected = Message(
             msg_id='super-method-not-called',
             node=bad_node,
-            args=(method, 'TestCase'),
+            args=(method, 'unittest.case.TestCase'),
+        )
+        with self.assertAddsMessages(expected):
+            self.walk(module)
+
+    @pytest.mark.parametrize("method", [
+        "setUpTestData",
+    ])
+    def test_django_super_check(self, method):
+        bad_node = astroid.extract_node("""
+            import django
+
+            class GoodTestCase(django.test.TestCase):
+                def {method}(self):
+                    super(GoodTestCase, self).{method}()
+
+            class BadTestCase(django.test.TestCase):
+                def {method}(self):         #@
+                    self.i_am_bad = True
+        """.format(method=method))
+        module = get_module(bad_node)
+
+        expected = Message(
+            msg_id='super-method-not-called',
+            node=bad_node,
+            args=(method, 'django.test.testcases.TestCase'),
         )
         with self.assertAddsMessages(expected):
             self.walk(module)
