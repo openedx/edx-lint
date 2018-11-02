@@ -25,3 +25,13 @@ deploy:
   distributions: sdist bdist_wheel
   on:
     tags: true
+    python: "2.7"
+
+  provider: pypi
+  user: edx
+  password:
+    secure: xxKuWj3AGXUumPMLbjjq5x3sNLH0KfftQJX7nrE0OCKkN3m5/MM/WOMXR17/F6Yw60dEQ3LyQK0RoFmhDbUh1kmOyk/IGxCyKuLZC3jRZcprpv3DKutjo4PTJxNAtntCmAiJmNDoMoIE40pcut96Klew9y1LNruIo6uRJM0NRvA=
+  distributions: bdist_wheel
+  on:
+    tags: true
+    python: "3.5"
