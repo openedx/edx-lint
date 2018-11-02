@@ -3,9 +3,8 @@ language: python
 matrix:
  include:
   - python: "2.7"
-    env: DISTRIBUTIONS="sdist bdist_wheel"
+    env: DISTRIBUTIONS="sdist bdist_wheel --universal"
   - python: "3.5"
-    env: DISTRIBUTIONS="bdist_wheel"
   - python: "2.7"
     env: TOXARG="-e pylint"
 
