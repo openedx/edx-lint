@@ -1,10 +1,10 @@
 language: python
 
-python:
-  - 2.7
-  - 3.5
 matrix:
  include:
+  - python: "2.7"
+    env: DISTRIBUTIONS="sdist bdist_wheel --universal"
+  - python: "3.5"
   - python: "2.7"
     env: TOXARG="-e pylint"
 
@@ -22,6 +22,7 @@ deploy:
   user: edx
   password:
     secure: xxKuWj3AGXUumPMLbjjq5x3sNLH0KfftQJX7nrE0OCKkN3m5/MM/WOMXR17/F6Yw60dEQ3LyQK0RoFmhDbUh1kmOyk/IGxCyKuLZC3jRZcprpv3DKutjo4PTJxNAtntCmAiJmNDoMoIE40pcut96Klew9y1LNruIo6uRJM0NRvA=
-  distributions: sdist bdist_wheel
+  distributions: $DISTRIBUTIONS
   on:
     tags: true
+    condition: $DISTRIBUTIONS != ""
