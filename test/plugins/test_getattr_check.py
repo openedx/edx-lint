@@ -24,6 +24,9 @@ class TestGetSetAttrLiteralChecker(CheckerTestCase):
 
             # We don't get confused by another function nname
             foobar(name, "hello")
+
+            # Allow hyphenated strings to support our rest-api client which maps these to URLs
+            getattr(name, "foo-bar")
         """)
         module = get_module(bad_nodes[0])
 

@@ -27,6 +27,7 @@ class GetSetAttrLiteralChecker(BaseChecker):
 
     OK:
         x = getattr(obj, "attr_name", default_value)
+        x = getattr(obj, "foo-bar")
 
     The message id is literal-used-as-attribute.
 
@@ -63,8 +64,8 @@ class GetSetAttrLiteralChecker(BaseChecker):
 
         second = node.args[1]
         if isinstance(second, astroid.Const):
-            if isinstance(second.value, six.string_types):
-                # The second argument is a constant string! Bad!
+            if isinstance(second.value, six.string_types) and "-" not in second.value:
+                # The second argument is a non-hyphenated constant string! Bad!
                 self.add_message(self.MESSAGE_ID, args=node.func.name, node=node)
 
         # All is well.
