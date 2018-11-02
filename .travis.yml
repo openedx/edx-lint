@@ -25,7 +25,7 @@ deploy:
   distributions: sdist bdist_wheel
   on:
     tags: true
-    python: "2.7"
+    python: 2.7
 
   provider: pypi
   user: edx
@@ -34,4 +34,4 @@ deploy:
   distributions: bdist_wheel
   on:
     tags: true
-    python: "3.5"
+    python: 3.5
