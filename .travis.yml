@@ -15,6 +15,7 @@ install:
     - pip install tox-travis
 
 script:
+    - echo $TRAVIS_PYTHON_VERSION
     - tox $TOXARG
 
 deploy:
