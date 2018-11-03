@@ -8,6 +8,8 @@ from ..utils import get_module
 
 
 class TestLayeredTestClassChecker(CheckerTestCase):
+    """Test layered_test_check.py"""
+
     CHECKER_CLASS = LayeredTestClassChecker
 
     def test_layered_test_checker(self):
