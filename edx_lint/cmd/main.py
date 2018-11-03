@@ -15,6 +15,7 @@ def main(argv=None):
 
     if not argv or argv[0] == "help":
         show_help()
+        return 0
     elif argv[0] == "check":
         return check_main(argv[1:])
     elif argv[0] == "list":
@@ -24,6 +25,7 @@ def main(argv=None):
     else:
         print("Don't understand {!r}".format(" ".join(argv)))
         show_help()
+        return 1
 
 
 def show_help():
