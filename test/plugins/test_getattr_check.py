@@ -19,6 +19,17 @@ class TestGetSetAttrLiteralChecker(CheckerTestCase):
             delattr(name, "something")              #@
             delattr(name, "FOO".lower())
 
+            # You can use a literal if it's not a valid identifier
+            getattr(name, "hello-world")
+            getattr(name, "hello.world")
+            getattr(name, "")
+            getattr(name, " ")
+            getattr(name, "1x")
+
+            # More bad cases
+            getattr(name, "hello1")                 #@
+            getattr(name, "_")                      #@
+
             # Account for this case in our code...
             world = getattr(name, 1)
 
@@ -31,6 +42,8 @@ class TestGetSetAttrLiteralChecker(CheckerTestCase):
             Message(msg_id='literal-used-as-attribute', node=bad_nodes[0], args='getattr'),
             Message(msg_id='literal-used-as-attribute', node=bad_nodes[1], args='setattr'),
             Message(msg_id='literal-used-as-attribute', node=bad_nodes[2], args='delattr'),
+            Message(msg_id='literal-used-as-attribute', node=bad_nodes[3], args='getattr'),
+            Message(msg_id='literal-used-as-attribute', node=bad_nodes[4], args='getattr'),
         ]
         with self.assertAddsMessages(*expected):
             self.walk(module)

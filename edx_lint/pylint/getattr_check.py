@@ -1,5 +1,7 @@
 """Check that getattr and setattr aren't being used with literal attribute names."""
 
+import re
+
 import six
 
 import astroid
@@ -64,7 +66,10 @@ class GetSetAttrLiteralChecker(BaseChecker):
         second = node.args[1]
         if isinstance(second, astroid.Const):
             if isinstance(second.value, six.string_types):
-                # The second argument is a constant string! Bad!
-                self.add_message(self.MESSAGE_ID, args=node.func.name, node=node)
+                # The second argument is a constant string! Might be bad!
+                # Check the string value: if it's an identifier, then no need
+                # for getattr.
+                if re.search(r"^[a-zA-Z_][a-zA-Z0-9_]*$", second.value):
+                    self.add_message(self.MESSAGE_ID, args=node.func.name, node=node)
 
         # All is well.
