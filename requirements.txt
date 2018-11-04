@@ -1,4 +1,4 @@
-pylint==1.8.4
+pylint==1.9.3
 #pylint-django==0.8.0
 -e git+https://github.com/nedbat/pylint-django.git@nedbat/scopeconsumer#egg=pylint-django==0.0
 pylint-celery==0.3
