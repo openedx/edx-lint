@@ -1,6 +1,5 @@
-pylint==1.7.6
-astroid==1.5.3
-pylint-django==0.7.2
+pylint==1.8.4
+pylint-django==0.8.0
 pylint-celery==0.3
 six>=1.10.0,<2.0.0
 click>=6.0
