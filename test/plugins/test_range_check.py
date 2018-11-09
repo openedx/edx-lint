@@ -9,6 +9,8 @@ from ..utils import get_module
 
 
 class TestRangeChecker(CheckerTestCase):
+    """Test range_check.py"""
+
     CHECKER_CLASS = RangeChecker
 
     @pytest.mark.parametrize("range_name", ["range", "xrange"])

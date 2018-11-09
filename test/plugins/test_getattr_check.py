@@ -8,6 +8,8 @@ from ..utils import get_module
 
 
 class TestGetSetAttrLiteralChecker(CheckerTestCase):
+    """Test getattr_check.py"""
+
     CHECKER_CLASS = GetSetAttrLiteralChecker
 
     def test_getattr_checker(self):

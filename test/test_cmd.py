@@ -44,9 +44,9 @@ class WriteCommandTest(unittest.TestCase):
         if contains is not None or not_contains is not None:
             with open(filename) as f:
                 text = f.read()
-                if contains is not None:
+                if contains is not None:                    # pragma: no branch
                     self.assertIn(contains, text)
-                if not_contains is not None:
+                if not_contains is not None:                # pragma: no branch
                     self.assertNotIn(not_contains, text)
 
     def assert_not_file(self, filename):

@@ -8,6 +8,8 @@ from ..utils import get_module
 
 
 class TestTranslationStringConstantsChecker(CheckerTestCase):
+    """Test i18n_check.py"""
+
     CHECKER_CLASS = TranslationStringConstantsChecker
 
     def test_i18n_checker(self):
