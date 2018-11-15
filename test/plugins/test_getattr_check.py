@@ -16,8 +16,11 @@ class TestGetSetAttrLiteralChecker(CheckerTestCase):
         bad_nodes = astroid.extract_node("""
             getattr(name, "hello")                  #@
             getattr(name, "hello", 17)
+            getattr(name, "hello", None)
+
             setattr(name, "hello", hello)           #@
             setattr(name, "h" + "ello", world)
+
             delattr(name, "something")              #@
             delattr(name, "FOO".lower())
 
