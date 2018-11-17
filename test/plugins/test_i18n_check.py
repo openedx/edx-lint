@@ -1,33 +1,24 @@
 """Test i18n_check.py"""
 
-import astroid
-from pylint.testutils import CheckerTestCase, Message
-
-from edx_lint.pylint.i18n_check import TranslationStringConstantsChecker
-from ..utils import get_module
+from .pylint_test import run_pylint
 
 
-class TestTranslationStringConstantsChecker(CheckerTestCase):
-    """Test i18n_check.py"""
+def test_i18n_checker():
+    source = """\
+        _("This is fine")
+        _("Hello"+"There")          #=A
+        _(17)                       #=B
+        _("Hi, {0}".format(name))   #=C
+        gettext("hi, %s" % name)    #=D
+        foobar(12)
+    """
 
-    CHECKER_CLASS = TranslationStringConstantsChecker
-
-    def test_i18n_checker(self):
-        bad_nodes = astroid.extract_node("""
-            _("This is fine")
-            _("Hello"+"There")          #@
-            _(17)                       #@
-            _("Hi, {0}".format(name))   #@
-            gettext("hi, %s" % name)    #@
-            foobar(12)
-        """)
-        module = get_module(bad_nodes[0])
-
-        expected = [
-            Message(msg_id='translation-of-non-string', node=bad_nodes[0], args='_'),
-            Message(msg_id='translation-of-non-string', node=bad_nodes[1], args='_'),
-            Message(msg_id='translation-of-non-string', node=bad_nodes[2], args='_'),
-            Message(msg_id='translation-of-non-string', node=bad_nodes[3], args='gettext'),
-        ]
-        with self.assertAddsMessages(*expected):
-            self.walk(module)
+    msg_ids = "translation-of-non-string"
+    messages = run_pylint(source, msg_ids)
+    expected = {
+        "A:translation-of-non-string:i18n function _() must be called with a literal string",
+        "B:translation-of-non-string:i18n function _() must be called with a literal string",
+        "C:translation-of-non-string:i18n function _() must be called with a literal string",
+        "D:translation-of-non-string:i18n function gettext() must be called with a literal string",
+    }
+    assert expected == messages
