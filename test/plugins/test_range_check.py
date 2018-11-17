@@ -14,6 +14,7 @@ def test_range(range_name):
         range(0, STOP)      #=B
         range(0, 10, 1)     #=C
         range(0, STOP, 1)   #=D
+        range(10, 20, 1)    #=E
 
         # Good
         range(10)
@@ -30,6 +31,7 @@ def test_range(range_name):
         range(0, 10, 1, "something")
 
         # trickier cases
+        range("something", "or other")
         [range][0](0, 10)
         some_other_function(0, 10)
 
@@ -41,5 +43,6 @@ def test_range(range_name):
         'B:simplifiable-range:{}() call could be single-argument'.format(range_name),
         'C:simplifiable-range:{}() call could be single-argument'.format(range_name),
         'D:simplifiable-range:{}() call could be single-argument'.format(range_name),
+        'E:simplifiable-range:{}() call could be two-argument'.format(range_name),
     }
     assert expected == messages

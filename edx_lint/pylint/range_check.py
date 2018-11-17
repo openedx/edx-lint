@@ -40,9 +40,9 @@ class RangeChecker(BaseChecker):
     MESSAGE_ID = 'simplifiable-range'
     msgs = {
         'C%d20' % BASE_ID: (
-            "%s() call could be single-argument",
+            "%s() call could be %s-argument",
             MESSAGE_ID,
-            "range() call could be single-argument",
+            "range() call could be simplified",
         ),
     }
 
@@ -62,18 +62,26 @@ class RangeChecker(BaseChecker):
             # Computed first argument, can't tell what it is.
             return
 
-        if not (isinstance(first.value, int) and first.value == 0):
-            # First argument is not 0, that's fine.
+        if not isinstance(first.value, int):
+            # First argument is not an int, that's fine.
             return
 
-        # The first argument is 0, suspicious.
-        if len(node.args) == 2:
-            # range(0, n): bad.
-            self.add_message(self.MESSAGE_ID, args=node.func.name, node=node)
-        elif len(node.args) == 3:
-            # Bad if the third argument is 1.
+        # If there are three args and the third is 1, that's bad.
+        three1 = False
+        if len(node.args) == 3:
             third = node.args[2]
             if isinstance(third, astroid.Const):
                 if isinstance(third.value, int) and third.value == 1:
-                    # range(0, n, 1): bad.
-                    self.add_message(self.MESSAGE_ID, args=node.func.name, node=node)
+                    three1 = True
+
+        if first.value == 0:
+            # The first argument is 0, suspicious.
+            if len(node.args) == 2:
+                # range(0, n): bad.
+                self.add_message(self.MESSAGE_ID, args=(node.func.name, "single"), node=node)
+            elif three1:
+                # range(0, n, 1): bad.
+                self.add_message(self.MESSAGE_ID, args=(node.func.name, "single"), node=node)
+        elif three1:
+            # range(n, m, 1): bad.
+            self.add_message(self.MESSAGE_ID, args=(node.func.name, "two"), node=node)
