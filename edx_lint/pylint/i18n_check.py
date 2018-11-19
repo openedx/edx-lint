@@ -17,7 +17,7 @@ def register_checkers(linter):
 
 @check_visitors
 class TranslationStringConstantsChecker(BaseChecker):
-    """
+    u"""
     Checks for i18n translation functions (_, ugettext, ungettext, and many
     others) being called on something that isn't a string literal.
 
@@ -50,7 +50,7 @@ class TranslationStringConstantsChecker(BaseChecker):
     MESSAGE_ID = 'translation-of-non-string'
     msgs = {
         'E%d10' % BASE_ID: (
-            "i18n function %s() must be called with a literal string",
+            u"i18n function %s() must be called with a literal string",
             MESSAGE_ID,
             "i18n functions must be called with a literal string",
         ),

@@ -7,6 +7,8 @@ from .pylint_test import run_pylint
 
 MSG_IDS = "unicode-format-string"
 
+# pylint: disable=unicode-format-string
+
 def test_unicode_checker():
     source = """\
         "this is fine"

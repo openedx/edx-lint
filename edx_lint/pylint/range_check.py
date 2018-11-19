@@ -40,7 +40,7 @@ class RangeChecker(BaseChecker):
     MESSAGE_ID = 'simplifiable-range'
     msgs = {
         'C%d20' % BASE_ID: (
-            "%s() call could be %s-argument",
+            u"%s() call could be %s-argument",
             MESSAGE_ID,
             "range() call could be simplified",
         ),
