@@ -1,54 +1,51 @@
 """Test getattr_check.py"""
 
-import astroid
-from pylint.testutils import CheckerTestCase, Message
-
-from edx_lint.pylint.getattr_check import GetSetAttrLiteralChecker
-from ..utils import get_module
+from .pylint_test import run_pylint
 
 
-class TestGetSetAttrLiteralChecker(CheckerTestCase):
-    """Test getattr_check.py"""
+def test_getattr_checker():
+    source = """\
+        getattr(name, "hello")                  #=A
+        getattr(name, "hello", 17)
+        getattr(name, "hello", None)
 
-    CHECKER_CLASS = GetSetAttrLiteralChecker
+        setattr(name, "hello", hello)           #=B
+        setattr(name, "h" + "ello", world)
 
-    def test_getattr_checker(self):
-        bad_nodes = astroid.extract_node("""
-            getattr(name, "hello")                  #@
-            getattr(name, "hello", 17)
-            getattr(name, "hello", None)
+        delattr(name, "something")              #=C
+        delattr(name, "FOO".lower())
 
-            setattr(name, "hello", hello)           #@
-            setattr(name, "h" + "ello", world)
+        # You can use a literal if it's not a valid identifier
+        getattr(name, "hello-world")
+        getattr(name, "hello.world")
+        getattr(name, "")
+        getattr(name, " ")
+        getattr(name, "1x")
 
-            delattr(name, "something")              #@
-            delattr(name, "FOO".lower())
+        # The warnings can be disabled
+        getattr(name, "_")                      # pylint: disable=literal-used-as-attribute
+        if 1:
+            # pylint: disable=literal-used-as-attribute
+            getattr(name, "Hello")
+            setattr(name, "hello", "hello")
 
-            # You can use a literal if it's not a valid identifier
-            getattr(name, "hello-world")
-            getattr(name, "hello.world")
-            getattr(name, "")
-            getattr(name, " ")
-            getattr(name, "1x")
+        # More bad cases
+        getattr(name, "hello1")                 #=D
+        getattr(name, "_")                      #=E
 
-            # More bad cases
-            getattr(name, "hello1")                 #@
-            getattr(name, "_")                      #@
+        # Account for this case in our code...
+        world = getattr(name, 1)
 
-            # Account for this case in our code...
-            world = getattr(name, 1)
-
-            # We don't get confused by another function nname
-            foobar(name, "hello")
-        """)
-        module = get_module(bad_nodes[0])
-
-        expected = [
-            Message(msg_id='literal-used-as-attribute', node=bad_nodes[0], args='getattr'),
-            Message(msg_id='literal-used-as-attribute', node=bad_nodes[1], args='setattr'),
-            Message(msg_id='literal-used-as-attribute', node=bad_nodes[2], args='delattr'),
-            Message(msg_id='literal-used-as-attribute', node=bad_nodes[3], args='getattr'),
-            Message(msg_id='literal-used-as-attribute', node=bad_nodes[4], args='getattr'),
-        ]
-        with self.assertAddsMessages(*expected):
-            self.walk(module)
+        # We don't get confused by another function nname
+        foobar(name, "hello")
+    """
+    msg_ids = "literal-used-as-attribute"
+    messages = run_pylint(source, msg_ids)
+    expected = {
+        "A:literal-used-as-attribute:getattr using a literal attribute name",
+        "B:literal-used-as-attribute:setattr using a literal attribute name",
+        "C:literal-used-as-attribute:delattr using a literal attribute name",
+        "D:literal-used-as-attribute:getattr using a literal attribute name",
+        "E:literal-used-as-attribute:getattr using a literal attribute name",
+    }
+    assert expected == messages

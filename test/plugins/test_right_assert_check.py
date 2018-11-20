@@ -1,20 +1,12 @@
 """Test right_assert_check.py"""
 
-import astroid
-from pylint.testutils import CheckerTestCase, Message
 import pytest
 
-from edx_lint.pylint.right_assert_check import AssertChecker
-from ..utils import get_module
+from .pylint_test import run_pylint
 
 
-class TestAssertChecker(CheckerTestCase):
-    """Test right_assert_check.py"""
-
-    CHECKER_CLASS = AssertChecker
-
-    def test_good_asserts(self):
-        node = astroid.extract_node("""
+def test_good_asserts():
+    source = """\
         import unittest
 
         class TestStringMethods(unittest.TestCase):
@@ -43,41 +35,35 @@ class TestAssertChecker(CheckerTestCase):
             def test_other_functions(self):
                 foo(bar)
                 assertTrue("what is this?")
-        """)
-        module = get_module(node)
+        """
+    messages = run_pylint(source, "wrong-assert-type")
+    assert not messages
 
-        with self.assertNoMessages():
-            self.walk(module)
 
-    @pytest.mark.parametrize("code, better", [
-        ("assertTrue('foo'.upper() == 'FOO')", "assertEqual"),
-        ("assertFalse(500 == 501)", "assertNotEqual"),
-        ("assertTrue('a' in 'lala')", "assertIn"),
-        ("assertFalse('b' not in 'lala')", "assertIn"),
-        ("assertTrue(1 > 0)", "assertGreater"),
-        ("assertFalse(1 < 2)", "assertGreaterEqual"),
-        ("assertTrue(my_zero is 0)", "assertIs"),
-        ("assertFalse(my_zero is 1)", "assertIsNot"),
-        ("assertTrue(my_zero is not 1)", "assertIsNot"),
-        ("assertFalse(my_zero is not 0)", "assertIs"),
-        ("assertTrue(my_none is None)", "assertIsNone"),
-        ("assertFalse(my_zero is None)", "assertIsNotNone"),
-        ("assertTrue(my_zero != None)", "assertIsNotNone"),
-    ])
-    def test_wrong_usage(self, code, better):
-        node = astroid.extract_node("""
+@pytest.mark.parametrize("code, better", [
+    ("assertTrue('foo'.upper() == 'FOO')", "assertEqual"),
+    ("assertFalse(500 == 501)", "assertNotEqual"),
+    ("assertTrue('a' in 'lala')", "assertIn"),
+    ("assertFalse('b' not in 'lala')", "assertIn"),
+    ("assertTrue(1 > 0)", "assertGreater"),
+    ("assertFalse(1 < 2)", "assertGreaterEqual"),
+    ("assertTrue(my_zero is 0)", "assertIs"),
+    ("assertFalse(my_zero is 1)", "assertIsNot"),
+    ("assertTrue(my_zero is not 1)", "assertIsNot"),
+    ("assertFalse(my_zero is not 0)", "assertIs"),
+    ("assertTrue(my_none is None)", "assertIsNone"),
+    ("assertFalse(my_zero is None)", "assertIsNotNone"),
+    ("assertTrue(my_zero != None)", "assertIsNotNone"),
+])
+def test_wrong_usage(code, better):
+    source = """\
         import unittest
 
         class TestStringMethods(unittest.TestCase):
             def test_wrong_usage(self):
-                self.{}      #@
-        """.format(code))
-        module = get_module(node)
+                self.{}      #=A
+        """.format(code)
+    messages = run_pylint(source, "wrong-assert-type")
 
-        expected = Message(
-            msg_id='wrong-assert-type',
-            node=node,
-            args='{} should be {}'.format(code, better),
-        )
-        with self.assertAddsMessages(expected):
-            self.walk(module)
+    expected = {"A:wrong-assert-type:{} should be {}".format(code, better)}
+    assert expected == messages
