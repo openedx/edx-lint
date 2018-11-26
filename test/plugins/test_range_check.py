@@ -38,6 +38,8 @@ def test_range(range_name):
     """.replace("range", range_name)
     msg_ids = "simplifiable-range"
     messages = run_pylint(source, msg_ids)
+
+    # pylint: disable=unicode-format-string
     expected = {
         'A:simplifiable-range:{}() call could be single-argument'.format(range_name),
         'B:simplifiable-range:{}() call could be single-argument'.format(range_name),

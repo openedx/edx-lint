@@ -37,8 +37,8 @@ def parse_pylint_output(pylint_output):
         parsed = PYLINT_PARSEABLE_REGEX.search(line)
         if parsed is None:
             LOG.warning(
-                "Unable to parse %r. If this is a lint failure, please re-run pylint with the "
-                "--output-format=parseable option, otherwise, you can ignore this message.",
+                u"Unable to parse %r. If this is a lint failure, please re-run pylint with the "
+                u"--output-format=parseable option, otherwise, you can ignore this message.",
                 line
             )
             continue
@@ -54,7 +54,7 @@ def format_pylint_disables(error_names, tag=True):
     """
     tag_str = "lint-amnesty, " if tag else ""
     if error_names:
-        return "  # {tag}pylint: disable={disabled}".format(
+        return u"  # {tag}pylint: disable={disabled}".format(
             disabled=", ".join(sorted(error_names)),
             tag=tag_str,
         )
@@ -114,7 +114,7 @@ def pylint_amnesty(pylint_output):
         try:
             opened_file = open(file_with_errors)
         except IOError:
-            LOG.warning("Unable to open %s for edits", file_with_errors, exc_info=True)
+            LOG.warning(u"Unable to open %s for edits", file_with_errors, exc_info=True)
         else:
             with opened_file as input_file:
                 output_lines = []

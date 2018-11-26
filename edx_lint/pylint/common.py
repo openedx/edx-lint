@@ -18,7 +18,7 @@ def check_visitors(cls):
     for name in dir(cls):
         if name.startswith("visit_"):
             if name[6:] not in CLASS_NAMES:
-                raise Exception("Method {} doesn't correspond to a node class".format(name))
+                raise Exception(u"Method {} doesn't correspond to a node class".format(name))
     return cls
 
 

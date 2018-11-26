@@ -4,6 +4,7 @@ from .pylint_test import run_pylint
 
 
 def test_i18n_checker():
+    # pylint: disable=unicode-format-string
     source = """\
         _("This is fine")
         _("Hello"+"There")          #=A
