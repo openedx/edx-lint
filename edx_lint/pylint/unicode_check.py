@@ -58,7 +58,20 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
             # If the whole module is __future__'d, then it's all fine.
             return
 
-        for tok_type, tok_text, start, _, _ in tokens:
+        previous_line_has_definition = False
+        current_line_has_definition = False
+        first_non_comment_line = None
+        for index, (tok_type, tok_text, start, _, _) in enumerate(tokens):
+            if first_non_comment_line is None and tok_type != 53: # 53 is token.COMMENT
+                first_non_comment_line = index
+
+            # Keep track of whether previous line contained a function or class definition
+            if tok_type == token.NEWLINE or tok_type == 54:  # 54 is token.NL
+                previous_line_has_definition = current_line_has_definition
+                current_line_has_definition = False
+            elif tok_text in ['def', 'class']:
+                current_line_has_definition = True
+
             if tok_type == token.STRING:
                 if tok_text.lower().startswith(("u", "b", "ur", "br")):
                     # An explicit prefix is fine.
@@ -73,6 +86,14 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
 
                 if not re.search(r"[%{]", value):
                     # There's no formatting character, leave it alone.
+                    continue
+
+                if previous_line_has_definition:
+                    # Previous line probably contains a function or class definition
+                    # so this string is probably a docstring
+                    continue
+                if first_non_comment_line and index == first_non_comment_line:
+                    # If this string is the first line of the file (excluding comments) it is a docstring
                     continue
 
                 try:

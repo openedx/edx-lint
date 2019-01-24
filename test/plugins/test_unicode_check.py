@@ -11,14 +11,20 @@ MSG_IDS = "unicode-format-string"
 
 def test_unicode_checker():
     source = """\
-        "this is fine"
-        "this is not {}".format("fine")         #=A
-        "This is not %s" % ("fine",)            #=B
-        '{"json": "is fine"}'
-        u"Unicode strings are {}".format("fine")
-        b"byte strings are %s." % ("fine,")
-        "onewordis{}".format("fine")
-        """
+    class Test():
+        "docstring this is {fine}"
+
+        def test():
+            "docstring this is {fine}"
+            pass
+    "this is fine"
+    "this is not {}".format("fine")         #=A
+    "This is not %s" % ("fine",)            #=B
+    '{"json": "is fine"}'
+    u"Unicode strings are {}".format("fine")
+    b"byte strings are %s." % ("fine,")
+    "onewordis{}".format("fine")
+    """
     messages = run_pylint(source, MSG_IDS)
 
     # This checker only makes messages on Python 2.
