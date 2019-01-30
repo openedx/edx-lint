@@ -24,6 +24,7 @@ def test_unicode_checker():
     u"Unicode strings are {}".format("fine")
     b"byte strings are %s." % ("fine,")
     "onewordis{}".format("fine")
+    "pragma makes this {}".format("fine")   # pylint: disable=unicode-format-string
     """
     messages = run_pylint(source, MSG_IDS)
 
