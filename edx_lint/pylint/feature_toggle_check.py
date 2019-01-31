@@ -175,6 +175,17 @@ class FeatureToggleChecker(BaseChecker):
     def visit_call(self, node):
         """
         Performs various checks on Call nodes.
+
         """
+        # TODO: THIS WAS A HACK TO GET THIS TO WORK ON:
+        # - /edx/app/edxapp/edx-platform/openedx/features/course_experience/__init__.py
+        # - without this have, we saw...
+        #    Stack Trace
+        #       ...
+        #       starts_with_capital = self._CHECK_CAPITAL_REGEX.match(node.func.name)
+        #    AttributeError: 'Attribute' object has no attribute 'name'
+        if not hasattr(node.func, 'name'):
+            return
+
         self.check_waffle_class_annotated(node)
         self.check_illegal_waffle_usage(node)
