@@ -20,12 +20,6 @@ def register_checkers(linter):
 
 @check_visitors
 class UnicodeFormatStringChecker(BaseTokenChecker):
-    """
-    XXXXXX
-
-    The message id is xxxxxxx.
-
-    """
     # ITokenChecker gets us process_tokens support.
     # IRawChecker gets us process_module support.
     __implements__ = (ITokenChecker, IRawChecker)
