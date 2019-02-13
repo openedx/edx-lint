@@ -18,3 +18,6 @@ build/
 dist/
 
 .eggs/
+
+#pyenv
+.python-version
