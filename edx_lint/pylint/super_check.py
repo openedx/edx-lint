@@ -83,7 +83,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
             try:
                 klass = next(expr.expr.infer())
-                if klass is astroid.YES:
+                if klass is astroid.Uninferable:
                     continue
 
                 # The infered klass can be super(), which was
