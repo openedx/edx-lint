@@ -92,7 +92,7 @@ def fix_pylint(line, errors):
     if current:
         yield PYLINT_EXCEPTION_REGEX.sub(disable_string, line)
     else:
-        yield re.sub(r'($\s*)', disable_string + r'\1', line)
+        yield re.sub(r'($\s*)', disable_string + r'\1', line, count=1)
 
 
 @click.command()
@@ -101,7 +101,6 @@ def fix_pylint(line, errors):
     help="An input file containing pylint --output-format=parseable errors. Defaults to stdin."
 )
 @click_log.simple_verbosity_option(default=u'INFO')
-@click_log.init()
 def pylint_amnesty(pylint_output):
     """
     Add ``# pylint: disable`` clauses to add exceptions to all existing pylint errors in a codebase.
