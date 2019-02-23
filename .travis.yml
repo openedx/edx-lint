@@ -9,6 +9,8 @@ matrix:
     dist: xenial  # required for Python >= 3.7 (travis-ci/travis-ci#9069)
   - python: "2.7"
     env: TOXARG="-e pylint"
+ allow_failures:
+  - python: "3.7"
 
 install:
     - pip install --upgrade pip setuptools
