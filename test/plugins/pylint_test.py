@@ -2,6 +2,7 @@
 
 import re
 import textwrap
+import warnings
 
 from pylint.__pkginfo__ import numversion as pylint_numversion
 from pylint.lint import Run
@@ -94,7 +95,10 @@ def test_that_we_can_test_pylint():
         # TODO is checked by an IRawChecker. #=C
         """
     msg_ids = "unused-import,redefined-builtin,anomalous-backslash-in-string,fixme"
-    messages = run_pylint(source, msg_ids)
+    with warnings.catch_warnings():
+        # We want pylint to find the bad \c escape, but we don't want Python to warn about it.
+        warnings.filterwarnings(action="ignore", category=DeprecationWarning, message="invalid escape")
+        messages = run_pylint(source, msg_ids)
     expected = {
         "A:unused-import:Unused import colorsys",
         "B:redefined-builtin:Redefining built-in 'int'",
