@@ -26,6 +26,7 @@ def test_ignore_long_lines():
         '''
         # <https://www.test.com/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world>
         # https://www.test.com/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world/hello/world
+        # .. toggle_description: this is a good toggle, it goes back and forth, toggling a lot, which is what we expect toggles to do.
     """
     msg_ids = "line-too-long"
     messages = run_pylint(source, msg_ids)
