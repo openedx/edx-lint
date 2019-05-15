@@ -43,17 +43,23 @@ WARNING_HEADER = u"""\
 # 1. Edit the {filename} file in the edx-lint repo at
 #    https://github.com/edx/edx-lint/blob/master/edx_lint/files/{filename}
 #
-# 2. Make a new version of edx_lint, which involves the usual steps of
-#    incrementing the version number, submitting and reviewing a pull
-#    request, and updating the edx-lint version reference in this repo.
+# 2. Run (in edx-lint repo):
 #
-# 3. Install the newer version of edx-lint.
+#       # uses {tweaks_name} from edx-lint for linting in edx-lint
+#       $ edx_lint write {filename}
+
+# 3. Make a new version of edx_lint, submit and review a pull request with the
+#    {filename} update, and after merging, update the edx-lint version by
+#    creating a new tag in the repo (uses pbr).
 #
-# 4. Run:
+# 4. In your local repo, install the newer version of edx-lint.
 #
+# 5. Run:
+#
+#       # uses local {tweaks_name}
 #       $ edx_lint write {filename}
 #
-# 5. This will modify the local file.  Submit a pull request to get it
+# 6. This will modify the local file.  Submit a pull request to get it
 #    checked in so that others will benefit.
 #
 #

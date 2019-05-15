@@ -20,6 +20,7 @@ os.environ['SKIP_GENERATE_AUTHORS'] = '1'
 os.environ['SKIP_WRITE_GIT_CHANGELOG'] = '1'
 
 setup(
+    # to update the version (uses pbr), create a new version tag in the repo
     setup_requires=['pbr>=1.9', 'setuptools>=17.1'],
     pbr=True,
 )

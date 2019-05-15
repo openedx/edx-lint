@@ -226,7 +226,6 @@ enable=
 
     # Consistent import order makes finding where code is
     # imported from easier
-    ungrouped-imports,
     wrong-import-order,
     wrong-import-position,
     wildcard-import,
