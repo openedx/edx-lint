@@ -26,17 +26,23 @@
 # 1. Edit the pylintrc file in the edx-lint repo at
 #    https://github.com/edx/edx-lint/blob/master/edx_lint/files/pylintrc
 #
-# 2. Make a new version of edx_lint, which involves the usual steps of
-#    incrementing the version number, submitting and reviewing a pull
-#    request, and updating the edx-lint version reference in this repo.
+# 2. Run (in edx-lint repo):
 #
-# 3. Install the newer version of edx-lint.
+#       # uses pylintrc_tweaks from edx-lint for linting in edx-lint
+#       $ edx_lint write pylintrc
+
+# 3. Make a new version of edx_lint, submit and review a pull request with the
+#    pylintrc update, and after merging, update the edx-lint version by
+#    creating a new tag in the repo (uses pbr).
 #
-# 4. Run:
+# 4. In your local repo, install the newer version of edx-lint.
 #
+# 5. Run:
+#
+#       # uses local pylintrc_tweaks
 #       $ edx_lint write pylintrc
 #
-# 5. This will modify the local file.  Submit a pull request to get it
+# 6. This will modify the local file.  Submit a pull request to get it
 #    checked in so that others will benefit.
 #
 #
@@ -248,7 +254,6 @@ enable =
 	too-many-statements,
 	too-many-boolean-expressions,
 	
-	ungrouped-imports,
 	wrong-import-order,
 	wrong-import-position,
 	wildcard-import,
@@ -367,7 +372,7 @@ docstring-min-length = 5
 
 [FORMAT]
 max-line-length = 120
-ignore-long-lines = ^\s*(# )?<?https?://\S+>?$
+ignore-long-lines = ^\s*(# )?((<?https?://\S+>?)|(\.\. \w+: .*))$
 single-line-if-stmt = no
 no-space-check = trailing-comma,dict-separator
 max-module-lines = 1000
@@ -440,4 +445,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# aebe69bb7440000dc1b4b9c5b162438a75e22d9d
+# 7edd7f25600478750157d7b451c8c303ad1294db
