@@ -43,23 +43,28 @@ WARNING_HEADER = u"""\
 # 1. Edit the {filename} file in the edx-lint repo at
 #    https://github.com/edx/edx-lint/blob/master/edx_lint/files/{filename}
 #
-# 2. Run (in edx-lint repo):
+# 2. install the updated version of edx-lint (in edx-lint):
+#
+#       $ pip install .
+#
+# 3. Run (in edx-lint):
 #
 #       # uses {tweaks_name} from edx-lint for linting in edx-lint
+#       # NOTE: Use Python 3.x, which no longer includes comments in the output file
 #       $ edx_lint write {filename}
-
-# 3. Make a new version of edx_lint, submit and review a pull request with the
+#
+# 4. Make a new version of edx_lint, submit and review a pull request with the
 #    {filename} update, and after merging, update the edx-lint version by
 #    creating a new tag in the repo (uses pbr).
 #
-# 4. In your local repo, install the newer version of edx-lint.
+# 5. In your local repo, install the newer version of edx-lint.
 #
-# 5. Run:
+# 6. Run:
 #
 #       # uses local {tweaks_name}
 #       $ edx_lint write {filename}
 #
-# 6. This will modify the local file.  Submit a pull request to get it
+# 7. This will modify the local file.  Submit a pull request to get it
 #    checked in so that others will benefit.
 #
 #
