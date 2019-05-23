@@ -326,6 +326,7 @@ disable=
     too-many-locals,
     too-many-public-methods,
     too-many-return-statements,
+    ungrouped-imports,
     unichr-builtin,
     unicode-builtin,
     unpacking-in-except,
