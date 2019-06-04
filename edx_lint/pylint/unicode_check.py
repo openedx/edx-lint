@@ -21,10 +21,9 @@ def register_checkers(linter):
 @check_visitors
 class UnicodeFormatStringChecker(BaseTokenChecker):
     """
-    XXXXXX
+    Checks that strings are unicode.
 
-    The message id is xxxxxxx.
-
+    Message ID is: unicode-format-string
     """
     # ITokenChecker gets us process_tokens support.
     # IRawChecker gets us process_module support.
