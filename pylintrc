@@ -195,6 +195,7 @@ enable =
 	anomalous-unicode-escape-in-string,
 	bad-open-mode,
 	boolean-datetime,
+	illegal-waffle-usage,
 	
 	fatal,
 	astroid-error,
@@ -209,6 +210,7 @@ enable =
 	missing-docstring,
 	wrong-spelling-in-comment,
 	wrong-spelling-in-docstring,
+	feature-toggle-needs-doc,
 	
 	unused-import,
 	unused-variable,
@@ -451,4 +453,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# d0f4059e1f1707d621743c27369d6d4d0d727696
+# ea0149f2ba5f9db700f5f1a715617bb366869707

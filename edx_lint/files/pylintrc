@@ -152,6 +152,7 @@ enable=
     anomalous-unicode-escape-in-string,
     bad-open-mode,
     boolean-datetime,
+    illegal-waffle-usage,
 
     # Checking failed for some reason
     fatal,
@@ -168,6 +169,7 @@ enable=
     missing-docstring,
     wrong-spelling-in-comment,
     wrong-spelling-in-docstring,
+    feature-toggle-needs-doc,
 
     # Unused code should be deleted
     unused-import,
