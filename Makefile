@@ -27,3 +27,4 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 	# Make sure to compile files after any other files they include!
 	pip-compile -v --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip-compile -v --upgrade -o requirements/dev.txt requirements/dev.in
+	@echo "\e[31mpylint, pylint-django, and pylint-celery are not managed by make upgrade. Please upgrade them manually in setup.cfg\e[0m"
