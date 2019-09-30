@@ -5,7 +5,7 @@
 #    make upgrade
 #
 -e file:///home/cpennington/work/code/edx-lint
-astroid==1.5.3            # via pylint, pylint-celery
+astroid==1.6.6            # via pylint, pylint-celery
 backports.functools-lru-cache==1.5  # via astroid, isort, pylint
 click-log==0.3.2
 click==7.0                # via click-log
@@ -24,9 +24,9 @@ pathlib2==2.3.5           # via importlib-metadata
 pluggy==0.13.0            # via tox
 py==1.8.0                 # via tox
 pylint-celery==0.3
-pylint-django==0.7.2
+pylint-django==0.11.1
 pylint-plugin-utils==0.6  # via pylint-celery, pylint-django
-pylint==1.7.6             # via pylint-celery, pylint-django, pylint-plugin-utils
+pylint==1.9.5             # via pylint-celery, pylint-django, pylint-plugin-utils
 pyparsing==2.4.2          # via packaging
 scandir==1.10.0           # via pathlib2
 singledispatch==3.4.0.3   # via astroid, pylint
