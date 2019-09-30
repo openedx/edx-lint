@@ -45,6 +45,9 @@ class YamlLoadChecker(BaseChecker):
 
     @utils.check_messages(MESSAGE_ID)
     def visit_call(self, node):
+        """
+        Check whether a call is an unsafe call to yaml.load.
+        """
         func_name = node.func.as_string()
         if func_name in self.UNSAFE_CALLS:
             suffix = func_name.lstrip('yaml.load')
