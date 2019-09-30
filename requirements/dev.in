@@ -1,2 +1,4 @@
+-e .
+
 tox
 tox-battery
