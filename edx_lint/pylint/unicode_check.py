@@ -65,7 +65,7 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
                 first_non_comment_line = index
 
             # Keep track of whether previous line contained a function or class definition
-            if tok_type == token.NEWLINE or tok_type == 54:  # 54 is token.NL
+            if tok_type in (token.NEWLINE, 54):  # 54 is token.NL
                 previous_line_has_definition = current_line_has_definition
                 current_line_has_definition = False
             elif tok_text in ['def', 'class']:

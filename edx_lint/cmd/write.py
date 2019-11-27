@@ -114,13 +114,7 @@ def write_main(argv):
     cfg = configparser.RawConfigParser()
     resource_string = pkg_resources.resource_string("edx_lint", resource_name).decode("utf8")
 
-    # pkg_resources always reads binary data (in both python2 and python3).
-    # ConfigParser.read_string only exists in python3, so we have to wrap the string
-    # from pkg_resources in a cStringIO so that we can pass it into ConfigParser.readfp.
-    if six.PY2:
-        cfg.readfp(cStringIO(resource_string), resource_name)
-    else:
-        cfg.read_string(resource_string, resource_name)     # pylint: disable=no-member
+    cfg.read_string(resource_string, resource_name)
 
     if os.path.exists(tweaks_name):
         print(u"Applying local tweaks from %s" % tweaks_name)

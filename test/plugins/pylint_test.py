@@ -66,7 +66,7 @@ def run_pylint(source, msg_ids):
     else:
         kwargs = dict(exit=False)
 
-    Run(pylint_args, reporter=reporter, **kwargs)       # pylint: disable=unexpected-keyword-arg
+    Run(pylint_args, reporter=reporter, **kwargs)
 
     markers = find_line_markers(source)
     messages = {

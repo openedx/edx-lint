@@ -4,7 +4,7 @@ import hashlib
 import re
 
 
-class TamperEvidentFile(object):
+class TamperEvidentFile():
     """Tamper-evident files.
 
     Write text to a file with `.write()`.  Later, you can validate that it

@@ -13,7 +13,6 @@ MSG_IDS = "super-method-not-called,non-parent-method-called"
     "tearDownClass",
 ])
 def test_unittest_super_check(method):
-    # pylint: disable=unicode-format-string
     source = """\
         import unittest
 
@@ -43,7 +42,6 @@ def test_unittest_super_check(method):
     "setUpTestData",
 ])
 def test_django_super_check(method):
-    # pylint: disable=unicode-format-string
     source = """\
         import django
 

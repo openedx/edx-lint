@@ -17,7 +17,7 @@ def register_checkers(linter):
     """
     linter.register_checker(FeatureToggleChecker(linter))
 
-class AnnotationLines(object):
+class AnnotationLines():
     """
     AnnotationLines provides utility methods to work with a string in terms of
     lines.  As an example, it can convert a Call node into a list of its contents

@@ -56,7 +56,6 @@ def test_good_asserts():
     ("assertTrue(my_zero != None)", "assertIsNotNone"),
 ])
 def test_wrong_usage(code, better):
-    # pylint: disable=unicode-format-string
     source = """\
         import unittest
 
