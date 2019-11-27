@@ -20,7 +20,7 @@ def is_test_case_class(node):
     have __test__ defined as False.
 
     """
-    if not node.is_subtype_of('unittest.case.TestCase'):
+    if not node.is_subtype_of("unittest.case.TestCase"):
         return False
 
     dunder_test = node.locals.get("__test__")
@@ -39,16 +39,17 @@ class LayeredTestClassChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'layered-test-class-checker'
+    name = "layered-test-class-checker"
 
     MESSAGE_ID = "test-inherits-tests"
     msgs = {
-        'E%d03' % BASE_ID: (
+        "E%d03"
+        % BASE_ID: (
             u"test class %s inherits tests from %s",
             MESSAGE_ID,
             "Used when a test class inherits test methods from another test "
             "class, meaning the inherited tests will run more than once.",
-        ),
+        )
     }
 
     @utils.check_messages(MESSAGE_ID)

@@ -23,16 +23,19 @@ def find_line_markers(source):
 
 
 def test_find_line_markers():
-    markers = find_line_markers("""\
+    markers = find_line_markers(
+        """\
         line 1      #=A
         line 2
         line 3      #=Hello
-        """)
-    assert markers == {1: 'A', 3: 'Hello'}
+        """
+    )
+    assert markers == {1: "A", 3: "Hello"}
 
 
 class SimpleReporter(CollectingReporter):
     """A pylint message reporter that collects the messages in a list."""
+
     # Pylint does not specify well what a reporter must do.  This works.
 
     def _display(self, layout):
@@ -69,10 +72,7 @@ def run_pylint(source, msg_ids):
     Run(pylint_args, reporter=reporter, **kwargs)
 
     markers = find_line_markers(source)
-    messages = {
-        "{line}:{m.symbol}:{m.msg}".format(m=m, line=markers.get(m.line, m.line))
-        for m in reporter.messages
-        }
+    messages = {"{line}:{m.symbol}:{m.msg}".format(m=m, line=markers.get(m.line, m.line)) for m in reporter.messages}
     return messages
 
 
@@ -104,9 +104,9 @@ def test_that_we_can_test_pylint():
         "B:redefined-builtin:Redefining built-in 'int'",
         "B:redefined-builtin:Redefining built-in 'float'",
         "B:anomalous-backslash-in-string:Anomalous backslash in string: '\\c'. "
-            "String constant might be missing an r prefix.",
+        "String constant might be missing an r prefix.",
         "C:fixme:TODO is checked by an IRawChecker. #=C",
-        }
+    }
     assert expected == messages
 
 
@@ -119,7 +119,8 @@ def test_invalid_python():
     message = messages.pop()
     # Pylint 1.x says the source is <string>, Pylint 2.x says <unknown>
     message = message.replace("<string>", "XXX").replace("<unknown>", "XXX")
-    assert message == '1:syntax-error:invalid syntax (XXX, line 1)'
+    assert message == "1:syntax-error:invalid syntax (XXX, line 1)"
+
 
 # I would have tested that the msgids must be valid, but pylint doesn't seem
 # to mind being told to enable non-existent msgids.

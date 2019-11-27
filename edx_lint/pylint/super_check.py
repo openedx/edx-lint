@@ -29,24 +29,18 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'unit-test-super-checker'
+    name = "unit-test-super-checker"
 
-    NOT_CALLED_MESSAGE_ID = 'super-method-not-called'
-    NON_PARENT_MESSAGE_ID = 'non-parent-method-called'
+    NOT_CALLED_MESSAGE_ID = "super-method-not-called"
+    NON_PARENT_MESSAGE_ID = "non-parent-method-called"
 
-    METHOD_NAMES = [
-        'setUp', 'tearDown',
-        'setUpClass', 'tearDownClass',
-        'setUpTestData',
-    ]
+    METHOD_NAMES = ["setUp", "tearDown", "setUpClass", "tearDownClass", "setUpTestData"]
 
     msgs = {
-        'E%d01' % BASE_ID: (
-            u"super(...).%s() not called (%s)",
-            NOT_CALLED_MESSAGE_ID,
-            "setUp() must call super(...).setUp()",
-        ),
-        'E%d02' % BASE_ID: (
+        "E%d01"
+        % BASE_ID: (u"super(...).%s() not called (%s)", NOT_CALLED_MESSAGE_ID, "setUp() must call super(...).setUp()",),
+        "E%d02"
+        % BASE_ID: (
             u"%s() was called from a non-parent class (%s)",
             NON_PARENT_MESSAGE_ID,
             "setUp() should only be called for parent classes",
@@ -76,9 +70,11 @@ class UnitTestSetupSuperChecker(BaseChecker):
                 continue
 
             # Skip the test if using super
-            if (isinstance(expr.expr, astroid.Call) and
-                    isinstance(expr.expr.func, astroid.Name) and
-                    expr.expr.func.name == 'super'):
+            if (
+                isinstance(expr.expr, astroid.Call)
+                and isinstance(expr.expr.func, astroid.Name)
+                and expr.expr.func.name == "super"
+            ):
                 return
 
             try:
@@ -93,10 +89,12 @@ class UnitTestSetupSuperChecker(BaseChecker):
                 # base.__init__(...)
 
                 # pylint: disable=protected-access
-                if (isinstance(klass, astroid.Instance) and
-                        isinstance(klass._proxied, astroid.ClassDef) and
-                        utils.is_builtin_object(klass._proxied) and
-                        klass._proxied.name == 'super'):
+                if (
+                    isinstance(klass, astroid.Instance)
+                    and isinstance(klass._proxied, astroid.ClassDef)
+                    and utils.is_builtin_object(klass._proxied)
+                    and klass._proxied.name == "super"
+                ):
                     return
                 if isinstance(klass, astroid.objects.Super):
                     return
@@ -105,18 +103,12 @@ class UnitTestSetupSuperChecker(BaseChecker):
                 except KeyError:
                     if klass not in to_call:
                         self.add_message(
-                            self.NON_PARENT_MESSAGE_ID,
-                            node=expr,
-                            args=(method_name, usable_class_name(klass)),
+                            self.NON_PARENT_MESSAGE_ID, node=expr, args=(method_name, usable_class_name(klass))
                         )
             except astroid.InferenceError:
                 continue
 
         for klass, method in six.iteritems(not_called_yet):
-            if klass.name == 'object' or method.parent.name == 'object':
+            if klass.name == "object" or method.parent.name == "object":
                 continue
-            self.add_message(
-                self.NOT_CALLED_MESSAGE_ID,
-                args=(method_name, usable_class_name(klass)),
-                node=node,
-            )
+            self.add_message(self.NOT_CALLED_MESSAGE_ID, args=(method_name, usable_class_name(klass)), node=node)

@@ -35,15 +35,17 @@ def test_range(range_name):
         [range][0](0, 10)
         some_other_function(0, 10)
 
-    """.replace("range", range_name)
+    """.replace(
+        "range", range_name
+    )
     msg_ids = "simplifiable-range"
     messages = run_pylint(source, msg_ids)
 
     expected = {
-        'A:simplifiable-range:{}() call could be single-argument'.format(range_name),
-        'B:simplifiable-range:{}() call could be single-argument'.format(range_name),
-        'C:simplifiable-range:{}() call could be single-argument'.format(range_name),
-        'D:simplifiable-range:{}() call could be single-argument'.format(range_name),
-        'E:simplifiable-range:{}() call could be two-argument'.format(range_name),
+        "A:simplifiable-range:{}() call could be single-argument".format(range_name),
+        "B:simplifiable-range:{}() call could be single-argument".format(range_name),
+        "C:simplifiable-range:{}() call could be single-argument".format(range_name),
+        "D:simplifiable-range:{}() call could be single-argument".format(range_name),
+        "E:simplifiable-range:{}() call could be two-argument".format(range_name),
     }
     assert expected == messages

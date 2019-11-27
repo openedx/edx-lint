@@ -40,21 +40,24 @@ def test_good_asserts():
     assert not messages
 
 
-@pytest.mark.parametrize("code, better", [
-    ("assertTrue('foo'.upper() == 'FOO')", "assertEqual"),
-    ("assertFalse(500 == 501)", "assertNotEqual"),
-    ("assertTrue('a' in 'lala')", "assertIn"),
-    ("assertFalse('b' not in 'lala')", "assertIn"),
-    ("assertTrue(1 > 0)", "assertGreater"),
-    ("assertFalse(1 < 2)", "assertGreaterEqual"),
-    ("assertTrue(my_zero is 0)", "assertIs"),
-    ("assertFalse(my_zero is 1)", "assertIsNot"),
-    ("assertTrue(my_zero is not 1)", "assertIsNot"),
-    ("assertFalse(my_zero is not 0)", "assertIs"),
-    ("assertTrue(my_none is None)", "assertIsNone"),
-    ("assertFalse(my_zero is None)", "assertIsNotNone"),
-    ("assertTrue(my_zero != None)", "assertIsNotNone"),
-])
+@pytest.mark.parametrize(
+    "code, better",
+    [
+        ("assertTrue('foo'.upper() == 'FOO')", "assertEqual"),
+        ("assertFalse(500 == 501)", "assertNotEqual"),
+        ("assertTrue('a' in 'lala')", "assertIn"),
+        ("assertFalse('b' not in 'lala')", "assertIn"),
+        ("assertTrue(1 > 0)", "assertGreater"),
+        ("assertFalse(1 < 2)", "assertGreaterEqual"),
+        ("assertTrue(my_zero is 0)", "assertIs"),
+        ("assertFalse(my_zero is 1)", "assertIsNot"),
+        ("assertTrue(my_zero is not 1)", "assertIsNot"),
+        ("assertFalse(my_zero is not 0)", "assertIs"),
+        ("assertTrue(my_none is None)", "assertIsNone"),
+        ("assertFalse(my_zero is None)", "assertIsNotNone"),
+        ("assertTrue(my_zero != None)", "assertIsNotNone"),
+    ],
+)
 def test_wrong_usage(code, better):
     source = """\
         import unittest
@@ -62,7 +65,9 @@ def test_wrong_usage(code, better):
         class TestStringMethods(unittest.TestCase):
             def test_wrong_usage(self):
                 self.{}      #=A
-        """.format(code)
+        """.format(
+        code
+    )
     messages = run_pylint(source, "wrong-assert-type")
 
     expected = {"A:wrong-assert-type:{} should be {}".format(code, better)}

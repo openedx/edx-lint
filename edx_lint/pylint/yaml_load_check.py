@@ -29,18 +29,18 @@ class YamlLoadChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'yaml-load-checker'
+    name = "yaml-load-checker"
 
-    MESSAGE_ID = 'unsafe-yaml-load'
+    MESSAGE_ID = "unsafe-yaml-load"
 
-    UNSAFE_CALLS = {'yaml.load', 'yaml.load_all'}
+    UNSAFE_CALLS = {"yaml.load", "yaml.load_all"}
 
     msgs = {
-        'C{}57'.format(BASE_ID): (
-            u'yaml.load%s() call is unsafe, use yaml.safe_load%s()',
+        "C{}57".format(BASE_ID): (
+            u"yaml.load%s() call is unsafe, use yaml.safe_load%s()",
             MESSAGE_ID,
-            'yaml.load*() is unsafe',
-        ),
+            "yaml.load*() is unsafe",
+        )
     }
 
     @utils.check_messages(MESSAGE_ID)
@@ -50,5 +50,5 @@ class YamlLoadChecker(BaseChecker):
         """
         func_name = node.func.as_string()
         if func_name in self.UNSAFE_CALLS:
-            suffix = func_name.lstrip('yaml.load')
+            suffix = func_name.lstrip("yaml.load")
             self.add_message(self.MESSAGE_ID, args=(suffix, suffix), node=node)

@@ -1,5 +1,6 @@
 """Config file tools for edx_lint."""
 
+
 def merge_configs(main, tweaks):
     """Merge tweaks into a main config file."""
     for section in tweaks.sections():
