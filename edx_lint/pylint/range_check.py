@@ -33,17 +33,13 @@ class RangeChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'range-checker'
+    name = "range-checker"
 
     RANGE_FUNCTIONS = ["range", "xrange"]
 
-    MESSAGE_ID = 'simplifiable-range'
+    MESSAGE_ID = "simplifiable-range"
     msgs = {
-        'C%d20' % BASE_ID: (
-            u"%s() call could be %s-argument",
-            MESSAGE_ID,
-            "range() call could be simplified",
-        ),
+        "C%d20" % BASE_ID: (u"%s() call could be %s-argument", MESSAGE_ID, "range() call could be simplified",),
     }
 
     @utils.check_messages(MESSAGE_ID)

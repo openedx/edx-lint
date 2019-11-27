@@ -35,14 +35,10 @@ class ModuleTracingChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'module-tracing-checker'
+    name = "module-tracing-checker"
 
     msgs = {
-        'E%d00' % BASE_ID: (
-            "bogus",
-            "bogus",
-            "bogus",
-        ),
+        "E%d00" % BASE_ID: ("bogus", "bogus", "bogus",),
     }
 
     def visit_module(self, node):

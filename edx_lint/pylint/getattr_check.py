@@ -33,13 +33,15 @@ class GetSetAttrLiteralChecker(BaseChecker):
     The message id is literal-used-as-attribute.
 
     """
+
     __implements__ = (IAstroidChecker,)
 
-    name = 'getattr-literal-checker'
+    name = "getattr-literal-checker"
 
-    MESSAGE_ID = 'literal-used-as-attribute'
+    MESSAGE_ID = "literal-used-as-attribute"
     msgs = {
-        'C%d30' % BASE_ID: (
+        "C%d30"
+        % BASE_ID: (
             u"%s using a literal attribute name",
             MESSAGE_ID,
             "getattr or setattr using with a literal attribute name",

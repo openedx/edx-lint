@@ -2,6 +2,7 @@
 
 from .pylint_test import run_pylint
 
+
 def test_layered_test_checker():
     source = """\
         import unittest
@@ -81,7 +82,7 @@ def test_layered_test_checker():
     msg_ids = "test-inherits-tests"
     messages = run_pylint(source, msg_ids)
     expected = {
-        'A:test-inherits-tests:test class DerivedTestCase inherits tests from TestCase',
-        'B:test-inherits-tests:test class TestsWithHelpers2 inherits tests from TestHelpers2',
+        "A:test-inherits-tests:test class DerivedTestCase inherits tests from TestCase",
+        "B:test-inherits-tests:test class TestsWithHelpers2 inherits tests from TestHelpers2",
     }
     assert expected == messages

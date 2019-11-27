@@ -32,15 +32,12 @@ def test_ignore_long_lines():
     messages = run_pylint(source, msg_ids)
 
     # normalize the messages by stripping off the 3rd segment.
-    messages = {
-        ':'.join(message.split(':')[:2])
-        for message in messages
-    }
+    messages = {":".join(message.split(":")[:2]) for message in messages}
 
     expected = {
-        '2:line-too-long',
-        '3:line-too-long',
-        '5:line-too-long',
-        '6:line-too-long',
+        "2:line-too-long",
+        "3:line-too-long",
+        "5:line-too-long",
+        "6:line-too-long",
     }
     assert expected == messages

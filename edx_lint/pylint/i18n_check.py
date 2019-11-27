@@ -35,21 +35,30 @@ class TranslationStringConstantsChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'translation-string-checker'
+    name = "translation-string-checker"
 
-    TRANSLATION_FUNCTIONS = set([
-        '_',
-        'gettext',
-        'ngettext', 'ngettext_lazy',
-        'npgettext', 'npgettext_lazy',
-        'pgettext', 'pgettext_lazy',
-        'ugettext', 'ugettext_lazy', 'ugettext_noop',
-        'ungettext', 'ungettext_lazy',
-    ])
+    TRANSLATION_FUNCTIONS = set(
+        [
+            "_",
+            "gettext",
+            "ngettext",
+            "ngettext_lazy",
+            "npgettext",
+            "npgettext_lazy",
+            "pgettext",
+            "pgettext_lazy",
+            "ugettext",
+            "ugettext_lazy",
+            "ugettext_noop",
+            "ungettext",
+            "ungettext_lazy",
+        ]
+    )
 
-    MESSAGE_ID = 'translation-of-non-string'
+    MESSAGE_ID = "translation-of-non-string"
     msgs = {
-        'E%d10' % BASE_ID: (
+        "E%d10"
+        % BASE_ID: (
             u"i18n function %s() must be called with a literal string",
             MESSAGE_ID,
             "i18n functions must be called with a literal string",

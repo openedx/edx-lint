@@ -46,27 +46,18 @@ class TamperEvidentFileTest(unittest.TestCase):
         filename1 = self.write_tamper_evident(b"Hello!")
 
         with open(filename1, "rb") as f:
-            self.assertEqual(
-                f.read(),
-                b"Hello!\n# a8d191538209e335154750d2df575b9ddfb16fc7\n"
-            )
+            self.assertEqual(f.read(), b"Hello!\n# a8d191538209e335154750d2df575b9ddfb16fc7\n")
 
         filename2 = self.write_tamper_evident(b"Hello?")
 
         with open(filename2, "rb") as f:
-            self.assertEqual(
-                f.read(),
-                b"Hello?\n# 4820175d44ef1a2c92e52bd1b3b7f05020d66e1c\n"
-            )
+            self.assertEqual(f.read(), b"Hello?\n# 4820175d44ef1a2c92e52bd1b3b7f05020d66e1c\n")
 
     def test_hashline_formatting(self):
         filename1 = self.write_tamper_evident(b"Hello!", hashline=b"XXX {} YYY")
 
         with open(filename1, "rb") as f:
-            self.assertEqual(
-                f.read(),
-                b"Hello!\nXXX a8d191538209e335154750d2df575b9ddfb16fc7 YYY\n"
-            )
+            self.assertEqual(f.read(), b"Hello!\nXXX a8d191538209e335154750d2df575b9ddfb16fc7 YYY\n")
 
     def test_validating_a_good_file(self):
         filename = self.write_tamper_evident(b"Am I OK?")

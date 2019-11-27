@@ -5,6 +5,7 @@ import shutil
 
 import pytest
 
+
 @pytest.fixture(autouse=True)
 def run_tests_in_temp_dir(tmpdir):
     """Automatically runs all tests in their own temp directory."""
