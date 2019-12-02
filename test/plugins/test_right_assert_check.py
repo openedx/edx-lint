@@ -59,15 +59,15 @@ def test_good_asserts():
     ],
 )
 def test_wrong_usage(code, better):
-    source = """\
+    source = (
+        """\
         import unittest
 
         class TestStringMethods(unittest.TestCase):
             def test_wrong_usage(self):
                 self.{}      #=A
-        """.format(
-        code
-    )
+        """
+    ).format(code)
     messages = run_pylint(source, "wrong-assert-type")
 
     expected = {"A:wrong-assert-type:{} should be {}".format(code, better)}

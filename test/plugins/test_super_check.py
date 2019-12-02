@@ -9,7 +9,8 @@ MSG_IDS = "super-method-not-called,non-parent-method-called"
 
 @pytest.mark.parametrize("method", ["setUp", "tearDown", "setUpClass", "tearDownClass",])
 def test_unittest_super_check(method):
-    source = """\
+    source = (
+        """\
         import unittest
 
         class GoodTestCase(unittest.TestCase):
@@ -28,9 +29,8 @@ def test_unittest_super_check(method):
         def {method}(xyzzy):
             # Weird, but who cares?
             pass
-        """.format(
-        method=method
-    )
+        """
+    ).format(method=method)
     messages = run_pylint(source, MSG_IDS)
     expected = {"A:super-method-not-called:super(...).{}() not called (unittest.case.TestCase)".format(method)}
     assert expected == messages
@@ -38,7 +38,8 @@ def test_unittest_super_check(method):
 
 @pytest.mark.parametrize("method", ["setUpTestData",])
 def test_django_super_check(method):
-    source = """\
+    source = (
+        """\
         import django
 
         class GoodTestCase(django.test.TestCase):
@@ -48,9 +49,8 @@ def test_django_super_check(method):
         class BadTestCase(django.test.TestCase):
             def {method}(self):         #=A
                 self.i_am_bad = True
-        """.format(
-        method=method
-    )
+        """
+    ).format(method=method)
     messages = run_pylint(source, MSG_IDS)
     expected = {"A:super-method-not-called:super(...).setUpTestData() not called (django.test.testcases.TestCase)"}
     assert expected == messages
