@@ -1,16 +1,18 @@
 # Makefile for edx-lint
 
-.PHONY: default test
+.PHONY: clean help pylint requirements test upgrade
 
-default: test
+help: ## display this help message
+	@echo "Please use \`make <target>' where <target> is one of"
+	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | sort | awk -F ':.*?## ' 'NF==2 {printf "\033[36m  %-25s\033[0m %s\n", $$1, $$2}'
 
-test:
+test: ## run all the tests
 	tox -e py27-pylint17,py36-pylint17,coverage
 
-pylint:
+pylint: ## check our own code with pylint
 	tox -e pylint
 
-clean:
+clean: ## remove all the unneeded artifacts
 	-rm -rf .tox
 	-rm -rf *.egg-info
 	-find . -name '__pycache__' -prune -exec rm -rf "{}" \;
@@ -18,7 +20,7 @@ clean:
 	-rm -f MANIFEST
 	-rm -rf .coverage .coverage.* htmlcov
 
-requirements:
+requirements: ## install the developer requirements
 	pip install -r requirements/dev.txt
 
 upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
