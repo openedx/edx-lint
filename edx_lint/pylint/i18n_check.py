@@ -37,23 +37,21 @@ class TranslationStringConstantsChecker(BaseChecker):
 
     name = "translation-string-checker"
 
-    TRANSLATION_FUNCTIONS = set(
-        [
-            "_",
-            "gettext",
-            "ngettext",
-            "ngettext_lazy",
-            "npgettext",
-            "npgettext_lazy",
-            "pgettext",
-            "pgettext_lazy",
-            "ugettext",
-            "ugettext_lazy",
-            "ugettext_noop",
-            "ungettext",
-            "ungettext_lazy",
-        ]
-    )
+    TRANSLATION_FUNCTIONS = {
+        "_",
+        "gettext",
+        "ngettext",
+        "ngettext_lazy",
+        "npgettext",
+        "npgettext_lazy",
+        "pgettext",
+        "pgettext_lazy",
+        "ugettext",
+        "ugettext_lazy",
+        "ugettext_noop",
+        "ungettext",
+        "ungettext_lazy",
+    }
 
     MESSAGE_ID = "translation-of-non-string"
     msgs = {
