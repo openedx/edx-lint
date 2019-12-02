@@ -7,7 +7,8 @@ from .pylint_test import run_pylint
 
 @pytest.mark.parametrize("range_name", ["range", "xrange"])
 def test_range(range_name):
-    source = """\
+    source = (
+        """\
         START, STOP, STEP = 0, 10, 1
         # Bad
         range(0, 10)        #=A
@@ -35,9 +36,8 @@ def test_range(range_name):
         [range][0](0, 10)
         some_other_function(0, 10)
 
-    """.replace(
-        "range", range_name
-    )
+    """
+    ).replace("range", range_name)
     msg_ids = "simplifiable-range"
     messages = run_pylint(source, msg_ids)
 
