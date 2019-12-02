@@ -43,10 +43,12 @@ class UnitTestSetupSuperChecker(BaseChecker):
     ]
 
     msgs = {
-        "E%d01"
-        % BASE_ID: (u"super(...).%s() not called (%s)", NOT_CALLED_MESSAGE_ID, "setUp() must call super(...).setUp()",),
-        "E%d02"
-        % BASE_ID: (
+        ("E%d01" % BASE_ID): (
+            u"super(...).%s() not called (%s)",
+            NOT_CALLED_MESSAGE_ID,
+            "setUp() must call super(...).setUp()",
+        ),
+        ("E%d02" % BASE_ID): (
             u"%s() was called from a non-parent class (%s)",
             NON_PARENT_MESSAGE_ID,
             "setUp() should only be called for parent classes",

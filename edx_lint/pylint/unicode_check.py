@@ -34,8 +34,7 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
 
     MESSAGE_ID = "unicode-format-string"
     msgs = {
-        "C%d11"
-        % BASE_ID: (
+        ("C%d11" % BASE_ID): (
             "Human-readable format strings should be unicode",
             MESSAGE_ID,
             "Human-readable format strings should be unicode",

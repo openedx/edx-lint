@@ -65,7 +65,7 @@ class AssertChecker(BaseChecker):
 
     MESSAGE_ID = "wrong-assert-type"
     msgs = {
-        "C%d90" % BASE_ID: ("%s", MESSAGE_ID, "Use assert(Not)Equal instead of assertTrue/False",),
+        ("C%d90" % BASE_ID): ("%s", MESSAGE_ID, "Use assert(Not)Equal instead of assertTrue/False",),
     }
 
     @utils.check_messages(MESSAGE_ID)
