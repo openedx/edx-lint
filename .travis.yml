@@ -10,7 +10,6 @@ matrix:
   - python: "3.5"
     env: TOXARG="-e pylint"
   - python: "3.6"
-    env: TOXARG="-e black-test"
 
 install:
     - pip install --upgrade pip setuptools

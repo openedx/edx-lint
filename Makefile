@@ -30,10 +30,3 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 	pip-compile -v --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip-compile -v --upgrade -o requirements/dev.txt requirements/dev.in
 	@echo "\e[31mpylint, pylint-django, and pylint-celery are not managed by make upgrade. Please upgrade them manually in setup.cfg\e[0m"
-
-
-black:
-	black --line-length 120 .
-
-black-test:
-	black --line-length 120 --check .
