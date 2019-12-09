@@ -43,7 +43,7 @@ def test_waffle_missing_toggle_annotation_check():
         "C:feature-toggle-needs-doc:feature toggle (DERIVED_FLAG_WITHOUT_ANNOTATION) is missing annotation",
         "D:feature-toggle-needs-doc:feature toggle (SWITCH_WITHOUT_ANNOTATION) is missing annotation",
         "E:feature-toggle-needs-doc:feature toggle (COURSE_WAFFLE_FLAG_WITHOUT_ANNOTATION) is missing annotation",
-        "F:feature-toggle-needs-doc:feature toggle (missing_course_with_kwarg) is missing annotation"
+        "F:feature-toggle-needs-doc:feature toggle (missing_course_with_kwarg) is missing annotation",
     }
     assert expected == messages
 
@@ -119,7 +119,7 @@ def test_django_feature_flags_missing_doc():
     messages = run_pylint(source, msg_ids)
     expected = {
         "A:feature-toggle-needs-doc:feature toggle (NO_DOCUMENTATION_FLAG) is missing annotation",
-        "A:feature-toggle-needs-doc:feature toggle (WRONG_DOCUMENTATION_FLAG) is missing annotation"
+        "A:feature-toggle-needs-doc:feature toggle (WRONG_DOCUMENTATION_FLAG) is missing annotation",
     }
     assert expected == messages
 

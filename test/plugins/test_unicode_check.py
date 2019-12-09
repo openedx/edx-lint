@@ -30,9 +30,9 @@ def test_unicode_checker():
     # This checker only makes messages on Python 2.
     if six.PY2:
         expected = {
-            'A:unicode-format-string:Human-readable format strings should be unicode',
-            'B:unicode-format-string:Human-readable format strings should be unicode',
-            }
+            "A:unicode-format-string:Human-readable format strings should be unicode",
+            "B:unicode-format-string:Human-readable format strings should be unicode",
+        }
     else:
         expected = set()
 

@@ -25,7 +25,7 @@ class AssertChecker(BaseChecker):
 
     __implements__ = (IAstroidChecker,)
 
-    name = 'assert-checker'
+    name = "assert-checker"
 
     AFFECTED_ASSERTS = ["assertTrue", "assertFalse"]
 
@@ -63,14 +63,8 @@ class AssertChecker(BaseChecker):
         INVERTED[yup] = nope
         INVERTED[nope] = yup
 
-    MESSAGE_ID = 'wrong-assert-type'
-    msgs = {
-        'C%d90' % BASE_ID: (
-            "%s",
-            MESSAGE_ID,
-            "Use assert(Not)Equal instead of assertTrue/False",
-        ),
-    }
+    MESSAGE_ID = "wrong-assert-type"
+    msgs = {("C%d90" % BASE_ID): ("%s", MESSAGE_ID, "Use assert(Not)Equal instead of assertTrue/False")}
 
     @utils.check_messages(MESSAGE_ID)
     def visit_call(self, node):
@@ -104,8 +98,4 @@ class AssertChecker(BaseChecker):
 
             if node.func.attrname == "assertFalse":
                 better = self.INVERTED[better]
-            self.add_message(
-                self.MESSAGE_ID,
-                args=u"%s should be %s" % (existing_code, better),
-                node=node,
-            )
+            self.add_message(self.MESSAGE_ID, args=u"%s should be %s" % (existing_code, better), node=node)

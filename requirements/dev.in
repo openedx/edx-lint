@@ -2,3 +2,4 @@
 
 tox
 tox-battery
+black

@@ -7,6 +7,7 @@ BASE_ID = 76
 
 CLASS_NAMES = {c.__name__.lower() for c in ALL_NODE_CLASSES}
 
+
 def check_visitors(cls):
     """Check that a checker's visitors are correctly named.
 
@@ -27,5 +28,5 @@ def usable_class_name(node):
     name = node.qname()
     for prefix in ["__builtin__.", "builtins.", "."]:
         if name.startswith(prefix):
-            name = name[len(prefix):]
+            name = name[len(prefix) :]
     return name

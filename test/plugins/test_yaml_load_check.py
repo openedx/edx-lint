@@ -3,7 +3,7 @@
 from .pylint_test import run_pylint
 
 
-MSG_IDS = 'unsafe-yaml-load'
+MSG_IDS = "unsafe-yaml-load"
 
 
 def test_unsafe_yaml_load_warnings():
@@ -15,8 +15,8 @@ def test_unsafe_yaml_load_warnings():
     messages = run_pylint(source, MSG_IDS)
 
     expected_messages = {
-        'A:unsafe-yaml-load:yaml.load() call is unsafe, use yaml.safe_load()',
-        'B:unsafe-yaml-load:yaml.load_all() call is unsafe, use yaml.safe_load_all()',
+        "A:unsafe-yaml-load:yaml.load() call is unsafe, use yaml.safe_load()",
+        "B:unsafe-yaml-load:yaml.load_all() call is unsafe, use yaml.safe_load_all()",
     }
     assert expected_messages == messages
 

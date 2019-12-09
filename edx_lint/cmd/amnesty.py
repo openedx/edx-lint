@@ -21,7 +21,8 @@ PYLINT_PARSEABLE_REGEX = re.compile(
 )
 PYLINT_EXCEPTION_REGEX = re.compile(r"""\s*#\s*pylint:\s+disable=(?P<disables>[^#$]+?)(?=\s*(#|$))""")
 
-PylintError = namedtuple('PylintError', ['filename', 'linenum', 'error_code', 'error_name', 'function', 'error_msg'])
+PylintError = namedtuple("PylintError", ["filename", "linenum", "error_code", "error_name", "function", "error_msg"])
+
 
 def parse_pylint_output(pylint_output):
     """
@@ -31,7 +32,7 @@ def parse_pylint_output(pylint_output):
         if not line.strip():
             continue
 
-        if line[0:5] in ("-"*5, "*"*5):
+        if line[0:5] in ("-" * 5, "*" * 5):
             continue
 
         parsed = PYLINT_PARSEABLE_REGEX.search(line)
@@ -39,12 +40,12 @@ def parse_pylint_output(pylint_output):
             LOG.warning(
                 u"Unable to parse %r. If this is a lint failure, please re-run pylint with the "
                 u"--output-format=parseable option, otherwise, you can ignore this message.",
-                line
+                line,
             )
             continue
 
         parsed_dict = parsed.groupdict()
-        parsed_dict['linenum'] = int(parsed_dict['linenum'])
+        parsed_dict["linenum"] = int(parsed_dict["linenum"])
         yield PylintError(**parsed_dict)
 
 
@@ -54,10 +55,7 @@ def format_pylint_disables(error_names, tag=True):
     """
     tag_str = "lint-amnesty, " if tag else ""
     if error_names:
-        return u"  # {tag}pylint: disable={disabled}".format(
-            disabled=", ".join(sorted(error_names)),
-            tag=tag_str,
-        )
+        return u"  # {tag}pylint: disable={disabled}".format(disabled=", ".join(sorted(error_names)), tag=tag_str)
     else:
         return ""
 
@@ -72,18 +70,18 @@ def fix_pylint(line, errors):
 
     current = PYLINT_EXCEPTION_REGEX.search(line)
     if current:
-        original_errors = {disable.strip() for disable in current.group('disables').split(',')}
+        original_errors = {disable.strip() for disable in current.group("disables").split(",")}
     else:
         original_errors = set()
 
     disabled_errors = set(original_errors)
 
     for error in errors:
-        if error.error_name == 'useless-suppression':
+        if error.error_name == "useless-suppression":
             parsed = re.search("""Useless suppression of '(?P<error_name>[^']+)'""", error.error_msg)
-            disabled_errors.discard(parsed.group('error_name'))
-        elif error.error_name == 'missing-docstring' and error.error_msg == 'Missing module docstring':
-            yield format_pylint_disables({error.error_name}).strip() + '\n'
+            disabled_errors.discard(parsed.group("error_name"))
+        elif error.error_name == "missing-docstring" and error.error_msg == "Missing module docstring":
+            yield format_pylint_disables({error.error_name}).strip() + "\n"
         else:
             disabled_errors.add(error.error_name)
 
@@ -92,15 +90,17 @@ def fix_pylint(line, errors):
     if current:
         yield PYLINT_EXCEPTION_REGEX.sub(disable_string, line)
     else:
-        yield re.sub(r'($\s*)', disable_string + r'\1', line, count=1)
+        yield re.sub(r"($\s*)", disable_string + r"\1", line, count=1)
 
 
 @click.command()
 @click.option(
-    '--pylint-output', default=sys.stdin, type=click.File(),
-    help="An input file containing pylint --output-format=parseable errors. Defaults to stdin."
+    "--pylint-output",
+    default=sys.stdin,
+    type=click.File(),
+    help="An input file containing pylint --output-format=parseable errors. Defaults to stdin.",
 )
-@click_log.simple_verbosity_option(default=u'INFO')
+@click_log.simple_verbosity_option(default=u"INFO")
 def pylint_amnesty(pylint_output):
     """
     Add ``# pylint: disable`` clauses to add exceptions to all existing pylint errors in a codebase.
@@ -118,12 +118,7 @@ def pylint_amnesty(pylint_output):
             with opened_file as input_file:
                 output_lines = []
                 for line_num, line in enumerate(input_file, start=1):
-                    output_lines.extend(
-                        fix_pylint(
-                            line,
-                            errors[file_with_errors][line_num]
-                        )
-                    )
+                    output_lines.extend(fix_pylint(line, errors[file_with_errors][line_num]))
 
-            with open(file_with_errors, 'w') as output_file:
+            with open(file_with_errors, "w") as output_file:
                 output_file.writelines(output_lines)

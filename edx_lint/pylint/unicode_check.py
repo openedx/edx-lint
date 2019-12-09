@@ -25,19 +25,20 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
 
     Message ID is: unicode-format-string
     """
+
     # ITokenChecker gets us process_tokens support.
     # IRawChecker gets us process_module support.
     __implements__ = (ITokenChecker, IRawChecker)
 
-    name = 'unicode-format-string-checker'
+    name = "unicode-format-string-checker"
 
-    MESSAGE_ID = 'unicode-format-string'
+    MESSAGE_ID = "unicode-format-string"
     msgs = {
-        'C%d11' % BASE_ID: (
+        ("C%d11" % BASE_ID): (
             "Human-readable format strings should be unicode",
             MESSAGE_ID,
             "Human-readable format strings should be unicode",
-        ),
+        )
     }
 
     def __init__(self, *args, **kwargs):
@@ -61,14 +62,14 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
         current_line_has_definition = False
         first_non_comment_line = None
         for index, (tok_type, tok_text, start, _, _) in enumerate(tokens):
-            if first_non_comment_line is None and tok_type != 53: # 53 is token.COMMENT
+            if first_non_comment_line is None and tok_type != 53:  # 53 is token.COMMENT
                 first_non_comment_line = index
 
             # Keep track of whether previous line contained a function or class definition
-            if tok_type == token.NEWLINE or tok_type == 54:  # 54 is token.NL
+            if tok_type in (token.NEWLINE, 54):  # 54 is token.NL
                 previous_line_has_definition = current_line_has_definition
                 current_line_has_definition = False
-            elif tok_text in ['def', 'class']:
+            elif tok_text in ["def", "class"]:
                 current_line_has_definition = True
 
             if tok_type == token.STRING:
@@ -102,6 +103,6 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
                     pass
                 else:
                     # Valid JSON isn't human-readable, leave it alone.
-                    continue    # pragma: no cover   grr.. https://github.com/nedbat/coveragepy/issues/198
+                    continue  # pragma: no cover   grr.. https://github.com/nedbat/coveragepy/issues/198
 
                 self.add_message(self.MESSAGE_ID, line=start[0])

@@ -5,14 +5,31 @@ will register them with pylint.
 """
 
 from edx_lint.pylint import (
-    feature_toggle_check, getattr_check, i18n_check, module_trace, range_check, super_check,
-    layered_test_check, right_assert_check, unicode_check, yaml_load_check,
+    feature_toggle_check,
+    getattr_check,
+    i18n_check,
+    module_trace,
+    range_check,
+    super_check,
+    layered_test_check,
+    right_assert_check,
+    unicode_check,
+    yaml_load_check,
 )
 
 MODS = [
-    feature_toggle_check, getattr_check, i18n_check, module_trace, range_check, super_check,
-    layered_test_check, right_assert_check, unicode_check, yaml_load_check,
+    feature_toggle_check,
+    getattr_check,
+    i18n_check,
+    module_trace,
+    range_check,
+    super_check,
+    layered_test_check,
+    right_assert_check,
+    unicode_check,
+    yaml_load_check,
 ]
+
 
 def register(linter):
     """Registering additional checkers.

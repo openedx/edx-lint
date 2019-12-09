@@ -4,7 +4,7 @@ import hashlib
 import re
 
 
-class TamperEvidentFile(object):
+class TamperEvidentFile:
     """Tamper-evident files.
 
     Write text to a file with `.write()`.  Later, you can validate that it
@@ -59,10 +59,10 @@ class TamperEvidentFile(object):
         if start_last_line == -1:
             return False
 
-        original_text = text[:start_last_line+1]
-        last_line = text[start_last_line+1:]
+        original_text = text[: start_last_line + 1]
+        last_line = text[start_last_line + 1 :]
 
-        expected_hash = hashlib.sha1(original_text).hexdigest().encode('utf8')
+        expected_hash = hashlib.sha1(original_text).hexdigest().encode("utf8")
         match = re.search(b"[0-9a-f]{40}", last_line)
         if not match:
             return False
