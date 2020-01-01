@@ -359,7 +359,7 @@ disable =
 output-format = text
 files-output = no
 reports = no
-evaluation = 10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10)
+score = no
 
 [BASIC]
 bad-functions = map,filter,apply,input
@@ -453,4 +453,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 2d0f98bd8d73d1e1c10330c897d9d213d06f0d5d
+# d70c10b1a41a0b8d5215ea58c7e5be7e62b03d1e
