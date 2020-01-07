@@ -1,7 +1,8 @@
-edx-lint  |Travis|_
-===================
-.. |Travis| image:: https://travis-ci.org/edx/edx-lint.svg?branch=master
-.. _Travis: https://travis-ci.org/edx/edx-lint
+========
+edx-lint
+========
+
+| |Travis|_
 
 A collection of code quality tools:
 
@@ -12,7 +13,7 @@ A collection of code quality tools:
 
 
 Using edx_lint
---------------
+==============
 
 The ``edx_lint`` command can generate config files from its own master file. Install
 the package using ``pip``::
@@ -49,21 +50,34 @@ This will add comments for every existing pylint violation that look like::
 
 It will also remove any existing suppressions that pylint flags as being ``useless-suppressions``.
 
+
 Customizing edx_lint
 --------------------
+
 You can customize the resulting pylintrc file by creating a pylintrc_tweaks file in the
 current directory before running the ``write`` sub-command.  It should contain only the
 settings you want to override.
 
-**Note:** If your project is not a Django project, you'll want to disable the django plugins with
+**Note:** If your project is not a Django project, you'll want to disable the Django plugins with
 your pylintrc_tweaks file::
 
     [MASTER]
     load-plugins = edx_lint.pylint
 
 
+Change history
+==============
+
+Unreleased
+----------
+
+- Breaking: dropped support for Python 2.
+
+- Pylintrc: dropped code scoring.
+
+
 Developing edx_lint
--------------------
+===================
 
 To run the tests::
 
@@ -88,10 +102,13 @@ Even though it was written with ``edx-platform`` in mind, the guidelines
 should be followed for Open edX code in general.
 
 
-Mailing List and IRC Channel
-----------------------------
+Getting Help
+------------
 
-You can discuss this code on the `edx-code Google Group`__ or in the
-``#edx-code`` IRC channel on Freenode.
+The Open edX project has resources for developer support on the `Getting Help`_ page.
 
-__ https://groups.google.com/forum/#!forum/edx-code
+
+.. _Getting Help: https://open.edx.org/getting-help
+
+.. |Travis| image:: https://travis-ci.org/edx/edx-lint.svg?branch=master
+.. _Travis: https://travis-ci.org/edx/edx-lint
