@@ -75,6 +75,8 @@ Unreleased
 
 - Pylintrc: dropped code scoring.
 
+- Fixed: the .editorconfig file was not installed, and so was not writable.
+
 
 Developing edx_lint
 ===================
