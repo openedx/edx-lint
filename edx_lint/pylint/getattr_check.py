@@ -20,7 +20,14 @@ def register_checkers(linter):
 class GetSetAttrLiteralChecker(BaseChecker):
     """
     Checks for string literals used as attribute names with getattr and
-    friends.
+    friends. `getattr`, `setattr` and `delattr` should be used to get, set and delete attributes of object
+    when names of those attributes are not known beforehand and needs to be determined at runtime.
+    Instead of using string literals in these methods standard attribute access/assignment
+    operations should be used. e.g.
+    `x = obj.attr_name`
+    `obj.attr_name = value`
+    `del obj.attr_name`
+    However, in case of getattr literal attribute name is allowed when a default value is set.
 
     Bad:
         x = getattr(obj, "attr_name")
