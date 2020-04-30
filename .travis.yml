@@ -2,13 +2,11 @@ language: python
 
 matrix:
  include:
-  - python: "3.5"
+  - python: 3.5
     env: DISTRIBUTIONS="sdist bdist_wheel --universal"
-  - python: "3.5"
+  - python: 3.5
     env: TOXARG="-e pylint"
-  - python: "3.6"
-  - python: "3.7"
-  - python: "3.8"
+  - python: 3.8
 
 install:
     - pip install --upgrade pip setuptools
