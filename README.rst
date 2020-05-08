@@ -77,6 +77,8 @@ Unreleased
 
 - Fixed: the .editorconfig file was not installed, and so was not writable.
 
+- Added support to Python 3.8
+
 
 Developing edx_lint
 ===================
