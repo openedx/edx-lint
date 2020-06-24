@@ -1,5 +1,4 @@
 """The edx_lint list command."""
-from __future__ import print_function
 
 import pkg_resources
 

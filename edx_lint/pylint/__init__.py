@@ -6,7 +6,6 @@ Add this to your pylintrc::
 
 """
 
-from __future__ import absolute_import
 from edx_lint.pylint import plugin
 
 # Pylint both insists on, and complains about, this name :)

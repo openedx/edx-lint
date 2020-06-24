@@ -2,7 +2,6 @@
 Pylint plugin: checks that feature toggles are properly annotated.
 """
 
-from __future__ import absolute_import
 import re
 
 from pylint.checkers import BaseChecker, utils
