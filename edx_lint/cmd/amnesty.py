@@ -2,16 +2,15 @@
 Commandline scripts to give one-time amnesty for specify linting error conditions.
 """
 
-from __future__ import print_function
 
-from collections import namedtuple, defaultdict
+
 import logging
 import re
 import sys
+from collections import namedtuple, defaultdict
 
 import click
 import click_log
-
 
 LOG = logging.getLogger(__name__)
 PYLINT_PARSEABLE_REGEX = re.compile(

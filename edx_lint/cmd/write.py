@@ -1,18 +1,16 @@
 """The edx_lint write command."""
 
-from __future__ import print_function
+
 
 import os
 
-import six
-from six.moves import configparser
-from six.moves import cStringIO
-
 import pkg_resources
+import six
+from six.moves import cStringIO
+from six.moves import configparser
 
-from edx_lint.tamper_evident import TamperEvidentFile
 from edx_lint.configfile import merge_configs
-
+from edx_lint.tamper_evident import TamperEvidentFile
 
 WARNING_HEADER = u"""\
 # ***************************

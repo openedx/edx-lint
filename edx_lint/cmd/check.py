@@ -1,5 +1,4 @@
 """The edx_lint check command."""
-from __future__ import print_function
 
 import os
 
