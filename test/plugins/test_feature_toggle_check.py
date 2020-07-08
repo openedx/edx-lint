@@ -31,7 +31,6 @@ def test_waffle_missing_toggle_annotation_check():
         MissingCourseWithKwarg = CourseWaffleFlag( #=F
             waffle_namespace=waffle_flags(),
             flag_name=u'missing_course_with_kwarg',
-            flag_undefined_default=False
         )
         """
 
