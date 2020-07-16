@@ -23,6 +23,10 @@ WARNING_HEADER = u"""\
 # you want to make a local change that applies only to this repo, or whether
 # you want to make a central change that applies to all repos using edx-lint.
 #
+# Note: If your pylintrc file is simply out-of-date relative to the latest
+# pylintrc rules in edx-lint, ensure you have the latest edx-lint installed
+# and then follow the steps for a "LOCAL CHANGE".
+#
 # LOCAL CHANGE:
 #
 # 1. Edit the local {tweaks_name} file to add changes just to this
