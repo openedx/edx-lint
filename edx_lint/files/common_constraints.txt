@@ -1,0 +1,3 @@
+# common constraints file across edx usage
+# using LTS django version
+Django<2.3
