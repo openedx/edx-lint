@@ -43,24 +43,21 @@ class CrossMonolithImportChecker(BaseChecker):
     }
 
     @staticmethod
-    def is_node_within_lms(node):
+    def get_top_level_package(node):
         """
-        Check whether a node is within the `lms/` top-level directory.
+        Find which top-level monolith package the node is in, or None.
 
-        Due to the PYTHONPATH-modification hack in edx-platform/lms/envs/common.py,
-        LMS modules can go by both fully-qualified (`lms.djangoapps.$app.$module`)
-        and partially-qualified (`$app.$module`) names, making it difficult to tell
-        via regular means whether an AST node is within the LMS top-level folder.
-        So, instead, we check using the actual file path of the module.
-
-        This shares most of its logic with `is_node_within_cms`, but they are separate,
-        in anticipation of the directory structures of LMS/Studio developing
-        indepenently of one another.
+        Due to the PYTHONPATH-modification hack in the edx-platform common.py settings
+        files, djangoapps in lms/, cms/, and common/ can go by both their fully-qualified
+        module names (e.g. `lms.djangoapps.$app.$module`), or their partially-qualified
+        module names (e.g. `$app.$module`). This makes it a bit challenging to deduce
+        their top-level package based on where 
 
         Arguments:
             node (NodeNG)
 
-        Returns: bool
+        Returns: str|None
+            One of: "lms", "cms", "openedx", "common", None.
         """
         module_fpath = node.root().file or ""
         # We could just check for "/lms/", but that is more likely to return
