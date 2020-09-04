@@ -10,7 +10,3 @@
 
 # using LTS django version
 Django<2.3
-
-
-# pytest-xdist>=2.0.0 removes some aliases and until pytest-django>=3.10.0 is released, this will break tests.
-pytest-xdist==1.34.0
