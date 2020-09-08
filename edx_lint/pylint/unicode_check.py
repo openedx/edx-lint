@@ -42,7 +42,7 @@ class UnicodeFormatStringChecker(BaseTokenChecker):
     }
 
     def __init__(self, *args, **kwargs):
-        super(UnicodeFormatStringChecker, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._unicode_literals = False
 
     def process_module(self, node):

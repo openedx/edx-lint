@@ -15,7 +15,7 @@ def test_unittest_super_check(method):
 
         class GoodTestCase(unittest.TestCase):
             def {method}(self):
-                super(GoodTestCase, self).{method}()
+                super().{method}()
 
         class BadTestCase(unittest.TestCase):
             def {method}(self):         #=A
@@ -32,7 +32,11 @@ def test_unittest_super_check(method):
         """
     ).format(method=method)
     messages = run_pylint(source, MSG_IDS)
-    expected = {"A:super-method-not-called:super(...).{}() not called (unittest.case.TestCase)".format(method)}
+    expected = {
+        "A:super-method-not-called:super(...).{}() not called (unittest.case.TestCase)".format(
+            method
+        )
+    }
     assert expected == messages
 
 
@@ -44,7 +48,7 @@ def test_django_super_check(method):
 
         class GoodTestCase(django.test.TestCase):
             def {method}(self):
-                super(GoodTestCase, self).{method}()
+                super().{method}()
 
         class BadTestCase(django.test.TestCase):
             def {method}(self):         #=A
@@ -52,7 +56,9 @@ def test_django_super_check(method):
         """
     ).format(method=method)
     messages = run_pylint(source, MSG_IDS)
-    expected = {"A:super-method-not-called:super(...).setUpTestData() not called (django.test.testcases.TestCase)"}
+    expected = {
+        "A:super-method-not-called:super(...).setUpTestData() not called (django.test.testcases.TestCase)"
+    }
     assert expected == messages
 
 
@@ -69,10 +75,12 @@ def test_hamfisted_super():
                 foo("What").setUp(self)
                 What.setUp(self)
                 SomeOtherClass.setUp(self)   #=A
-                super(BadTestCase, self).setUp()
+                super().setUp()
         """
     messages = run_pylint(source, MSG_IDS)
-    expected = {"A:non-parent-method-called:setUp() was called from a non-parent class (source.SomeOtherClass)"}
+    expected = {
+        "A:non-parent-method-called:setUp() was called from a non-parent class (source.SomeOtherClass)"
+    }
     assert expected == messages
 
 
@@ -87,11 +95,11 @@ def test_good_super():
             def setUp(self):
                 self.foo_meth(bar)
                 foo_func(bar)
-                super(GoodTestCase, self).setUp()
+                super().setUp()
 
             def tearDown(self):
                 # Not sure why you would do it this way, ...
-                base = super(GoodTestCase, self)
+                base = super()
                 base.tearDown()
 
             def foo_meth(self, bar):
