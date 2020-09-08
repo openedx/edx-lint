@@ -255,7 +255,6 @@ enable =
 	multiple-imports,
 	multiple-statements,
 	no-classmethod-decorator,
-	no-self-use,
 	no-staticmethod-decorator,
 	old-raise-syntax,
 	old-style-class,
@@ -328,6 +327,7 @@ disable =
 	misplaced-comparison-constant,
 	no-else-return,
 	no-init,
+	no-self-use,
 	suppressed-message,
 	too-few-public-methods,
 	too-many-ancestors,
@@ -480,4 +480,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 06ed594579a9e8f6737446521986de6e1766469b
+# 0e295eac1585b1ab8208e7411d0842e4060642fa
