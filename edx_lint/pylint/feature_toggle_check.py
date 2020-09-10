@@ -88,14 +88,18 @@ class FeatureToggleChecker(BaseChecker):
             "feature toggle is missing annotation",
         ),
         ("E%d41" % BASE_ID): (
-            u"illegal waffle usage with (%s): use utility classes {}.".format(", ".join(_WAFFLE_TOGGLE_CLASSES)),
+            u"illegal waffle usage with (%s): use utility classes {}.".format(
+                ", ".join(_WAFFLE_TOGGLE_CLASSES)
+            ),
             ILLEGAL_WAFFLE_MESSAGE_ID,
-            u"illegal waffle usage: use utility classes {}.".format(", ".join(_WAFFLE_TOGGLE_CLASSES)),
+            u"illegal waffle usage: use utility classes {}.".format(
+                ", ".join(_WAFFLE_TOGGLE_CLASSES)
+            ),
         ),
     }
 
     def __init__(self, *args, **kwargs):
-        super(FeatureToggleChecker, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._lines = None
 
     def visit_module(self, node):
@@ -130,7 +134,11 @@ class FeatureToggleChecker(BaseChecker):
                 if len(node.args) >= 2:
                     feature_toggle_name = node.args[1].as_string()
 
-            self.add_message(self.TOGGLE_NOT_ANNOTATED_MESSAGE_ID, args=(feature_toggle_name,), node=node)
+            self.add_message(
+                self.TOGGLE_NOT_ANNOTATED_MESSAGE_ID,
+                args=(feature_toggle_name,),
+                node=node,
+            )
 
     def check_configuration_model_annotated(self, node):
         """
@@ -142,7 +150,11 @@ class FeatureToggleChecker(BaseChecker):
         if not self._lines.is_line_annotated(node.lineno - 1):
             config_model_subclass_name = node.name
 
-            self.add_message(self.TOGGLE_NOT_ANNOTATED_MESSAGE_ID, args=(config_model_subclass_name,), node=node)
+            self.add_message(
+                self.TOGGLE_NOT_ANNOTATED_MESSAGE_ID,
+                args=(config_model_subclass_name,),
+                node=node,
+            )
 
     def check_django_feature_flag_annotated(self, node):
         """
@@ -161,7 +173,9 @@ class FeatureToggleChecker(BaseChecker):
                     django_feature_toggle_name = key.value
 
                     self.add_message(
-                        self.TOGGLE_NOT_ANNOTATED_MESSAGE_ID, args=(django_feature_toggle_name,), node=node
+                        self.TOGGLE_NOT_ANNOTATED_MESSAGE_ID,
+                        args=(django_feature_toggle_name,),
+                        node=node,
                     )
 
     def check_illegal_waffle_usage(self, node):
@@ -176,7 +190,9 @@ class FeatureToggleChecker(BaseChecker):
             if len(node.args) >= 1:
                 feature_toggle_name = node.args[0].as_string()
 
-            self.add_message(self.ILLEGAL_WAFFLE_MESSAGE_ID, args=(feature_toggle_name,), node=node)
+            self.add_message(
+                self.ILLEGAL_WAFFLE_MESSAGE_ID, args=(feature_toggle_name,), node=node
+            )
 
     @utils.check_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID, ILLEGAL_WAFFLE_MESSAGE_ID)
     def visit_call(self, node):

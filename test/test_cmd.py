@@ -17,7 +17,7 @@ class WriteCommandTest(unittest.TestCase):
     """ Tests for the write command. """
 
     def setUp(self):
-        super(WriteCommandTest, self).setUp()
+        super().setUp()
 
         # Make a temporary directory to work in, and rm-rf it when we're done.
         tempdir = tempfile.mkdtemp(suffix="_edx_lint_test")
@@ -32,7 +32,7 @@ class WriteCommandTest(unittest.TestCase):
         self.assert_not_file(PYLINTRC)
 
     def call_command(self, argv=None):
-        """ Call an edx_lint script command.
+        """Call an edx_lint script command.
 
         Arguments:
             argv (list) -- arguments to pass to the edx_lint script
@@ -85,7 +85,9 @@ class WriteCommandTest(unittest.TestCase):
         with open(PYLINTRC, "a") as pylintrc:
             pylintrc.write("# changed!\n")
         self.assertEqual(0, self.call_command(["write", PYLINTRC]))
-        self.assert_file(PYLINTRC_BACKUP, contains="# changed!", not_contains="# modified!")
+        self.assert_file(
+            PYLINTRC_BACKUP, contains="# changed!", not_contains="# modified!"
+        )
 
     def test_write_applies_tweaks(self):
         # Create a tweaks file.

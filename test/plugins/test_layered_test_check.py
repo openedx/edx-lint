@@ -54,7 +54,7 @@ def test_layered_test_checker():
 
         class EmptyTestCase(unittest.TestCase):
             def setUp(self):
-                super(EmptyTestCase, self).setUp()
+                super().setUp()
 
         class ActualTestCase(EmptyTestCase):
             def test_something(self):

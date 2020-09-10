@@ -8,6 +8,4 @@ Add this to your pylintrc::
 
 from edx_lint.pylint import plugin
 
-# Pylint both insists on, and complains about, this name :)
-# pylint: disable=invalid-name
 register = plugin.register
