@@ -12,9 +12,6 @@ def test_waffle_missing_toggle_annotation_check():
         # .. toggle_name: course_waffle_annotated_flag
         CourseWaffleFlag(NAMESPACE, 'course_waffle_annotated_flag')
 
-        # .. documented_elsewhere
-        WaffleFlag(NAMESPACE, 'documented_elsewhere')
-
         NotAFlag(NAMESPACE, NOT_A_WAFFLE_FLAG)
 
         # .. wrong_annotation
@@ -66,10 +63,6 @@ def test_config_models_missing_doc():
         class NoAnnotationsConfig(ConfigurationModel): #=B
             my_toggle_name = models.BooleanField(default=True)
 
-        # .. documented_elsewhere: true
-        class DocumentedElsewhereConfig(ConfigurationModel): #=A
-            my_toggle_name = models.BooleanField(default=True)
-
         class NotAConfigurationModelClass():
             def __init__(self, value):
                 self.value = value
@@ -104,9 +97,6 @@ def test_django_feature_flags_missing_doc():
 
             # .. wrong_annotation
             'WRONG_DOCUMENTATION_FLAG': False,
-
-            # .. documented_elsewhere: true
-            'DOCUMENTED_ELSEWHERE': False,
         }
 
         FEATURES = {  #pylint: disable=feature-toggle-needs-doc

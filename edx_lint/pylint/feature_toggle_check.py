@@ -24,8 +24,8 @@ class AnnotationLines:
     separated by line breaks.
     """
 
-    # Regex searches for annotations like: # .. toggle or # .. documented_elsewhere
-    _ANNOTATION_REGEX = re.compile(r"[\s]*#[\s]*\.\.[\s]*(toggle|documented_elsewhere)")
+    # Regex searches for annotations like: # .. toggle
+    _ANNOTATION_REGEX = re.compile(r"[\s]*#[\s]*\.\.[\s]*(toggle)")
 
     def __init__(self, module_node):
         """
