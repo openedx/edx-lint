@@ -1,0 +1,7 @@
+# Note that these requirements are pinned in order to provide a pinned pylint version for all dependent projects.
+pylint==2.6.0
+pylint-django==2.3.0
+pylint-celery==0.3
+six>=1.10.0,<2.0.0
+click>=6.0
+click-log==0.3.2

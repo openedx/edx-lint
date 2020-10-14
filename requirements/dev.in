@@ -1,4 +1,4 @@
--e .
+-r base.txt
 
 tox
 tox-battery
