@@ -73,6 +73,9 @@ To run the tests::
     $ make requirements
     $ make test
 
+To manually test your pylint plugin, create a custom module and run pylint with a selected set of enabled message symbols. For instance::
+
+    pylint --load-plugins=edx_lint.pylint --disable=all --enable=feature-toggle-needs-doc path/to/my/custom/module.py
 
 License
 -------
