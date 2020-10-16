@@ -7,7 +7,7 @@
 astroid==2.4.2            # via pylint, pylint-celery
 click-log==0.3.2          # via -r requirements/base.in
 click==7.1.2              # via -r requirements/base.in, click-log
-isort==5.6.4              # via pylint
+isort==4.3.21             # via pylint
 lazy-object-proxy==1.4.3  # via astroid
 mccabe==0.6.1             # via pylint
 pylint-celery==0.3        # via -r requirements/base.in
@@ -16,4 +16,5 @@ pylint-plugin-utils==0.6  # via pylint-celery, pylint-django
 pylint==2.6.0             # via -r requirements/base.in, pylint-celery, pylint-django, pylint-plugin-utils
 six==1.15.0               # via -r requirements/base.in, astroid
 toml==0.10.1              # via pylint
+typed-ast==1.4.1          # via astroid
 wrapt==1.12.1             # via astroid
