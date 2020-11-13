@@ -29,5 +29,8 @@ trim_trailing_whitespace = false
 # Don't fiddle with .git files at all.
 trim_trailing_whitespace = false
 
+[COMMIT_EDITMSG]
+max_line_length = 72
+
 [*.rst]
 max_line_length = 79
