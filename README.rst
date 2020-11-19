@@ -99,5 +99,5 @@ The Open edX project has resources for developer support on the `Getting Help`_ 
 
 .. _Getting Help: https://open.edx.org/getting-help
 
-.. |Travis| image:: https://travis-ci.org/edx/edx-lint.svg?branch=master
-.. _Travis: https://travis-ci.org/edx/edx-lint
+.. |Travis| image:: https://travis-ci.com/edx/edx-lint.svg?branch=master
+.. _Travis: https://travis-ci.com/edx/edx-lint
