@@ -15,6 +15,6 @@ pylint-django==2.3.0      # via -r requirements/base.in
 pylint-plugin-utils==0.6  # via pylint-celery, pylint-django
 pylint==2.6.0             # via -r requirements/base.in, pylint-celery, pylint-django, pylint-plugin-utils
 six==1.15.0               # via -r requirements/base.in, astroid
-toml==0.10.1              # via pylint
+toml==0.10.2              # via pylint
 typed-ast==1.4.1          # via astroid
 wrapt==1.12.1             # via astroid
