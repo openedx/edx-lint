@@ -2,7 +2,7 @@
 edx-lint
 ========
 
-| |Travis|_
+| |CI|_
 
 A collection of code quality tools:
 
@@ -99,5 +99,5 @@ The Open edX project has resources for developer support on the `Getting Help`_ 
 
 .. _Getting Help: https://open.edx.org/getting-help
 
-.. |Travis| image:: https://travis-ci.org/edx/edx-lint.svg?branch=master
-.. _Travis: https://travis-ci.org/edx/edx-lint
+.. |CI| image:: https://github.com/edx/edx-lint/workflows/Python%20CI/badge.svg?branch=master
+.. _CI: https://github.com/edx/edx-lint/actions?query=workflow%3A%22Python+CI%22
