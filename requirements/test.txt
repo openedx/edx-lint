@@ -6,20 +6,20 @@
 #
 appdirs==1.4.4            # via -r requirements/dev.txt, virtualenv
 astroid==2.4.2            # via -r requirements/dev.txt, pylint, pylint-celery
-attrs==20.2.0             # via pytest
+attrs==20.3.0             # via pytest
 click-log==0.3.2          # via -r requirements/dev.txt
 click==7.1.2              # via -r requirements/dev.txt, click-log
 coverage==5.3             # via -r requirements/test.in
 distlib==0.3.1            # via -r requirements/dev.txt, virtualenv
-django==2.2.16            # via -r requirements/test.in
+django==2.2.17            # via -r requirements/test.in
 filelock==3.0.12          # via -r requirements/dev.txt, tox, virtualenv
-importlib-metadata==1.7.0  # via -r requirements/dev.txt, pluggy, pytest, tox, virtualenv
-importlib-resources==3.0.0  # via -r requirements/dev.txt, virtualenv
+importlib-metadata==2.1.0  # via -r requirements/dev.txt, pluggy, pytest, tox, virtualenv
+importlib-resources==3.2.1  # via -r requirements/dev.txt, virtualenv
 iniconfig==1.1.1          # via pytest
 isort==4.3.21             # via -r requirements/dev.txt, pylint
 lazy-object-proxy==1.4.3  # via -r requirements/dev.txt, astroid
 mccabe==0.6.1             # via -r requirements/dev.txt, pylint
-packaging==20.4           # via -r requirements/dev.txt, pytest, tox
+packaging==20.7           # via -r requirements/dev.txt, pytest, tox
 pathlib2==2.3.5           # via pytest
 pluggy==0.13.1            # via -r requirements/dev.txt, pytest, tox
 py==1.9.0                 # via -r requirements/dev.txt, pytest, tox
@@ -28,14 +28,14 @@ pylint-django==2.3.0      # via -r requirements/dev.txt
 pylint-plugin-utils==0.6  # via -r requirements/dev.txt, pylint-celery, pylint-django
 pylint==2.6.0             # via -r requirements/dev.txt, pylint-celery, pylint-django, pylint-plugin-utils
 pyparsing==2.4.7          # via -r requirements/dev.txt, packaging
-pytest==6.1.1             # via -r requirements/test.in
-pytz==2020.1              # via django
-six==1.15.0               # via -r requirements/dev.txt, astroid, packaging, tox, virtualenv
+pytest==6.1.2             # via -r requirements/test.in
+pytz==2020.4              # via django
+six==1.15.0               # via -r requirements/dev.txt, astroid, tox, virtualenv
 sqlparse==0.4.1           # via django
-toml==0.10.1              # via -r requirements/dev.txt, pylint, pytest, tox
+toml==0.10.2              # via -r requirements/dev.txt, pylint, pytest, tox
 tox-battery==0.6.1        # via -r requirements/dev.txt
-tox==3.20.0               # via -r requirements/dev.txt, tox-battery
+tox==3.20.1               # via -r requirements/dev.txt, tox-battery
 typed-ast==1.4.1          # via -r requirements/dev.txt, astroid
-virtualenv==20.0.31       # via -r requirements/dev.txt, tox
+virtualenv==20.2.1        # via -r requirements/dev.txt, tox
 wrapt==1.12.1             # via -r requirements/dev.txt, astroid
 zipp==1.2.0               # via -r requirements/dev.txt, importlib-metadata, importlib-resources
