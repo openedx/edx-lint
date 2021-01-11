@@ -83,16 +83,16 @@ class FeatureToggleChecker(BaseChecker):
 
     msgs = {
         ("E%d40" % BASE_ID): (
-            u"feature toggle (%s) is missing annotation",
+            "feature toggle (%s) is missing annotation",
             TOGGLE_NOT_ANNOTATED_MESSAGE_ID,
             "feature toggle is missing annotation",
         ),
         ("E%d41" % BASE_ID): (
-            u"illegal waffle usage with (%s): use utility classes {}.".format(
+            "illegal waffle usage with (%s): use utility classes {}.".format(
                 ", ".join(_WAFFLE_TOGGLE_CLASSES)
             ),
             ILLEGAL_WAFFLE_MESSAGE_ID,
-            u"illegal waffle usage: use utility classes {}.".format(
+            "illegal waffle usage: use utility classes {}.".format(
                 ", ".join(_WAFFLE_TOGGLE_CLASSES)
             ),
         ),

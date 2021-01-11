@@ -2,8 +2,6 @@
 
 import re
 
-import six
-
 import astroid
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
@@ -48,7 +46,7 @@ class GetSetAttrLiteralChecker(BaseChecker):
     MESSAGE_ID = "literal-used-as-attribute"
     msgs = {
         ("C%d30" % BASE_ID): (
-            u"%s using a literal attribute name",
+            "%s using a literal attribute name",
             MESSAGE_ID,
             "getattr or setattr using with a literal attribute name",
         )
@@ -73,7 +71,7 @@ class GetSetAttrLiteralChecker(BaseChecker):
 
         second = node.args[1]
         if isinstance(second, astroid.Const):
-            if isinstance(second.value, six.string_types):
+            if isinstance(second.value, str):
                 # The second argument is a constant string! Might be bad!
                 # Check the string value: if it's an identifier, then no need
                 # for getattr.

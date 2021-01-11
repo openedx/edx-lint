@@ -70,5 +70,5 @@ def test_wrong_usage(code, better):
     ).format(code)
     messages = run_pylint(source, "wrong-assert-type")
 
-    expected = {"A:wrong-assert-type:{} should be {}".format(code, better)}
+    expected = {f"A:wrong-assert-type:{code} should be {better}"}
     assert expected == messages

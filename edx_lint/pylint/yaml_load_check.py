@@ -36,8 +36,8 @@ class YamlLoadChecker(BaseChecker):
     UNSAFE_CALLS = {"yaml.load", "yaml.load_all"}
 
     msgs = {
-        "C{}57".format(BASE_ID): (
-            u"yaml.load%s() call is unsafe, use yaml.safe_load%s()",
+        f"C{BASE_ID}57": (
+            "yaml.load%s() call is unsafe, use yaml.safe_load%s()",
             MESSAGE_ID,
             "yaml.load*() is unsafe",
         )

@@ -1,11 +1,9 @@
 """Pylint plugin: check that tests have used super() properly."""
 
 import astroid
-import six
-
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 from pylint.checkers.classes import _ancestors_to_call
+from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors, usable_class_name
 
@@ -38,12 +36,12 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     msgs = {
         ("E%d01" % BASE_ID): (
-            u"super(...).%s() not called (%s)",
+            "super(...).%s() not called (%s)",
             NOT_CALLED_MESSAGE_ID,
             "setUp() must call super(...).setUp()",
         ),
         ("E%d02" % BASE_ID): (
-            u"%s() was called from a non-parent class (%s)",
+            "%s() was called from a non-parent class (%s)",
             NON_PARENT_MESSAGE_ID,
             "setUp() should only be called for parent classes",
         ),
@@ -110,7 +108,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
             except astroid.InferenceError:
                 continue
 
-        for klass, method in six.iteritems(not_called_yet):
+        for klass, method in not_called_yet.items():
             if klass.name == "object" or method.parent.name == "object":
                 continue
             self.add_message(self.NOT_CALLED_MESSAGE_ID, args=(method_name, usable_class_name(klass)), node=node)

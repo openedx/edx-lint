@@ -63,7 +63,7 @@ def run_pylint(source, msg_ids):
 
     reporter = SimpleReporter()
 
-    pylint_args = ["source.py", "--disable=all", "--enable={}".format(msg_ids)]
+    pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}"]
     if pylint_numversion >= (2, 0):
         kwargs = dict(do_exit=False)
     else:

@@ -13,7 +13,6 @@ from edx_lint.pylint import (
     super_check,
     layered_test_check,
     right_assert_check,
-    unicode_check,
     yaml_load_check,
 )
 
@@ -26,7 +25,6 @@ MODS = [
     super_check,
     layered_test_check,
     right_assert_check,
-    unicode_check,
     yaml_load_check,
 ]
 

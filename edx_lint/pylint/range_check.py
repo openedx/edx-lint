@@ -38,7 +38,7 @@ class RangeChecker(BaseChecker):
     RANGE_FUNCTIONS = ["range", "xrange"]
 
     MESSAGE_ID = "simplifiable-range"
-    msgs = {("C%d20" % BASE_ID): (u"%s() call could be %s-argument", MESSAGE_ID, "range() call could be simplified")}
+    msgs = {("C%d20" % BASE_ID): ("%s() call could be %s-argument", MESSAGE_ID, "range() call could be simplified")}
 
     @utils.check_messages(MESSAGE_ID)
     def visit_call(self, node):

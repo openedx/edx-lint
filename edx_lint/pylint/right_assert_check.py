@@ -98,4 +98,4 @@ class AssertChecker(BaseChecker):
 
             if node.func.attrname == "assertFalse":
                 better = self.INVERTED[better]
-            self.add_message(self.MESSAGE_ID, args=u"%s should be %s" % (existing_code, better), node=node)
+            self.add_message(self.MESSAGE_ID, args="%s should be %s" % (existing_code, better), node=node)
