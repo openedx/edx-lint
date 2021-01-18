@@ -13,6 +13,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Add feature toggle annotation linting.
+
 ..
     Feel free to update the following link to actual changelog entries.
 ..

@@ -2,8 +2,13 @@
 Pylint plugin: checks that feature toggles are properly annotated.
 """
 
+import os
 import re
 
+import pkg_resources
+
+from code_annotations.base import AnnotationConfig
+from code_annotations.find_static import StaticSearch
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
@@ -15,6 +20,7 @@ def register_checkers(linter):
     Register checkers.
     """
     linter.register_checker(FeatureToggleChecker(linter))
+    linter.register_checker(FeatureToggleAnnotationChecker(linter))
 
 
 class AnnotationLines:
@@ -217,3 +223,119 @@ class FeatureToggleChecker(BaseChecker):
         initialized.
         """
         self.check_django_feature_flag_annotated(node)
+
+
+@check_visitors
+class FeatureToggleAnnotationChecker(BaseChecker):
+    """
+    Parse feature toggle annotations and ensure best practices are followed.
+    """
+
+    __implements__ = (IAstroidChecker,)
+
+    name = "feature-toggle-annotation-checker"
+
+    INCORRECT_NAME_MESSAGE_ID = "toggle-incorrect-name"
+    EMPTY_DESCRIPTION_MESSAGE_ID = "toggle-empty-description"
+    MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID = "toggle-missing-target-removal-date"
+    NON_BOOLEAN_DEFAULT_VALUE = "toggle-non-boolean-default-value"
+
+    msgs = {
+        ("E%d50" % BASE_ID): (
+            "feature toggle has undefined or incorrectly placed name",
+            INCORRECT_NAME_MESSAGE_ID,
+            "Feature toggle name must be present and be the first annotation",
+        ),
+        ("E%d51" % BASE_ID): (
+            "feature toggle (%s) does not have a description",
+            EMPTY_DESCRIPTION_MESSAGE_ID,
+            "Feature toggles must include a thorough description",
+        ),
+        ("E%d52" % BASE_ID): (
+            "temporary feature toggle (%s) has no target removal date",
+            MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
+            "Temporary feature toggles must include a target removal date",
+        ),
+        ("E%d53" % BASE_ID): (
+            "feature toggle (%s) default value must be boolean ('True' or 'False')",
+            NON_BOOLEAN_DEFAULT_VALUE,
+            "Temporary feature toggles must include a target removal date",
+        ),
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        config_path = pkg_resources.resource_filename(
+            "code_annotations",
+            os.path.join("contrib", "config", "feature_toggle_annotations.yaml"),
+        )
+        self.config = AnnotationConfig(config_path, verbosity=-1)
+        self.search = StaticSearch(self.config)
+
+    @utils.check_messages(
+        INCORRECT_NAME_MESSAGE_ID,
+        EMPTY_DESCRIPTION_MESSAGE_ID,
+        MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
+        NON_BOOLEAN_DEFAULT_VALUE,
+    )
+    def visit_module(self, node):
+        """
+        Perform checks on all annotation groups for this module.
+        """
+        # This is a hack to avoid re-creating AnnotationConfig every time
+        self.config.source_path = node.path[0]
+        results = self.search.search()
+
+        current_annotations_group = []
+        for _file_name, results in results.items():
+            for current_annotations_group in self.search.iter_groups(results):
+                self.check_feature_toggles_annotation_group(current_annotations_group, node)
+
+    def check_feature_toggles_annotation_group(self, annotations, node):
+        """
+        Perform checks on a single annotation group.
+        """
+        if not annotations:
+            return
+
+        target_removal_date = None
+        temporary_use_case = False
+        toggle_name = ""
+        toggle_description = ""
+        toggle_default = None
+        for annotation in annotations:
+            if annotation["annotation_token"] == ".. toggle_name:":
+                toggle_name = annotation["annotation_data"]
+            elif annotation["annotation_token"] == ".. toggle_description:":
+                toggle_description = annotation["annotation_data"].strip()
+            elif annotation["annotation_token"] == ".. toggle_use_cases:":
+                if "temporary" in annotation["annotation_data"]:
+                    temporary_use_case = True
+            elif annotation["annotation_token"] == ".. toggle_target_removal_date:":
+                target_removal_date = annotation["annotation_data"]
+            elif annotation["annotation_token"] == ".. toggle_default:":
+                toggle_default = annotation["annotation_data"]
+
+        if not toggle_name:
+            self.add_message(
+                self.INCORRECT_NAME_MESSAGE_ID,
+                node=node,
+            )
+        if not toggle_description:
+            self.add_message(
+                self.EMPTY_DESCRIPTION_MESSAGE_ID,
+                args=(toggle_name,),
+                node=node,
+            )
+        if temporary_use_case and not target_removal_date:
+            self.add_message(
+                self.MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
+                args=(toggle_name,),
+                node=node,
+            )
+        if toggle_default not in ["True", "False"]:
+            self.add_message(
+                self.NON_BOOLEAN_DEFAULT_VALUE,
+                args=(toggle_name,),
+                node=node,
+            )
