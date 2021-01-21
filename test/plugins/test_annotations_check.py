@@ -1,4 +1,4 @@
-"""Test feature_toggle_check.py"""
+"""Test annotations_check.py"""
 # pylint: disable=toggle-non-boolean-default-value,toggle-empty-description,toggle-no-name
 
 from .pylint_test import run_pylint
@@ -164,6 +164,17 @@ def test_empty_removal_date_on_permanent_use_case():
     assert not messages
 
 
+def test_toggle_with_empty_name():
+    source = """
+    # .. toggle_name:
+    """
+    messages = run_pylint(source, "toggle-no-name")
+    expected = {
+        "1:toggle-no-name:feature toggle has no name"
+    }
+    assert expected == messages
+
+
 def test_toggle_with_empty_description():
     source = """
     # .. toggle_name: MYTOGGLE
@@ -184,5 +195,17 @@ def test_non_boolean_default_value():
     messages = run_pylint(source, "toggle-non-boolean-default-value")
     expected = {
         "1:toggle-non-boolean-default-value:feature toggle (MYTOGGLE) default value must be boolean ('True' or 'False')"
+    }
+    assert expected == messages
+
+
+def test_setting_boolean_default_value():
+    source = """
+    # .. setting_name: MYSETTING
+    # .. setting_default: True
+    """
+    messages = run_pylint(source, "setting-boolean-default-value")
+    expected = {
+        "1:setting-boolean-default-value:setting annotation (MYSETTING) cannot have a boolean value"
     }
     assert expected == messages

@@ -5,7 +5,7 @@ will register them with pylint.
 """
 
 from edx_lint.pylint import (
-    feature_toggle_check,
+    annotations_check,
     getattr_check,
     i18n_check,
     module_trace,
@@ -17,7 +17,7 @@ from edx_lint.pylint import (
 )
 
 MODS = [
-    feature_toggle_check,
+    annotations_check,
     getattr_check,
     i18n_check,
     module_trace,

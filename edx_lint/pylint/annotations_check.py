@@ -21,6 +21,7 @@ def register_checkers(linter):
     """
     linter.register_checker(FeatureToggleChecker(linter))
     linter.register_checker(FeatureToggleAnnotationChecker(linter))
+    linter.register_checker(SettingAnnotationChecker(linter))
 
 
 class AnnotationLines:
@@ -226,24 +227,59 @@ class FeatureToggleChecker(BaseChecker):
 
 
 @check_visitors
-class FeatureToggleAnnotationChecker(BaseChecker):
+class AnnotationBaseChecker(BaseChecker):
+    """
+    Code annotation checkers should almost certainly inherit from this class.
+    """
+
+    # Override this in child classes
+    CONFIG_FILENAME = ""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        config_path = pkg_resources.resource_filename(
+            "code_annotations",
+            os.path.join("contrib", "config", self.CONFIG_FILENAME),
+        )
+        self.config = AnnotationConfig(config_path, verbosity=-1)
+        self.search = StaticSearch(self.config)
+
+    def check_module(self, node):
+        """
+        Perform checks on all annotation groups for this module.
+        """
+        # This is a hack to avoid re-creating AnnotationConfig every time
+        self.config.source_path = node.path[0]
+        results = self.search.search()
+
+        current_annotations_group = []
+        for _file_name, results in results.items():
+            for current_annotations_group in self.search.iter_groups(results):
+                self.check_annotation_group(current_annotations_group, node)
+
+    def check_annotation_group(self, annotations, node):
+        raise NotImplementedError
+
+
+class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
     """
     Parse feature toggle annotations and ensure best practices are followed.
     """
+    CONFIG_FILENAME = "feature_toggle_annotations.yaml"
 
     __implements__ = (IAstroidChecker,)
 
     name = "feature-toggle-annotation-checker"
 
-    INCORRECT_NAME_MESSAGE_ID = "toggle-incorrect-name"
+    NO_NAME_MESSAGE_ID = "toggle-no-name"
     EMPTY_DESCRIPTION_MESSAGE_ID = "toggle-empty-description"
     MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID = "toggle-missing-target-removal-date"
     NON_BOOLEAN_DEFAULT_VALUE = "toggle-non-boolean-default-value"
 
     msgs = {
         ("E%d50" % BASE_ID): (
-            "feature toggle has undefined or incorrectly placed name",
-            INCORRECT_NAME_MESSAGE_ID,
+            "feature toggle has no name",
+            NO_NAME_MESSAGE_ID,
             "Feature toggle name must be present and be the first annotation",
         ),
         ("E%d51" % BASE_ID): (
@@ -259,39 +295,23 @@ class FeatureToggleAnnotationChecker(BaseChecker):
         ("E%d53" % BASE_ID): (
             "feature toggle (%s) default value must be boolean ('True' or 'False')",
             NON_BOOLEAN_DEFAULT_VALUE,
-            "Temporary feature toggles must include a target removal date",
+            "Feature toggle default values must be boolean",
         ),
     }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        config_path = pkg_resources.resource_filename(
-            "code_annotations",
-            os.path.join("contrib", "config", "feature_toggle_annotations.yaml"),
-        )
-        self.config = AnnotationConfig(config_path, verbosity=-1)
-        self.search = StaticSearch(self.config)
-
     @utils.check_messages(
-        INCORRECT_NAME_MESSAGE_ID,
+        NO_NAME_MESSAGE_ID,
         EMPTY_DESCRIPTION_MESSAGE_ID,
         MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
         NON_BOOLEAN_DEFAULT_VALUE,
     )
     def visit_module(self, node):
         """
-        Perform checks on all annotation groups for this module.
+        Run all checks on a single module.
         """
-        # This is a hack to avoid re-creating AnnotationConfig every time
-        self.config.source_path = node.path[0]
-        results = self.search.search()
+        self.check_module(node)
 
-        current_annotations_group = []
-        for _file_name, results in results.items():
-            for current_annotations_group in self.search.iter_groups(results):
-                self.check_feature_toggles_annotation_group(current_annotations_group, node)
-
-    def check_feature_toggles_annotation_group(self, annotations, node):
+    def check_annotation_group(self, annotations, node):
         """
         Perform checks on a single annotation group.
         """
@@ -318,7 +338,7 @@ class FeatureToggleAnnotationChecker(BaseChecker):
 
         if not toggle_name:
             self.add_message(
-                self.INCORRECT_NAME_MESSAGE_ID,
+                self.NO_NAME_MESSAGE_ID,
                 node=node,
             )
         if not toggle_description:
@@ -337,5 +357,57 @@ class FeatureToggleAnnotationChecker(BaseChecker):
             self.add_message(
                 self.NON_BOOLEAN_DEFAULT_VALUE,
                 args=(toggle_name,),
+                node=node,
+            )
+
+
+class SettingAnnotationChecker(AnnotationBaseChecker):
+    """
+    Perform checks on setting annotations.
+    """
+    CONFIG_FILENAME = "setting_annotations.yaml"
+
+    __implements__ = (IAstroidChecker,)
+
+    name = "setting-annotation-checker"
+
+    BOOLEAN_DEFAULT_VALUE = "setting-boolean-default-value"
+
+    msgs = {
+        ("E%d60" % BASE_ID): (
+            "setting annotation (%s) cannot have a boolean value",
+            BOOLEAN_DEFAULT_VALUE,
+            "Setting with boolean values should be annotated as feature toggles",
+        ),
+    }
+
+    @utils.check_messages(
+        BOOLEAN_DEFAULT_VALUE,
+    )
+    def visit_module(self, node):
+        """
+        Run all checks on a single module.
+        """
+        self.check_module(node)
+
+    def check_annotation_group(self, annotations, node):
+        """
+        Perform checks on a single annotation group.
+        """
+        if not annotations:
+            return
+
+        setting_name = ""
+        setting_default = None
+        for annotation in annotations:
+            if annotation["annotation_token"] == ".. setting_name:":
+                setting_name = annotation["annotation_data"]
+            elif annotation["annotation_token"] == ".. setting_default:":
+                setting_default = annotation["annotation_data"]
+
+        if setting_default in ["True", "False"]:
+            self.add_message(
+                self.BOOLEAN_DEFAULT_VALUE,
+                args=(setting_name,),
                 node=node,
             )

@@ -13,6 +13,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Add setting annotation linting.
 * Add feature toggle annotation linting.
 
 ..
