@@ -22,7 +22,7 @@ def main(argv=None):
     elif argv[0] == "write":
         return write_main(argv[1:])
     else:
-        print(u"Don't understand {!r}".format(" ".join(argv)))
+        print("Don't understand {!r}".format(" ".join(argv)))
         show_help()
         return 1
 

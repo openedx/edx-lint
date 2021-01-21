@@ -37,7 +37,7 @@ class AmnestyTest(unittest.TestCase):
             fix_pylint(line, errors_by_line[lineno]) for lineno, line in enumerate(StringIO(input_code), start=1)
         )
 
-        self.assertEqual(expected.split(u"\n"), "".join(output_lines).split(u"\n"))
+        self.assertEqual(expected.split("\n"), "".join(output_lines).split("\n"))
 
     def assert_pylint_exception_match(self, expected, line):
         """
@@ -97,14 +97,14 @@ class AmnestyTest(unittest.TestCase):
         )
 
     def test_add_supression(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg):
                 pass
         """
 
         errors = [PylintError("test.py", 1, "W0613", "unused-argument", "func", "Unused argument 'arg'")]
 
-        expected = u"""\
+        expected = """\
             def func(arg):  # lint-amnesty, pylint: disable=unused-argument
                 pass
         """
@@ -112,7 +112,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_add_multiple_suppressions_same_line(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):
                 pass
         """
@@ -122,7 +122,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 1, "E0108", "duplicate-argument-name", "func", "Duplicate argument name 'arg'"),
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):  # lint-amnesty, pylint: disable=duplicate-argument-name, unused-argument
                 pass
         """
@@ -130,7 +130,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_add_to_existing_suppression(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):  # pylint: disable=unused-argument
                 pass
         """
@@ -139,7 +139,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 1, "E0108", "duplicate-argument-name", "func", "Duplicate argument name 'arg'")
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):  # lint-amnesty, pylint: disable=duplicate-argument-name, unused-argument
                 pass
         """
@@ -147,7 +147,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_add_to_existing_suppression_trailing_comment(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):  # pylint: disable=unused-argument  # noqa
                 pass
         """
@@ -156,7 +156,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 1, "E0108", "duplicate-argument-name", "func", "Duplicate argument name 'arg'")
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):  # lint-amnesty, pylint: disable=duplicate-argument-name, unused-argument  # noqa
                 pass
         """
@@ -164,7 +164,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_add_suppression_trailing_comment(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):  # noqa
                 pass
         """
@@ -173,7 +173,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 1, "E0108", "duplicate-argument-name", "func", "Duplicate argument name 'arg'")
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):  # noqa  # lint-amnesty, pylint: disable=duplicate-argument-name
                 pass
         """
@@ -181,7 +181,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_remove_useless_suppression(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):  # pylint: disable=unused-argument
                 pass
         """
@@ -192,7 +192,7 @@ class AmnestyTest(unittest.TestCase):
             )
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):
                 pass
         """
@@ -200,7 +200,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_remove_useless_suppression_leave_rest(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):  # pylint: disable=unused-argument, duplicate-argument-name
                 pass
         """
@@ -211,7 +211,7 @@ class AmnestyTest(unittest.TestCase):
             )
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):  # pylint: disable=duplicate-argument-name
                 pass
         """
@@ -219,7 +219,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_replace_useless_suppression(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg, arg):  # pylint: disable=unused-argument
                 pass
         """
@@ -231,7 +231,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 1, "E0108", "duplicate-argument-name", "func", "Duplicate argument name 'arg'"),
         ]
 
-        expected = u"""\
+        expected = """\
             def func(arg, arg):  # lint-amnesty, pylint: disable=duplicate-argument-name
                 pass
         """
@@ -239,7 +239,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_fix_multiple_lines(self):
-        input_code = u"""\
+        input_code = """\
             def func_a(arg):
                 pass
 
@@ -252,7 +252,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 4, "E0108", "duplicate-argument-name", "func", "Duplicate argument name 'arg'"),
         ]
 
-        expected = u"""\
+        expected = """\
             def func_a(arg):  # lint-amnesty, pylint: disable=unused-argument
                 pass
 
@@ -263,14 +263,14 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_fix_module_docstring_missing(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg):
                 pass
         """
 
         errors = [PylintError("test.py", 1, "C0111", "missing-docstring", "func", "Missing module docstring")]
 
-        expected = u"""\
+        expected = """\
             # lint-amnesty, pylint: disable=missing-docstring
             def func(arg):
                 pass
@@ -279,7 +279,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_fix_module_and_func_docstring_missing(self):
-        input_code = u"""\
+        input_code = """\
             def func(arg):
                 pass
         """
@@ -289,7 +289,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("test.py", 1, "C0111", "missing-docstring", "func", "Missing function docstring"),
         ]
 
-        expected = u"""\
+        expected = """\
             # lint-amnesty, pylint: disable=missing-docstring
             def func(arg):  # lint-amnesty, pylint: disable=missing-docstring
                 pass
@@ -298,7 +298,7 @@ class AmnestyTest(unittest.TestCase):
         self.assert_amnesty(input_code, errors, expected)
 
     def test_fix_many_errors(self):
-        input_code = u"""\
+        input_code = """\
             def foo(self, arg, blarg, flarg, blanth, notehu, onethu, psonatehu):
                 pass"""
 
@@ -317,7 +317,7 @@ class AmnestyTest(unittest.TestCase):
             PylintError("lint_test.py", 1, "W0613", "unused-argument", "foo", "Unused argument 'flarg'"),
         ]
 
-        expected = u"""\
+        expected = """\
             # lint-amnesty, pylint: disable=missing-docstring
             def foo(self, arg, blarg, flarg, blanth, notehu, onethu, psonatehu):  # lint-amnesty, pylint: disable=blacklisted-name, missing-docstring, unused-argument
                 pass  # lint-amnesty, pylint: disable=missing-final-newline"""

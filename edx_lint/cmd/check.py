@@ -17,13 +17,13 @@ def check_main(argv):
     filename = argv[0]
 
     if os.path.exists(filename):
-        print(u"Checking existing copy of %s" % filename)
+        print("Checking existing copy of %s" % filename)
         tef = TamperEvidentFile(filename)
         if tef.validate():
-            print(u"Your copy of %s is good" % filename)
+            print("Your copy of %s is good" % filename)
         else:
-            print(u"Your copy of %s seems to have been edited" % filename)
+            print("Your copy of %s seems to have been edited" % filename)
     else:
-        print(u"You don't have a copy of %s" % filename)
+        print("You don't have a copy of %s" % filename)
 
     return 0

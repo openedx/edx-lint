@@ -37,8 +37,8 @@ def parse_pylint_output(pylint_output):
         parsed = PYLINT_PARSEABLE_REGEX.search(line)
         if parsed is None:
             LOG.warning(
-                u"Unable to parse %r. If this is a lint failure, please re-run pylint with the "
-                u"--output-format=parseable option, otherwise, you can ignore this message.",
+                "Unable to parse %r. If this is a lint failure, please re-run pylint with the "
+                "--output-format=parseable option, otherwise, you can ignore this message.",
                 line,
             )
             continue
@@ -54,7 +54,7 @@ def format_pylint_disables(error_names, tag=True):
     """
     tag_str = "lint-amnesty, " if tag else ""
     if error_names:
-        return u"  # {tag}pylint: disable={disabled}".format(disabled=", ".join(sorted(error_names)), tag=tag_str)
+        return "  # {tag}pylint: disable={disabled}".format(disabled=", ".join(sorted(error_names)), tag=tag_str)
     else:
         return ""
 
@@ -99,7 +99,7 @@ def fix_pylint(line, errors):
     type=click.File(),
     help="An input file containing pylint --output-format=parseable errors. Defaults to stdin.",
 )
-@click_log.simple_verbosity_option(default=u"INFO")
+@click_log.simple_verbosity_option(default="INFO")
 def pylint_amnesty(pylint_output):
     """
     Add ``# pylint: disable`` clauses to add exceptions to all existing pylint errors in a codebase.
@@ -111,8 +111,8 @@ def pylint_amnesty(pylint_output):
     for file_with_errors in sorted(errors):
         try:
             opened_file = open(file_with_errors)
-        except IOError:
-            LOG.warning(u"Unable to open %s for edits", file_with_errors, exc_info=True)
+        except OSError:
+            LOG.warning("Unable to open %s for edits", file_with_errors, exc_info=True)
         else:
             with opened_file as input_file:
                 output_lines = []

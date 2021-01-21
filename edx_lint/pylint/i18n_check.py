@@ -1,9 +1,6 @@
 """Checker for incorrect string translation functions."""
 
-import six
-
 import astroid
-
 from pylint.checkers import BaseChecker, utils
 from pylint.interfaces import IAstroidChecker
 
@@ -17,7 +14,7 @@ def register_checkers(linter):
 
 @check_visitors
 class TranslationStringConstantsChecker(BaseChecker):
-    u"""
+    """
     Checks for i18n translation functions (_, ugettext, ungettext, and many
     others) being called on something that isn't a string literal.
 
@@ -56,7 +53,7 @@ class TranslationStringConstantsChecker(BaseChecker):
     MESSAGE_ID = "translation-of-non-string"
     msgs = {
         ("E%d10" % BASE_ID): (
-            u"i18n function %s() must be called with a literal string",
+            "i18n function %s() must be called with a literal string",
             MESSAGE_ID,
             "i18n functions must be called with a literal string",
         )
@@ -75,7 +72,7 @@ class TranslationStringConstantsChecker(BaseChecker):
 
         first = node.args[0]
         if isinstance(first, astroid.Const):
-            if isinstance(first.value, six.string_types):
+            if isinstance(first.value, str):
                 # The first argument is a constant string! All is well!
                 return
 

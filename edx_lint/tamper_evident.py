@@ -16,7 +16,7 @@ class TamperEvidentFile:
         self.filename = filename
 
     def write(self, text, hashline=b"# {}"):
-        u"""
+        """
         Write `text` to the file.
 
         Writes the text to the file, with a final line checksumming the

@@ -44,7 +44,7 @@ class LayeredTestClassChecker(BaseChecker):
     MESSAGE_ID = "test-inherits-tests"
     msgs = {
         ("E%d03" % BASE_ID): (
-            u"test class %s inherits tests from %s",
+            "test class %s inherits tests from %s",
             MESSAGE_ID,
             "Used when a test class inherits test methods from another test "
             "class, meaning the inherited tests will run more than once.",
