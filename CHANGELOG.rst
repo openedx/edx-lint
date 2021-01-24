@@ -13,8 +13,17 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+
+[3.0.0] - 2021-01-24
+~~~~~~~~~~~~~~~~~~~~
+
 * Add setting annotation linting.
 * Add feature toggle annotation linting.
+
+[2.0.0] - 2021-01-21
+~~~~~~~~~~~~~~~~~~~~
+
+* Drop support for Python 3.5
 
 ..
     Feel free to update the following link to actual changelog entries.
