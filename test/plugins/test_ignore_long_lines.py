@@ -1,6 +1,7 @@
 """
 Test ignore-long-lines regex
 """
+# pylint: disable=toggle-no-name,toggle-non-boolean-default-value
 
 from .pylint_test import run_pylint
 

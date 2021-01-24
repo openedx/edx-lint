@@ -1,3 +1,5 @@
+code-annotations>=1.0.1    # Parse feature toggle and setting annotations
+Django>=2.2,<2.3           # Version coherent with other projects
 # Note that these requirements are pinned in order to provide a pinned pylint version for all dependent projects.
 pylint==2.6.0
 pylint-django==2.3.0

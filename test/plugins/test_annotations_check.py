@@ -1,4 +1,6 @@
-"""Test feature_toggle_check.py"""
+"""Test annotations_check.py"""
+# pylint: disable=toggle-non-boolean-default-value,toggle-empty-description,toggle-no-name
+
 from .pylint_test import run_pylint
 
 
@@ -137,5 +139,73 @@ def test_illegal_waffle_usage_check():
         "use utility classes WaffleFlag, WaffleSwitch, CourseWaffleFlag.",
         "D:illegal-waffle-usage:illegal waffle usage with (TEST_FLAG): "
         "use utility classes WaffleFlag, WaffleSwitch, CourseWaffleFlag.",
+    }
+    assert expected == messages
+
+
+def test_temporary_use_case_without_target_removal_date():
+    source = """
+    # .. toggle_name: MYTOGGLE
+    # .. toggle_use_cases: temporary
+    """
+    messages = run_pylint(source, "toggle-missing-target-removal-date")
+    expected = {
+        "1:toggle-missing-target-removal-date:temporary feature toggle (MYTOGGLE) has no target removal date"
+    }
+    assert expected == messages
+
+
+def test_empty_removal_date_on_permanent_use_case():
+    source = """
+    # .. toggle_name: MYTOGGLE
+    # .. toggle_use_cases: open_edx
+    """
+    messages = run_pylint(source, "toggle-missing-target-removal-date")
+    assert not messages
+
+
+def test_toggle_with_empty_name():
+    source = """
+    # .. toggle_name:
+    """
+    messages = run_pylint(source, "toggle-no-name")
+    expected = {
+        "1:toggle-no-name:feature toggle has no name"
+    }
+    assert expected == messages
+
+
+def test_toggle_with_empty_description():
+    source = """
+    # .. toggle_name: MYTOGGLE
+    # .. toggle_description:
+    """
+    messages = run_pylint(source, "toggle-empty-description")
+    expected = {
+        "1:toggle-empty-description:feature toggle (MYTOGGLE) does not have a description"
+    }
+    assert expected == messages
+
+
+def test_non_boolean_default_value():
+    source = """
+    # .. toggle_name: MYTOGGLE
+    # .. toggle_default: something
+    """
+    messages = run_pylint(source, "toggle-non-boolean-default-value")
+    expected = {
+        "1:toggle-non-boolean-default-value:feature toggle (MYTOGGLE) default value must be boolean ('True' or 'False')"
+    }
+    assert expected == messages
+
+
+def test_setting_boolean_default_value():
+    source = """
+    # .. setting_name: MYSETTING
+    # .. setting_default: True
+    """
+    messages = run_pylint(source, "setting-boolean-default-value")
+    expected = {
+        "1:setting-boolean-default-value:setting annotation (MYSETTING) cannot have a boolean value"
     }
     assert expected == messages
