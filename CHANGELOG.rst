@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[3.0.2] - 2021-01-26
+~~~~~~~~~~~~~~~~~~~~
+
+* Fix line number from annotation checks.
+
 [3.0.1] - 2021-01-26
 ~~~~~~~~~~~~~~~~~~~~
 

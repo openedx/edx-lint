@@ -323,7 +323,10 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         toggle_name = ""
         toggle_description = ""
         toggle_default = None
+        line_number = None
         for annotation in annotations:
+            if line_number is None:
+                line_number = annotation["line_number"]
             if annotation["annotation_token"] == ".. toggle_name:":
                 toggle_name = annotation["annotation_data"]
             elif annotation["annotation_token"] == ".. toggle_description:":
@@ -340,24 +343,28 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
             self.add_message(
                 self.NO_NAME_MESSAGE_ID,
                 node=node,
+                line=line_number,
             )
         if not toggle_description:
             self.add_message(
                 self.EMPTY_DESCRIPTION_MESSAGE_ID,
                 args=(toggle_name,),
                 node=node,
+                line=line_number,
             )
         if temporary_use_case and not target_removal_date:
             self.add_message(
                 self.MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
                 args=(toggle_name,),
                 node=node,
+                line=line_number,
             )
         if toggle_default not in ["True", "False"]:
             self.add_message(
                 self.NON_BOOLEAN_DEFAULT_VALUE,
                 args=(toggle_name,),
                 node=node,
+                line=line_number,
             )
 
 
@@ -399,7 +406,10 @@ class SettingAnnotationChecker(AnnotationBaseChecker):
 
         setting_name = ""
         setting_default = None
+        line_number = None
         for annotation in annotations:
+            if line_number is None:
+                line_number = annotation["line_number"]
             if annotation["annotation_token"] == ".. setting_name:":
                 setting_name = annotation["annotation_data"]
             elif annotation["annotation_token"] == ".. setting_default:":
@@ -410,4 +420,5 @@ class SettingAnnotationChecker(AnnotationBaseChecker):
                 self.BOOLEAN_DEFAULT_VALUE,
                 args=(setting_name,),
                 node=node,
+                line=line_number,
             )

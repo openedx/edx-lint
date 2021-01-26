@@ -150,7 +150,7 @@ def test_temporary_use_case_without_target_removal_date():
     """
     messages = run_pylint(source, "toggle-missing-target-removal-date")
     expected = {
-        "1:toggle-missing-target-removal-date:temporary feature toggle (MYTOGGLE) has no target removal date"
+        "2:toggle-missing-target-removal-date:temporary feature toggle (MYTOGGLE) has no target removal date"
     }
     assert expected == messages
 
@@ -170,7 +170,7 @@ def test_toggle_with_empty_name():
     """
     messages = run_pylint(source, "toggle-no-name")
     expected = {
-        "1:toggle-no-name:feature toggle has no name"
+        "2:toggle-no-name:feature toggle has no name"
     }
     assert expected == messages
 
@@ -182,7 +182,7 @@ def test_toggle_with_empty_description():
     """
     messages = run_pylint(source, "toggle-empty-description")
     expected = {
-        "1:toggle-empty-description:feature toggle (MYTOGGLE) does not have a description"
+        "2:toggle-empty-description:feature toggle (MYTOGGLE) does not have a description"
     }
     assert expected == messages
 
@@ -194,7 +194,7 @@ def test_non_boolean_default_value():
     """
     messages = run_pylint(source, "toggle-non-boolean-default-value")
     expected = {
-        "1:toggle-non-boolean-default-value:feature toggle (MYTOGGLE) default value must be boolean ('True' or 'False')"
+        "2:toggle-non-boolean-default-value:feature toggle (MYTOGGLE) default value must be boolean ('True' or 'False')"
     }
     assert expected == messages
 
@@ -206,6 +206,6 @@ def test_setting_boolean_default_value():
     """
     messages = run_pylint(source, "setting-boolean-default-value")
     expected = {
-        "1:setting-boolean-default-value:setting annotation (MYSETTING) cannot have a boolean value"
+        "2:setting-boolean-default-value:setting annotation (MYSETTING) cannot have a boolean value"
     }
     assert expected == messages
