@@ -13,6 +13,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[3.0.1] - 2021-01-26
+~~~~~~~~~~~~~~~~~~~~
+
+* Added constraints file to handle package versions.
 
 [3.0.0] - 2021-01-24
 ~~~~~~~~~~~~~~~~~~~~
