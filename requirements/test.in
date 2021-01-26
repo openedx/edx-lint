@@ -1,5 +1,6 @@
+-c constraints.txt
 -r dev.txt
 
 coverage
-Django>=2.2,<2.3
+Django
 pytest
