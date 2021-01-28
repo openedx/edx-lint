@@ -7,6 +7,7 @@ import re
 
 import pkg_resources
 
+from code_annotations import annotation_errors
 from code_annotations.base import AnnotationConfig
 from code_annotations.find_static import StaticSearch
 from pylint.checkers import BaseChecker, utils
@@ -20,8 +21,23 @@ def register_checkers(linter):
     Register checkers.
     """
     linter.register_checker(FeatureToggleChecker(linter))
+    linter.register_checker(CodeAnnotationChecker(linter))
     linter.register_checker(FeatureToggleAnnotationChecker(linter))
     linter.register_checker(SettingAnnotationChecker(linter))
+
+
+def check_all_messages(msgs):
+    """
+    Decorator to automatically assign all messages from a class to the list of messages handled by a checker method.
+
+    Inspired by pylint.checkers.util.check_messages
+    """
+
+    def store_messages(func):
+        func.checks_msgs = [message[1] for message in msgs]
+        return func
+
+    return store_messages
 
 
 class AnnotationLines:
@@ -230,46 +246,95 @@ class FeatureToggleChecker(BaseChecker):
 class AnnotationBaseChecker(BaseChecker):
     """
     Code annotation checkers should almost certainly inherit from this class.
+
+    The CONFIG_FILENAMES class attribute is a list of str filenames located in code_annotations/contrib/config.
     """
 
     # Override this in child classes
-    CONFIG_FILENAME = ""
+    CONFIG_FILENAMES = []
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        config_path = pkg_resources.resource_filename(
-            "code_annotations",
-            os.path.join("contrib", "config", self.CONFIG_FILENAME),
-        )
-        self.config = AnnotationConfig(config_path, verbosity=-1)
-        self.search = StaticSearch(self.config)
+        self.config_search = []
+        for config_filename in self.CONFIG_FILENAMES:
+            config_path = pkg_resources.resource_filename(
+                "code_annotations",
+                os.path.join("contrib", "config", config_filename),
+            )
+            config = AnnotationConfig(config_path, verbosity=-1)
+            search = StaticSearch(config)
+            self.config_search.append((config, search))
 
     def check_module(self, node):
         """
         Perform checks on all annotation groups for this module.
         """
-        # This is a hack to avoid re-creating AnnotationConfig every time
-        self.config.source_path = node.path[0]
-        results = self.search.search()
+        for config, search in self.config_search:
+            # This is a hack to avoid re-creating AnnotationConfig every time
+            config.source_path = node.path[0]
+            results = search.search()
 
-        current_annotations_group = []
-        for _file_name, results in results.items():
-            for current_annotations_group in self.search.iter_groups(results):
-                self.check_annotation_group(current_annotations_group, node)
+            current_annotations_group = []
+            for _file_name, results in results.items():
+                for current_annotations_group in search.iter_groups(results):
+                    self.check_annotation_group(search, current_annotations_group, node)
 
-    def check_annotation_group(self, annotations, node):
+    def check_annotation_group(self, search, annotations, node):
         raise NotImplementedError
+
+
+class CodeAnnotationChecker(AnnotationBaseChecker):
+    """
+    Run generic code annotation checks.
+
+    This makes use of code-annotations `check_results()` method. Elements from
+    `search.annotation_errors` are then parsed and exposed to pylint. Note that modifying the creation order of the
+    error types in code-annotations will lead to a modification of the numerical IDs of the errors here, so this should
+    be avoided as much as possible.
+
+    When creating a new annotation configuration, its filename should be added to
+    CodeAnnotationChecker.CONFIG_FILENAMES (see AnnotationBaseChecker docs).
+    """
+    CONFIG_FILENAMES = ["feature_toggle_annotations.yaml", "setting_annotations.yaml"]
+    __implements__ = (IAstroidChecker,)
+    name = "code-annotations"
+    msgs = {
+        ("E%d%d" % (BASE_ID, index + 50)): (
+            error_type.message,
+            error_type.symbol,
+            error_type.description,
+        )
+        for index, error_type in enumerate(annotation_errors.TYPES)
+    }
+
+    @check_all_messages(msgs)
+    def visit_module(self, node):
+        """
+        Run all checks on a single module.
+        """
+        self.check_module(node)
+
+    def check_annotation_group(self, search, annotations, node):
+        search.check_group(annotations)
+        for (annotation, AnnotationErrorType, args) in search.annotation_errors:
+            self.add_message(
+                AnnotationErrorType.symbol,
+                args=args,
+                node=node,
+                line=annotation["line_number"],
+            )
 
 
 class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
     """
     Parse feature toggle annotations and ensure best practices are followed.
     """
-    CONFIG_FILENAME = "feature_toggle_annotations.yaml"
+
+    CONFIG_FILENAMES = ["feature_toggle_annotations.yaml"]
 
     __implements__ = (IAstroidChecker,)
 
-    name = "feature-toggle-annotation-checker"
+    name = "toggle-annotations"
 
     NO_NAME_MESSAGE_ID = "toggle-no-name"
     EMPTY_DESCRIPTION_MESSAGE_ID = "toggle-empty-description"
@@ -277,41 +342,36 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
     NON_BOOLEAN_DEFAULT_VALUE = "toggle-non-boolean-default-value"
 
     msgs = {
-        ("E%d50" % BASE_ID): (
+        ("E%d60" % BASE_ID): (
             "feature toggle has no name",
             NO_NAME_MESSAGE_ID,
             "Feature toggle name must be present and be the first annotation",
         ),
-        ("E%d51" % BASE_ID): (
+        ("E%d61" % BASE_ID): (
             "feature toggle (%s) does not have a description",
             EMPTY_DESCRIPTION_MESSAGE_ID,
             "Feature toggles must include a thorough description",
         ),
-        ("E%d52" % BASE_ID): (
+        ("E%d62" % BASE_ID): (
             "temporary feature toggle (%s) has no target removal date",
             MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
             "Temporary feature toggles must include a target removal date",
         ),
-        ("E%d53" % BASE_ID): (
+        ("E%d63" % BASE_ID): (
             "feature toggle (%s) default value must be boolean ('True' or 'False')",
             NON_BOOLEAN_DEFAULT_VALUE,
             "Feature toggle default values must be boolean",
         ),
     }
 
-    @utils.check_messages(
-        NO_NAME_MESSAGE_ID,
-        EMPTY_DESCRIPTION_MESSAGE_ID,
-        MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID,
-        NON_BOOLEAN_DEFAULT_VALUE,
-    )
+    @check_all_messages(msgs)
     def visit_module(self, node):
         """
         Run all checks on a single module.
         """
         self.check_module(node)
 
-    def check_annotation_group(self, annotations, node):
+    def check_annotation_group(self, search, annotations, node):
         """
         Perform checks on a single annotation group.
         """
@@ -372,32 +432,31 @@ class SettingAnnotationChecker(AnnotationBaseChecker):
     """
     Perform checks on setting annotations.
     """
-    CONFIG_FILENAME = "setting_annotations.yaml"
+
+    CONFIG_FILENAMES = ["setting_annotations.yaml"]
 
     __implements__ = (IAstroidChecker,)
 
-    name = "setting-annotation-checker"
+    name = "setting-annotations"
 
     BOOLEAN_DEFAULT_VALUE = "setting-boolean-default-value"
 
     msgs = {
-        ("E%d60" % BASE_ID): (
+        ("E%d70" % BASE_ID): (
             "setting annotation (%s) cannot have a boolean value",
             BOOLEAN_DEFAULT_VALUE,
             "Setting with boolean values should be annotated as feature toggles",
         ),
     }
 
-    @utils.check_messages(
-        BOOLEAN_DEFAULT_VALUE,
-    )
+    @check_all_messages(msgs)
     def visit_module(self, node):
         """
         Run all checks on a single module.
         """
         self.check_module(node)
 
-    def check_annotation_group(self, annotations, node):
+    def check_annotation_group(self, search, annotations, node):
         """
         Perform checks on a single annotation group.
         """
