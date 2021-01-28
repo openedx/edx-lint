@@ -12,4 +12,5 @@
 Django<2.3
 
 # Pinned social-auth-core to <4.0.3 untill drf-jwt adds support for PyJWT>2.0
+# https://github.com/Styria-Digital/django-rest-framework-jwt/issues/76 
 social-auth-core<4.0.3
