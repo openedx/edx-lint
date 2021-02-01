@@ -3,6 +3,4 @@
 
 nick: lint
 oeps: {}
-owner: edx/openedx-tooling
 tags: [tools]
-track-pulls: true
