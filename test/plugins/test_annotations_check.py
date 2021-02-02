@@ -1,5 +1,5 @@
 """Test annotations_check.py"""
-# pylint: disable=toggle-non-boolean-default-value,toggle-empty-description,toggle-no-name
+# pylint: disable=toggle-non-boolean-default-value,toggle-empty-description,toggle-no-name,annotation-missing-token
 
 from .pylint_test import run_pylint
 
@@ -139,6 +139,18 @@ def test_illegal_waffle_usage_check():
         "use utility classes WaffleFlag, WaffleSwitch, CourseWaffleFlag.",
         "D:illegal-waffle-usage:illegal waffle usage with (TEST_FLAG): "
         "use utility classes WaffleFlag, WaffleSwitch, CourseWaffleFlag.",
+    }
+    assert expected == messages
+
+
+def test_code_annotations_checker():
+    source = """
+    # .. toggle_name: MYTOGGLE
+    # .. toggle_name: MYTOGGLE
+    """
+    messages = run_pylint(source, "annotation-duplicate-token")
+    expected = {
+        "2:annotation-duplicate-token:found duplicate token '.. toggle_name:'"
     }
     assert expected == messages
 

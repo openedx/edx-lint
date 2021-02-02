@@ -13,6 +13,18 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[4.0.0] - 2021-01-28
+~~~~~~~~~~~~~~~~~~~~
+
+* BREAKING CHANGE: modify the numerical ID of annotation checks
+* BREAKING CHANGES:
+
+  * modify the numerical ID of annotation checks
+  * though technically not a breaking change, the new annotation checks may break your build if there are pre-existing
+    violations.
+
+* Add ``CodeAnnotationChecker`` to run generic checks on annotations
+
 [3.0.2] - 2021-01-26
 ~~~~~~~~~~~~~~~~~~~~
 

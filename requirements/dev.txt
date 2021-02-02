@@ -21,7 +21,7 @@ click==7.1.2
     #   -r requirements/base.txt
     #   click-log
     #   code-annotations
-code-annotations==1.0.2
+code-annotations==1.1.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
