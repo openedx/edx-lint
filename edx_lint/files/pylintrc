@@ -363,6 +363,9 @@ disable=
     unpacking-in-except,
     xrange-builtin,
 
+    # We want to allow developers to use f-strings for readability
+    logging-fstring-interpolation,
+
 [REPORTS]
 
 # Set the output format. Available formats are text, parseable, colorized, msvs
