@@ -13,6 +13,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[4.1.1] - 2021-03-16
+~~~~~~~~~~~~~~~~~~~~
+
+* Fixed lint amnesty breakage on line continuation
+
+
 [4.1.0] - 2021-02-24
 ~~~~~~~~~~~~~~~~~~~~
 

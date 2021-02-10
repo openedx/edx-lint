@@ -117,6 +117,11 @@ def pylint_amnesty(pylint_output):
             with opened_file as input_file:
                 output_lines = []
                 for line_num, line in enumerate(input_file, start=1):
+                    # If the line ends with backslash, take the amnesty to next line because line of code has not ended
+                    if line.endswith('\\\n'):
+                        errors[file_with_errors][line_num + 1] = errors[file_with_errors][line_num]
+                        errors[file_with_errors][line_num] = set()
+
                     output_lines.extend(fix_pylint(line, errors[file_with_errors][line_num]))
 
             with open(file_with_errors, "w") as output_file:
