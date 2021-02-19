@@ -13,6 +13,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* BREAKING CHANGE: Add linter for missing feature toggle annotations ("toggle-missing-annotation"). Check `this howto <https://edx.readthedocs.io/projects/edx-toggles/en/latest/how_to/documenting_new_feature_toggles.html>`__ for more information on writing toggle annotations.
 * Fix duplicate annotation errors.
 
 [4.1.1] - 2021-03-16
