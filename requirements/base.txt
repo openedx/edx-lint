@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.4.2
+astroid==2.5
     # via
     #   pylint
     #   pylint-celery
@@ -22,16 +22,15 @@ code-annotations==1.1.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-django==2.2.17
+django==2.2.19
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
-    #   -r requirements/base.in
     #   code-annotations
 isort==5.7.0
     # via pylint
-jinja2==2.11.2
+jinja2==2.11.3
     # via code-annotations
-lazy-object-proxy==1.4.3
+lazy-object-proxy==1.5.2
     # via astroid
 markupsafe==1.1.1
     # via jinja2
@@ -60,7 +59,7 @@ pylint==2.6.0
     #   pylint-plugin-utils
 python-slugify==4.0.1
     # via code-annotations
-pytz==2020.5
+pytz==2021.1
     # via django
 pyyaml==5.4.1
     # via code-annotations
@@ -68,7 +67,6 @@ six==1.15.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-    #   astroid
 sqlparse==0.4.1
     # via django
 stevedore==3.3.0
