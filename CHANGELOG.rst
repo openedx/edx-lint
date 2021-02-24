@@ -13,6 +13,22 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[4.1.0] - 2021-02-24
+~~~~~~~~~~~~~~~~~~~~
+
+Added unittest_assert module (optional plugin for unittest assertion checks)
+
+To use this plugin, you should add this to your pylintrc
+
+.. code-block:: python
+
+    load-plugins=edx_lint.pylint.unittest_assert
+
+[4.0.1] - 2021-02-04
+~~~~~~~~~~~~~~~~~~~~
+
+edx-lint will now ignore the logging-fstring-interpolation warning in pylint.
+
 [4.0.0] - 2021-01-28
 ~~~~~~~~~~~~~~~~~~~~
 
