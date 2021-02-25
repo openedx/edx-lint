@@ -42,7 +42,7 @@ class SimpleReporter(CollectingReporter):
         pass
 
 
-def run_pylint(source, msg_ids):
+def run_pylint(source, msg_ids, *cmd_args):
     """Run pylint on some source, collecting specific messages.
 
     `source` is the literal text of the program to check. It is
@@ -50,6 +50,9 @@ def run_pylint(source, msg_ids):
 
     `msg_ids` is a comma-separated string of msgids we are interested
     in.  Use "all" to enable all messages.
+
+    `*cmd_args` is the optional list of command line arguments. If calling
+    function wants to send some additional command line arguments.
 
     Returns a set of messages.  Each message is a string, formatted
     as "line:msg-id:message".  "line" will be the line number of the
@@ -63,7 +66,7 @@ def run_pylint(source, msg_ids):
 
     reporter = SimpleReporter()
 
-    pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}"]
+    pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", *cmd_args]
     if pylint_numversion >= (2, 0):
         kwargs = dict(do_exit=False)
     else:
