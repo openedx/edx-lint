@@ -221,3 +221,21 @@ def test_setting_boolean_default_value():
         "2:setting-boolean-default-value:setting annotation (MYSETTING) cannot have a boolean value"
     }
     assert expected == messages
+
+
+def test_no_duplicate_annotation_errors():
+    source = """
+    # .. setting_default: something1
+    # .. setting_description: something1
+    x = 1
+
+    # .. setting_name: MYTOGGLE2
+    # .. setting_default: something2
+    # .. setting_description: something2
+    x = 2
+    """
+    messages = run_pylint(source, "annotation-missing-token")
+    expected = {
+        "2:annotation-missing-token:missing non-optional annotation: '.. setting_name:'"
+    }
+    assert expected == messages

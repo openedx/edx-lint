@@ -323,6 +323,7 @@ class CodeAnnotationChecker(AnnotationBaseChecker):
                 node=node,
                 line=annotation["line_number"],
             )
+        search.annotation_errors.clear()
 
 
 class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
