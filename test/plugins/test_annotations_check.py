@@ -256,7 +256,7 @@ def test_missing_annotation():
 
 def test_missing_legacy_annotation():
     source = """
-    # .. toggle_name: MYTOGGLE1
+    # .. toggle_name: MYNAMESPACE.INCORRECTMYTOGGLE1
     waffle1 = LegacyWaffleFlag('MYNAMESPACE', 'MYTOGGLE1')
     """
     messages = run_pylint(source, "toggle-missing-annotation")

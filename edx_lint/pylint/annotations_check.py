@@ -382,7 +382,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
             "invalid Django Waffle import",
             INVALID_DJANGO_WAFFLE_IMPORT,
             (
-                "It is not allowed to directly access Django Waffle objects and methods. Instead, import from"
+                "Do not directly access Django Waffle objects and methods. Instead, import from"
                 " edx_toggles.toggles.",
             )
         ),
@@ -525,7 +525,8 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
             if node.func.name in self.LEGACY_TOGGLE_FUNC_NAMES:
                 # For legacy toggles
                 if isinstance(node.args[1], Const) and isinstance(node.args[1].value, str):
-                    toggle_name = toggle_name + "." + node.args[1].value
+                    namespace = toggle_name
+                    toggle_name = namespace + "." + node.args[1].value
             if toggle_name not in self.current_module_annotated_toggle_names:
                 return True
         return False
