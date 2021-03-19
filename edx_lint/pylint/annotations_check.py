@@ -7,6 +7,7 @@ import re
 
 import pkg_resources
 
+from astroid.node_classes import Const, Name
 from code_annotations import annotation_errors
 from code_annotations.base import AnnotationConfig
 from code_annotations.find_static import StaticSearch
@@ -264,6 +265,7 @@ class AnnotationBaseChecker(BaseChecker):
             config = AnnotationConfig(config_path, verbosity=-1)
             search = StaticSearch(config)
             self.config_search.append((config, search))
+            self.current_module_annotations = []
 
     def check_module(self, node):
         """
@@ -272,12 +274,15 @@ class AnnotationBaseChecker(BaseChecker):
         for config, search in self.config_search:
             # This is a hack to avoid re-creating AnnotationConfig every time
             config.source_path = node.path[0]
-            results = search.search()
+            all_results = search.search()
 
-            current_annotations_group = []
-            for _file_name, results in results.items():
-                for current_annotations_group in search.iter_groups(results):
-                    self.check_annotation_group(search, current_annotations_group, node)
+            for _file_name, results in all_results.items():
+                for annotations_group in search.iter_groups(results):
+                    self.current_module_annotations.append(annotations_group)
+                    self.check_annotation_group(search, annotations_group, node)
+
+    def leave_module(self, _node):
+        self.current_module_annotations.clear()
 
     def check_annotation_group(self, search, annotations, node):
         raise NotImplementedError
@@ -323,6 +328,7 @@ class CodeAnnotationChecker(AnnotationBaseChecker):
                 node=node,
                 line=annotation["line_number"],
             )
+        search.annotation_errors.clear()
 
 
 class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
@@ -340,6 +346,8 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
     EMPTY_DESCRIPTION_MESSAGE_ID = "toggle-empty-description"
     MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID = "toggle-missing-target-removal-date"
     NON_BOOLEAN_DEFAULT_VALUE = "toggle-non-boolean-default-value"
+    MISSING_ANNOTATION = "toggle-missing-annotation"
+    INVALID_DJANGO_WAFFLE_IMPORT = "invalid-django-waffle-import"
 
     msgs = {
         ("E%d60" % BASE_ID): (
@@ -362,7 +370,38 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
             NON_BOOLEAN_DEFAULT_VALUE,
             "Feature toggle default values must be boolean",
         ),
+        ("E%d64" % BASE_ID): (
+            "missing feature toggle annotation",
+            MISSING_ANNOTATION,
+            (
+                "When a WaffleFlag/Switch object is created, a corresponding annotation must be present above in the"
+                " same module and with a matching name",
+            )
+        ),
+        ("E%d65" % BASE_ID): (
+            "invalid Django Waffle import",
+            INVALID_DJANGO_WAFFLE_IMPORT,
+            (
+                "Do not directly access Django Waffle objects and methods. Instead, import from"
+                " edx_toggles.toggles.",
+            )
+        ),
     }
+
+    LEGACY_TOGGLE_FUNC_NAMES = ["LegacyWaffleFlag", "LegacyWaffleSwitch"]
+    TOGGLE_FUNC_NAMES = [
+        "WaffleFlag",
+        "NonNamespacedWaffleFlag",
+        "WaffleSwitch",
+        "NonNamespacedWaffleSwitch",
+        "CourseWaffleFlag",
+        "ExperimentWaffleFlag",
+    ] + LEGACY_TOGGLE_FUNC_NAMES
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.current_module_annotated_toggle_names = set()
+        self.current_module_annotation_group_line_numbers = []
 
     @check_all_messages(msgs)
     def visit_module(self, node):
@@ -370,6 +409,10 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         Run all checks on a single module.
         """
         self.check_module(node)
+
+    def leave_module(self, _node):
+        self.current_module_annotated_toggle_names.clear()
+        self.current_module_annotation_group_line_numbers.clear()
 
     def check_annotation_group(self, search, annotations, node):
         """
@@ -387,8 +430,10 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         for annotation in annotations:
             if line_number is None:
                 line_number = annotation["line_number"]
+                self.current_module_annotation_group_line_numbers.append(line_number)
             if annotation["annotation_token"] == ".. toggle_name:":
                 toggle_name = annotation["annotation_data"]
+                self.current_module_annotated_toggle_names.add(toggle_name)
             elif annotation["annotation_token"] == ".. toggle_description:":
                 toggle_description = annotation["annotation_data"].strip()
             elif annotation["annotation_token"] == ".. toggle_use_cases:":
@@ -426,6 +471,65 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
                 node=node,
                 line=line_number,
             )
+
+    @utils.check_messages(MISSING_ANNOTATION)
+    def visit_call(self, node):
+        """
+        Check for missing annotations.
+        """
+        if self.is_annotation_missing(node):
+            self.add_message(
+                self.MISSING_ANNOTATION,
+                node=node,
+            )
+
+    @utils.check_messages(INVALID_DJANGO_WAFFLE_IMPORT)
+    def visit_import(self, node):
+        if node.names[0][0] == "waffle":
+            self.add_message(
+                self.INVALID_DJANGO_WAFFLE_IMPORT,
+                node=node,
+            )
+
+    @utils.check_messages(INVALID_DJANGO_WAFFLE_IMPORT)
+    def visit_importfrom(self, node):
+        if node.modname == "waffle":
+            self.add_message(
+                self.INVALID_DJANGO_WAFFLE_IMPORT,
+                node=node,
+            )
+
+    def is_annotation_missing(self, node):
+        """
+        Check whether the node corresponds to a toggle instance creation. if yes, check that it is annotated.
+        """
+        if (
+            not isinstance(node.func, Name)
+            or node.func.name not in self.TOGGLE_FUNC_NAMES
+        ):
+            return False
+
+        if not self.current_module_annotation_group_line_numbers:
+            # There are no annotations left
+            return True
+
+        annotation_line_number = self.current_module_annotation_group_line_numbers[0]
+        if annotation_line_number > node.tolineno:
+            # The next annotation is located after the current node
+            return True
+        self.current_module_annotation_group_line_numbers.pop(0)
+
+        # Check literal toggle name arguments
+        if node.args and isinstance(node.args[0], Const) and isinstance(node.args[0].value, str):
+            toggle_name = node.args[0].value
+            if node.func.name in self.LEGACY_TOGGLE_FUNC_NAMES:
+                # For legacy toggles
+                if isinstance(node.args[1], Const) and isinstance(node.args[1].value, str):
+                    namespace = toggle_name
+                    toggle_name = namespace + "." + node.args[1].value
+            if toggle_name not in self.current_module_annotated_toggle_names:
+                return True
+        return False
 
 
 class SettingAnnotationChecker(AnnotationBaseChecker):

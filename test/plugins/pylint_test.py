@@ -66,7 +66,7 @@ def run_pylint(source, msg_ids, *cmd_args):
 
     reporter = SimpleReporter()
 
-    pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", *cmd_args]
+    pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", "--load-plugins=edx_lint.pylint", *cmd_args]
     if pylint_numversion >= (2, 0):
         kwargs = dict(do_exit=False)
     else:

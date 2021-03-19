@@ -221,3 +221,74 @@ def test_setting_boolean_default_value():
         "2:setting-boolean-default-value:setting annotation (MYSETTING) cannot have a boolean value"
     }
     assert expected == messages
+
+
+def test_no_duplicate_annotation_errors():
+    source = """
+    # .. setting_default: something1
+    # .. setting_description: something1
+    x = 1
+
+    # .. setting_name: MYTOGGLE2
+    # .. setting_default: something2
+    # .. setting_description: something2
+    x = 2
+    """
+    messages = run_pylint(source, "annotation-missing-token")
+    expected = {
+        "2:annotation-missing-token:missing non-optional annotation: '.. setting_name:'"
+    }
+    assert expected == messages
+
+
+def test_missing_annotation():
+    source = """
+    # .. toggle_name: MYTOGGLE1
+    waffle1 = WaffleFlag('MYTOGGLE1')
+    waffle2 = WaffleFlag('MYTOGGLE2')
+    """
+    messages = run_pylint(source, "toggle-missing-annotation")
+    expected = {
+        "4:toggle-missing-annotation:missing feature toggle annotation"
+    }
+    assert expected == messages
+
+
+def test_missing_legacy_annotation():
+    source = """
+    # .. toggle_name: MYNAMESPACE.INCORRECTMYTOGGLE1
+    waffle1 = LegacyWaffleFlag('MYNAMESPACE', 'MYTOGGLE1')
+    """
+    messages = run_pylint(source, "toggle-missing-annotation")
+    expected = {
+        "3:toggle-missing-annotation:missing feature toggle annotation"
+    }
+    assert expected == messages
+
+
+def test_missing_annotation_for_unnamed_toggle():
+    source = """
+    # annotated waffle flag
+    # .. toggle_name: MYTOGGLE1
+    waffle1 = CourseWaffleFlag()
+    # unannotated waffle flag
+    waffle2 = ExperimentWaffleFlag()
+    """
+    messages = run_pylint(source, "toggle-missing-annotation")
+    expected = {
+        "6:toggle-missing-annotation:missing feature toggle annotation"
+    }
+    assert expected == messages
+
+
+def test_invalid_import_from_django_waffle():
+    source = """
+    from waffle import waffle_is_active
+    import waffle
+    """
+    messages = run_pylint(source, "invalid-django-waffle-import")
+    expected = {
+        "2:invalid-django-waffle-import:invalid Django Waffle import",
+        "3:invalid-django-waffle-import:invalid Django Waffle import",
+    }
+    assert expected == messages
