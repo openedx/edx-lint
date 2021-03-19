@@ -379,6 +379,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         ),
     }
 
+    LEGACY_TOGGLE_FUNC_NAMES = ["LegacyWaffleFlag", "LegacyWaffleSwitch"]
     TOGGLE_FUNC_NAMES = [
         "WaffleFlag",
         "NonNamespacedWaffleFlag",
@@ -386,7 +387,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         "NonNamespacedWaffleSwitch",
         "CourseWaffleFlag",
         "ExperimentWaffleFlag",
-    ]
+    ] + LEGACY_TOGGLE_FUNC_NAMES
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -493,9 +494,13 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
             return True
         self.current_module_annotation_group_line_numbers.pop(0)
 
+        # Check literal toggle name arguments
         if node.args and isinstance(node.args[0], Const) and isinstance(node.args[0].value, str):
-            # First argument is constant string and corresponds to the toggle name
             toggle_name = node.args[0].value
+            if node.func.name in self.LEGACY_TOGGLE_FUNC_NAMES:
+                # For legacy toggles
+                if isinstance(node.args[1], Const) and isinstance(node.args[1].value, str):
+                    toggle_name = toggle_name + "." + node.args[1].value
             if toggle_name not in self.current_module_annotated_toggle_names:
                 return True
         return False
