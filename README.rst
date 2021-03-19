@@ -30,6 +30,17 @@ The file written contains a hash of its contents, to detect subsequent editing.
 is detected, the edited file will be moved aside so it can be compared to the
 newly written file.
 
+Handling newly introduced lint violations
+-----------------------------------------
+
+New potential lint violations will be communicated with a major version bump.
+
+If you run into new lint violations during an upgrade of edx-lint, your options include:
+
+#. Fixing the violations immediately, or
+#. `Using lint-amnesty`_ and fixing at a later time, or
+#. `Customizing edx_lint`_ to permanently ignore the violations.
+
 Using lint-amnesty
 ------------------
 
