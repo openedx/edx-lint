@@ -347,6 +347,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
     MISSING_TARGET_REMOVAL_DATE_MESSAGE_ID = "toggle-missing-target-removal-date"
     NON_BOOLEAN_DEFAULT_VALUE = "toggle-non-boolean-default-value"
     MISSING_ANNOTATION = "toggle-missing-annotation"
+    INVALID_DJANGO_WAFFLE_IMPORT = "invalid-django-waffle-import"
 
     msgs = {
         ("E%d60" % BASE_ID): (
@@ -375,6 +376,14 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
             (
                 "When a WaffleFlag/Switch object is created, a corresponding annotation must be present above in the"
                 " same module and with a matching name",
+            )
+        ),
+        ("E%d65" % BASE_ID): (
+            "invalid Django Waffle import",
+            INVALID_DJANGO_WAFFLE_IMPORT,
+            (
+                "It is not allowed to directly access Django Waffle objects and methods. Instead, import from"
+                " edx_toggles.toggles.",
             )
         ),
     }
@@ -471,6 +480,22 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         if self.is_annotation_missing(node):
             self.add_message(
                 self.MISSING_ANNOTATION,
+                node=node,
+            )
+
+    @utils.check_messages(INVALID_DJANGO_WAFFLE_IMPORT)
+    def visit_import(self, node):
+        if node.names[0][0] == "waffle":
+            self.add_message(
+                self.INVALID_DJANGO_WAFFLE_IMPORT,
+                node=node,
+            )
+
+    @utils.check_messages(INVALID_DJANGO_WAFFLE_IMPORT)
+    def visit_importfrom(self, node):
+        if node.modname == "waffle":
+            self.add_message(
+                self.INVALID_DJANGO_WAFFLE_IMPORT,
                 node=node,
             )
 

@@ -13,6 +13,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* BREAKING CHANGE: Add linter for invalid imports from Django Waffle (`import waffle` and `from waffle import ...`). Instead, developers should import toggle objects from `edx_toggles.toggles`.
 * BREAKING CHANGE: Add linter for missing feature toggle annotations ("toggle-missing-annotation"). Check `this howto <https://edx.readthedocs.io/projects/edx-toggles/en/latest/how_to/documenting_new_feature_toggles.html>`__ for more information on writing toggle annotations.
 * Fix duplicate annotation errors.
 

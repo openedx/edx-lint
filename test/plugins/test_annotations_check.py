@@ -279,3 +279,16 @@ def test_missing_annotation_for_unnamed_toggle():
         "6:toggle-missing-annotation:missing feature toggle annotation"
     }
     assert expected == messages
+
+
+def test_invalid_import_from_django_waffle():
+    source = """
+    from waffle import waffle_is_active
+    import waffle
+    """
+    messages = run_pylint(source, "invalid-django-waffle-import")
+    expected = {
+        "2:invalid-django-waffle-import:invalid Django Waffle import",
+        "3:invalid-django-waffle-import:invalid Django Waffle import",
+    }
+    assert expected == messages
