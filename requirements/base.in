@@ -3,7 +3,6 @@
 code-annotations
 click
 click-log
-Django
 pylint
 pylint-django
 pylint-celery
