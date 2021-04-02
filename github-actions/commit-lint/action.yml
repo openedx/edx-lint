@@ -1,0 +1,16 @@
+name: "Commit lint"
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup Nodejs
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install commintlint-cli
+      run: npm install -g @commitlint/cli
+    - name: Lint commit messages
+      run: for commit in $(git log --no-merges --pretty=format:%H remotes/origin/master..); do git show -s --pretty=format:%B $commit | commitlint -V; done
