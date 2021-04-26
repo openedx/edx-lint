@@ -10,21 +10,21 @@ astroid==2.5
     #   pylint-celery
 click-log==0.3.2
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c constraints.txt
+    #   -r base.in
 click==7.1.2
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c constraints.txt
+    #   -r base.in
     #   click-log
     #   code-annotations
 code-annotations==1.1.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
-django==2.2.19
+    #   -c constraints.txt
+    #   -r base.in
+django==2.2.20
     # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
+    #   -c ../edx_lint/files/common_constraints.txt
     #   code-annotations
 isort==5.7.0
     # via pylint
@@ -40,20 +40,21 @@ pbr==5.5.1
     # via stevedore
 pylint-celery==0.3
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c constraints.txt
+    #   -r base.in
 pylint-django==2.3.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c constraints.txt
+    #   -r base.in
 pylint-plugin-utils==0.6
     # via
     #   pylint-celery
     #   pylint-django
 pylint==2.6.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c ../edx_lint/files/common_constraints.txt
+    #   -c constraints.txt
+    #   -r base.in
     #   pylint-celery
     #   pylint-django
     #   pylint-plugin-utils
@@ -65,8 +66,8 @@ pyyaml==5.4.1
     # via code-annotations
 six==1.15.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c constraints.txt
+    #   -r base.in
 sqlparse==0.4.1
     # via django
 stevedore==3.3.0
