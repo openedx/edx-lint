@@ -18,25 +18,25 @@ click==7.1.2
     #   -r requirements/base.in
     #   click-log
     #   code-annotations
-code-annotations==1.1.0
+code-annotations==1.1.1
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-django==2.2.19
+django==2.2.20
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   code-annotations
-isort==5.7.0
+isort==5.8.0
     # via pylint
 jinja2==2.11.3
     # via code-annotations
-lazy-object-proxy==1.5.2
+lazy-object-proxy==1.6.0
     # via astroid
 markupsafe==1.1.1
     # via jinja2
 mccabe==0.6.1
     # via pylint
-pbr==5.5.1
+pbr==5.6.0
     # via stevedore
 pylint-celery==0.3
     # via
