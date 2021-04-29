@@ -18,7 +18,3 @@ Django<2.3
 # docutils version 0.17 is causing docs rendering to fail
 # See https://sourceforge.net/p/docutils/bugs/417/
 docutils==0.16
-
-# pylint.__pkginfo__.numversion conflicts with pylint-django.
-# Can be removed once https://github.com/PyCQA/pylint-django/issues/323 is fixed.
-pylint<2.8.0
