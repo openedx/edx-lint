@@ -12,8 +12,11 @@
 #  this file from Github directly. It does not require packaging in edx-lint.
 
 
-# using LTS django version
-Django<2.3
+# Django version==2.2.21 fixed a security vulnerability related to file paths.
+# https://code.djangoproject.com/ticket/32718 is addressing this issue.
+# This update broke the tests in edx-platform so the tests need to be fixed for the upgrade.
+# https://openedx.atlassian.net/browse/BOM-2513 is fixing the tests for the upgrade.
+Django<2.2.21
 
 # docutils version 0.17 is causing docs rendering to fail
 # See https://sourceforge.net/p/docutils/bugs/417/
