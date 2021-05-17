@@ -22,3 +22,5 @@ docutils==0.16
 # Newer versions causing tests failures in multiple repos.
 pyjwt[crypto]==1.7.1
 
+# click>=8.0.0 causes conflicts with Sphinx>=4.0.0(which requires jinja2<3.2, click<8.0)
+click<8.0.0
