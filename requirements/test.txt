@@ -13,7 +13,7 @@ astroid==2.5
     #   -r requirements/dev.txt
     #   pylint
     #   pylint-celery
-attrs==20.3.0
+attrs==21.2.0
     # via pytest
 click-log==0.3.2
     # via
@@ -35,7 +35,7 @@ distlib==0.3.1
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==2.2.20
+django==2.2.23
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.txt
@@ -52,7 +52,7 @@ isort==5.8.0
     # via
     #   -r requirements/dev.txt
     #   pylint
-jinja2==2.11.3
+jinja2==3.0.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -60,7 +60,7 @@ lazy-object-proxy==1.6.0
     # via
     #   -r requirements/dev.txt
     #   astroid
-markupsafe==1.1.1
+markupsafe==2.0.0
     # via
     #   -r requirements/dev.txt
     #   jinja2
@@ -111,9 +111,9 @@ pyparsing==2.4.7
     # via
     #   -r requirements/dev.txt
     #   packaging
-pytest==6.2.3
+pytest==6.2.4
     # via -r requirements/test.in
-python-slugify==4.0.1
+python-slugify==5.0.2
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -125,7 +125,7 @@ pyyaml==5.4.1
     # via
     #   -r requirements/dev.txt
     #   code-annotations
-six==1.15.0
+six==1.16.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
@@ -151,11 +151,11 @@ toml==0.10.2
     #   tox
 tox-battery==0.6.1
     # via -r requirements/dev.txt
-tox==3.23.0
+tox==3.23.1
     # via
     #   -r requirements/dev.txt
     #   tox-battery
-virtualenv==20.4.4
+virtualenv==20.4.6
     # via
     #   -r requirements/dev.txt
     #   tox
