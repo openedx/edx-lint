@@ -6,20 +6,12 @@
 #
 click==8.0.0
     # via pip-tools
-importlib-metadata==4.0.1
-    # via pep517
 pep517==0.10.0
     # via pip-tools
 pip-tools==6.1.0
     # via -r requirements/pip-tools.in
 toml==0.10.2
     # via pep517
-typing-extensions==3.10.0.0
-    # via importlib-metadata
-zipp==3.4.1
-    # via
-    #   importlib-metadata
-    #   pep517
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
