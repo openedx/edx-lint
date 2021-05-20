@@ -19,15 +19,8 @@ Django<2.3
 # See https://sourceforge.net/p/docutils/bugs/417/
 docutils==0.16
 
-# latest version is causing e2e failures in edx-platform. 
+# latest version is causing e2e failures in edx-platform.
 drf-jwt<1.19.1
 
 # Newer versions causing tests failures in multiple repos.
 pyjwt[crypto]==1.7.1
-
-# click>=8.0.0 causes conflicts with Sphinx>=4.0.0(which requires jinja2<3.2, click<8.0)
-click<8.0.0
-
-# Sphinx>=4.0.1 requires Jinja2<3.0.0, MarkupSafe<2.0.0 (Can be removed once Sphinx==4.0.2 is released)
-Jinja2<3.0.0
-MarkupSafe<2.0.0
