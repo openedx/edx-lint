@@ -19,6 +19,9 @@ Django<2.3
 # See https://sourceforge.net/p/docutils/bugs/417/
 docutils==0.16
 
+# latest version is causing e2e failures in edx-platform. 
+drf-jwt<1.19.1
+
 # Newer versions causing tests failures in multiple repos.
 pyjwt[crypto]==1.7.1
 
