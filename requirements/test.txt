@@ -26,9 +26,7 @@ click==7.1.2
     #   click-log
     #   code-annotations
 code-annotations==1.1.1
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    # via -r requirements/dev.txt
 coverage==5.5
     # via -r requirements/test.in
 distlib==0.3.1
