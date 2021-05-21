@@ -1,6 +1,6 @@
 -c constraints.txt
 
-code-annotations
+-e git+https://github.com/edx/code-annotations.git@65075bfcd3797b8a28b6c1452160426bd61d0116#egg=code-annotations
 click
 click-log
 pylint

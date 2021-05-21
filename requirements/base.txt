@@ -4,6 +4,8 @@
 #
 #    make upgrade
 #
+-e git+https://github.com/edx/code-annotations.git@65075bfcd3797b8a28b6c1452160426bd61d0116#egg=code-annotations
+    # via -r requirements/base.in
 astroid==2.5
     # via
     #   pylint
@@ -12,17 +14,11 @@ click-log==0.3.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-click==7.1.2
+click==8.0.1
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
     #   click-log
-    #   code-annotations
-code-annotations==1.1.1
-    # via -r requirements/base.in
-django==2.2.23
-    # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
     #   code-annotations
 isort==5.8.0
     # via pylint
@@ -57,16 +53,12 @@ pylint==2.6.0
     #   pylint-plugin-utils
 python-slugify==5.0.2
     # via code-annotations
-pytz==2021.1
-    # via django
 pyyaml==5.4.1
     # via code-annotations
 six==1.16.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-sqlparse==0.4.1
-    # via django
 stevedore==3.3.0
     # via code-annotations
 text-unidecode==1.3
