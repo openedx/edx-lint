@@ -15,23 +15,18 @@ click-log==0.3.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
-click==7.1.2
+click==8.0.1
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
     #   click-log
     #   code-annotations
-code-annotations==1.1.1
+code-annotations==1.1.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
 distlib==0.3.1
     # via virtualenv
-django==2.2.23
-    # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
-    #   -r requirements/base.txt
-    #   code-annotations
 filelock==3.0.12
     # via
     #   tox
@@ -92,10 +87,6 @@ python-slugify==5.0.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pytz==2021.1
-    # via
-    #   -r requirements/base.txt
-    #   django
 pyyaml==5.4.1
     # via
     #   -r requirements/base.txt
@@ -106,10 +97,6 @@ six==1.16.0
     #   -r requirements/base.txt
     #   tox
     #   virtualenv
-sqlparse==0.4.1
-    # via
-    #   -r requirements/base.txt
-    #   django
 stevedore==3.3.0
     # via
     #   -r requirements/base.txt
