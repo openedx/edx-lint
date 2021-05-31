@@ -25,7 +25,7 @@ code-annotations==1.1.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
-distlib==0.3.1
+distlib==0.3.2
     # via virtualenv
 filelock==3.0.12
     # via
@@ -116,7 +116,7 @@ tox==3.23.1
     # via
     #   -r requirements/dev.in
     #   tox-battery
-virtualenv==20.4.6
+virtualenv==20.4.7
     # via tox
 wrapt==1.12.1
     # via

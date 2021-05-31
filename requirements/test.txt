@@ -31,7 +31,7 @@ code-annotations==1.1.2
     #   -r requirements/dev.txt
 coverage==5.5
     # via -r requirements/test.in
-distlib==0.3.1
+distlib==0.3.2
     # via
     #   -r requirements/dev.txt
     #   virtualenv
@@ -149,7 +149,7 @@ tox==3.23.1
     # via
     #   -r requirements/dev.txt
     #   tox-battery
-virtualenv==20.4.6
+virtualenv==20.4.7
     # via
     #   -r requirements/dev.txt
     #   tox
