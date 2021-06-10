@@ -13,7 +13,7 @@
 
 
 # using LTS django version
-Django<2.3
+Django==2.2.24
 
 # docutils version 0.17 is causing docs rendering to fail
 # See https://sourceforge.net/p/docutils/bugs/417/
