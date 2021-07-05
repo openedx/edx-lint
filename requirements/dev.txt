@@ -31,7 +31,7 @@ filelock==3.0.12
     # via
     #   tox
     #   virtualenv
-isort==5.8.0
+isort==5.9.1
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -51,7 +51,7 @@ mccabe==0.6.1
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==20.9
+packaging==21.0
     # via tox
 pbr==5.6.0
     # via
