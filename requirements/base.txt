@@ -22,7 +22,7 @@ code-annotations==1.1.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-isort==5.8.0
+isort==5.9.1
     # via pylint
 jinja2==3.0.1
     # via code-annotations
