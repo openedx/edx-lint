@@ -20,3 +20,6 @@ drf-jwt<1.19.1
 
 # Newer versions causing tests failures in multiple repos.
 pyjwt[crypto]==1.7.1
+
+# latest version requires PyJWT>=2.0.0 but drf-jwt requires PyJWT[crypto]<2.0.0,>=1.5.2
+social-auth-core<4.0.3
