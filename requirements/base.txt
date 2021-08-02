@@ -18,11 +18,11 @@ click-log==0.3.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-code-annotations==1.1.2
+code-annotations==1.2.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
-isort==5.9.2
+isort==5.9.3
     # via pylint
 jinja2==3.0.1
     # via code-annotations
