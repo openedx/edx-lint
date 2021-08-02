@@ -21,7 +21,7 @@ click-log==0.3.2
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
-code-annotations==1.1.2
+code-annotations==1.2.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
@@ -31,7 +31,7 @@ filelock==3.0.12
     # via
     #   tox
     #   virtualenv
-isort==5.9.2
+isort==5.9.3
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -57,7 +57,7 @@ pbr==5.6.0
     # via
     #   -r requirements/base.txt
     #   stevedore
-platformdirs==2.1.0
+platformdirs==2.2.0
     # via virtualenv
 pluggy==0.13.1
     # via tox
@@ -112,13 +112,13 @@ toml==0.10.2
     #   -r requirements/base.txt
     #   pylint
     #   tox
-tox==3.24.0
+tox==3.24.1
     # via
     #   -r requirements/dev.in
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.in
-virtualenv==20.6.0
+virtualenv==20.7.0
     # via tox
 wrapt==1.12.1
     # via
