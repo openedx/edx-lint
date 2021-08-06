@@ -23,3 +23,6 @@ pyjwt[crypto]==1.7.1
 
 # latest version requires PyJWT>=2.0.0 but drf-jwt requires PyJWT[crypto]<2.0.0,>=1.5.2
 social-auth-core<4.0.3
+
+# 5.0.0+ of social-auth-app-django requires social-auth-core>=4.1.0
+social-auth-app-django<5.0.0
