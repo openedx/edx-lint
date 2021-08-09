@@ -26,3 +26,8 @@ social-auth-core<4.0.3
 
 # 5.0.0+ of social-auth-app-django requires social-auth-core>=4.1.0
 social-auth-app-django<5.0.0
+
+# These following packages depends on pyjwt which brings breaking changes in latest version 2.1.0.
+# These packages are under active development and their pin will be remove after testing.
+edx-drf-extensions==6.6.0
+edx-auth-backends==3.4.0
