@@ -118,7 +118,7 @@ tox==3.24.1
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.in
-virtualenv==20.7.0
+virtualenv==20.7.2
     # via tox
 wrapt==1.12.1
     # via
