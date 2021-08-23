@@ -133,7 +133,7 @@ six==1.16.0
     #   virtualenv
 sqlparse==0.4.1
     # via django
-stevedore==3.3.0
+stevedore==3.4.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -147,7 +147,7 @@ toml==0.10.2
     #   pylint
     #   pytest
     #   tox
-tox==3.24.1
+tox==3.24.3
     # via
     #   -r requirements/dev.txt
     #   tox-battery

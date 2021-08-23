@@ -99,7 +99,7 @@ six==1.16.0
     #   -r requirements/base.txt
     #   tox
     #   virtualenv
-stevedore==3.3.0
+stevedore==3.4.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -112,7 +112,7 @@ toml==0.10.2
     #   -r requirements/base.txt
     #   pylint
     #   tox
-tox==3.24.1
+tox==3.24.3
     # via
     #   -r requirements/dev.in
     #   tox-battery
