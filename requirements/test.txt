@@ -81,6 +81,7 @@ platformdirs==2.2.0
     #   virtualenv
 pluggy==0.13.1
     # via
+    #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.txt
     #   pytest
     #   tox
