@@ -318,7 +318,9 @@ disable=
     too-many-public-methods,
     too-many-return-statements,
     ungrouped-imports,
+    unspecified-encoding,
     unused-wildcard-import,
+    use-maxsplit-arg,
 
     # These are repo-specific
     feature-toggle-needs-doc,

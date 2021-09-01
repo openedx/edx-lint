@@ -13,6 +13,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.1.0 - 2021-09-01
+~~~~~~~~~~~~~~~~~~
+
+* Disabled two new warnings from pylint 2.10: unspecified-encoding and
+  use-maxsplit-arg.
+
 [5.0.0] - 2021-03-18
 ~~~~~~~~~~~~~~~~~~~~
 
