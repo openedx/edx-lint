@@ -57,12 +57,10 @@ pbr==5.6.0
     # via
     #   -r requirements/base.txt
     #   stevedore
-platformdirs==2.2.0
+platformdirs==2.3.0
     # via virtualenv
-pluggy==0.13.1
-    # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
-    #   tox
+pluggy==1.0.0
+    # via tox
 py==1.10.0
     # via tox
 pylint==2.6.0
