@@ -6,158 +6,158 @@
 #
 astroid==2.5
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pylint
     #   pylint-celery
 attrs==21.2.0
     # via pytest
 backports.entry-points-selectable==1.1.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   virtualenv
 click==8.0.1
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
     #   click-log
     #   code-annotations
 click-log==0.3.2
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
 code-annotations==1.2.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
 coverage==5.5
-    # via -r requirements/test.in
+    # via -r test.in
 distlib==0.3.2
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   virtualenv
 django==2.2.24
     # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
-    #   -r requirements/test.in
+    #   -c ../edx_lint/files/common_constraints.txt
+    #   -r test.in
 filelock==3.0.12
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   tox
     #   virtualenv
 iniconfig==1.1.1
     # via pytest
 isort==5.9.3
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pylint
 jinja2==3.0.1
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   code-annotations
 lazy-object-proxy==1.6.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   astroid
 markupsafe==2.0.1
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   jinja2
 mccabe==0.6.1
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pylint
 packaging==21.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pytest
     #   tox
 pbr==5.6.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   stevedore
 platformdirs==2.3.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   virtualenv
 pluggy==1.0.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pytest
     #   tox
 py==1.10.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pytest
     #   tox
 pylint==2.6.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
     #   pylint-celery
     #   pylint-django
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
 pylint-django==2.3.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
 pylint-plugin-utils==0.6
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pylint-celery
     #   pylint-django
 pyparsing==2.4.7
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   packaging
 pytest==6.2.5
-    # via -r requirements/test.in
+    # via -r test.in
 python-slugify==5.0.2
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   code-annotations
 pytz==2021.1
     # via django
 pyyaml==5.4.1
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   code-annotations
 six==1.16.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    #   -c constraints.txt
+    #   -r dev.txt
     #   tox
     #   virtualenv
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
 stevedore==3.4.0
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   code-annotations
 text-unidecode==1.3
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   python-slugify
 toml==0.10.2
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   pylint
     #   pytest
     #   tox
 tox==3.24.3
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   tox-battery
 tox-battery==0.6.1
-    # via -r requirements/dev.txt
+    # via -r dev.txt
 virtualenv==20.7.2
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   tox
 wrapt==1.12.1
     # via
-    #   -r requirements/dev.txt
+    #   -r dev.txt
     #   astroid
