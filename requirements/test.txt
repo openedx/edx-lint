@@ -131,7 +131,7 @@ six==1.16.0
     #   -r requirements/dev.txt
     #   tox
     #   virtualenv
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
 stevedore==3.4.0
     # via
