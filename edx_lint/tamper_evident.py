@@ -15,7 +15,7 @@ class TamperEvidentFile:
     def __init__(self, filename):
         self.filename = filename
 
-    def write(self, text, hashline=b"# {}"):
+    def write(self, text, hashline="# {}"):
         """
         Write `text` to the file.
 
@@ -30,7 +30,7 @@ class TamperEvidentFile:
         Arguments:
             text (UTF8 byte string): the contents of the file to write.
 
-            hashline (UTF8 byte string): the format of the last line to append
+            hashline (string): the format of the last line to append
                 to the file, with "{}" replaced with the hash.
 
         """
@@ -41,7 +41,7 @@ class TamperEvidentFile:
 
         with open(self.filename, "wb") as f:
             f.write(text)
-            f.write(hashline.decode("utf8").format(actual_hash).encode("utf8"))
+            f.write(hashline.format(actual_hash).encode("utf8"))
             f.write(b"\n")
 
     def validate(self):
