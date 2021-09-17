@@ -8,6 +8,7 @@ import dataclasses
 class Metadata:
     format: str
     comment: str
+    internal_only: bool = False
 
 
 KNOWN_FILES = {
@@ -22,5 +23,8 @@ KNOWN_FILES = {
     "just_for_testing.txt": Metadata(
         format="txt",
         comment="-- {}",
+        internal_only=True,
     ),
+    # BTW: common_constraints.txt is in the resources, but isn't a file
+    # that edx_lint writes.
 }
