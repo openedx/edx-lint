@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from edx_lint.cmd import main
 
@@ -12,11 +13,13 @@ PYLINTRC = "pylintrc"
 PYLINTRC_TWEAKS = "pylintrc_tweaks"
 PYLINTRC_BACKUP = "pylintrc_backup"
 
+EDITORCONFIG = ".editorconfig"
+
 JUST_TESTING = "just_for_testing.txt"
 
 
-class WriteCommandTest(unittest.TestCase):
-    """ Tests for the write command. """
+class CommandTest(unittest.TestCase):
+    """Helpers for testing commands."""
 
     def setUp(self):
         super().setUp()
@@ -55,6 +58,10 @@ class WriteCommandTest(unittest.TestCase):
     def assert_not_file(self, filename):
         """Assert that a file doesn't exist."""
         self.assertFalse(os.path.isfile(filename))
+
+
+class WriteCommandTest(CommandTest):
+    """Tests for the write command."""
 
     def test_write_arg_errors(self):
         self.assertEqual(1, self.call_command(["write"]))
@@ -109,3 +116,42 @@ class WriteCommandTest(unittest.TestCase):
         self.assertEqual(0, self.call_command(["write", JUST_TESTING]))
         self.assert_file(JUST_TESTING, contains="\n-- ** DO NOT EDIT")
         self.assert_file(JUST_TESTING, contains="you must edit the central file", not_contains="LOCAL CHANGE")
+
+
+class UpdateCommandTest(CommandTest):
+    """Tests for the update command."""
+
+    def test_no_files_exist(self):
+        self.assertEqual(0, self.call_command(["update"]))
+        self.assert_not_file(PYLINTRC)
+        self.assert_not_file(EDITORCONFIG)
+
+    def test_one_file_exists(self):
+        # Write the initial version of pylintrc.
+        self.assertEqual(0, self.call_command(["write", PYLINTRC]))
+        self.assert_file(PYLINTRC, contains="[MASTER]")
+        self.assert_not_file(EDITORCONFIG)
+
+        # Pretend edx-lint has a newer version of pylintrc, and update files.
+        with patch("edx_lint.write.get_file_content") as get_file_content:
+            get_file_content.return_value = "[xyz]\nsetting = True"
+            self.assertEqual(0, self.call_command(["update"]))
+
+        # pylintrc is re-written with new content.
+        self.assert_file(PYLINTRC, contains="setting = True")
+        self.assert_file(PYLINTRC, not_contains="[MASTER]")
+        # .editorconfig still hasn't been written.
+        self.assert_not_file(EDITORCONFIG)
+
+    def test_update_backs_up_handwritten_files(self):
+        # Create a hand-written pylintrc file:
+        with open(PYLINTRC, "w") as pylintrc:
+            pylintrc.write("[bogus]\nnot_really = pylintrc\n")
+
+        # Update will see it's not one made by edx-lint, and move it aside.
+        self.assertEqual(0, self.call_command(["update"]))
+
+        # The backup file is our original hand-written file.
+        self.assert_file(PYLINTRC_BACKUP, contains="not_really = pylintrc")
+        # The pylintrc file was written by edx-lint.
+        self.assert_file(PYLINTRC, contains="[MASTER]")
