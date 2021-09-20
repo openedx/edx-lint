@@ -112,13 +112,13 @@ toml==0.10.2
     #   -r requirements/base.txt
     #   pylint
     #   tox
-tox==3.24.3
+tox==3.24.4
     # via
     #   -r requirements/dev.in
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.in
-virtualenv==20.7.2
+virtualenv==20.8.0
     # via tox
 wrapt==1.12.1
     # via
