@@ -2,6 +2,7 @@
 
 import sys
 
+from edx_lint import VERSION
 from edx_lint.cmd.check import check_main
 from edx_lint.cmd.list import list_main
 from edx_lint.cmd.write import write_main
@@ -32,9 +33,9 @@ def show_help():
     print(
         """\
 Manage local config files from masters in edx_lint.
-
+version {VERSION}
 Commands:
-"""
+""".format(VERSION=VERSION)
     )
     for cmd in [write_main, check_main, list_main]:
         print(cmd.__doc__.lstrip("\n"))

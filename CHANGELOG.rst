@@ -13,6 +13,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* The help message now includes the version.
+
 5.1.0 - 2021-09-01
 ~~~~~~~~~~~~~~~~~~
 
