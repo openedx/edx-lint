@@ -20,6 +20,11 @@ KNOWN_FILES = {
         format="ini",
         comment="# {}",
     ),
+    "commitlint.config.js": Metadata(
+        format="js",
+        comment="// {}",
+    ),
+
     "just_for_testing.txt": Metadata(
         format="txt",
         comment="-- {}",
