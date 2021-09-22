@@ -13,6 +13,9 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* The new "update" command will write all edx-lint-writable files that exist
+  on disk.
+
 * edx-lint can now write commitlint.config.js files.
 
 * The help message now includes the version.

@@ -6,6 +6,7 @@ from edx_lint import VERSION
 from edx_lint.cmd.check import check_main
 from edx_lint.cmd.list import list_main
 from edx_lint.cmd.write import write_main
+from edx_lint.cmd.update import update_main
 
 
 def main(argv=None):
@@ -22,6 +23,8 @@ def main(argv=None):
         return list_main(argv[1:])
     elif argv[0] == "write":
         return write_main(argv[1:])
+    elif argv[0] == "update":
+        return update_main(argv[1:])
     else:
         print("Don't understand {!r}".format(" ".join(argv)))
         show_help()
@@ -37,5 +40,5 @@ version {VERSION}
 Commands:
 """.format(VERSION=VERSION)
     )
-    for cmd in [write_main, check_main, list_main]:
+    for cmd in [write_main, check_main, list_main, update_main]:
         print(cmd.__doc__.lstrip("\n"))

@@ -124,8 +124,6 @@ def write_file(filename, output_fn):
         output_fn("Don't have file %r to write." % filename)
         return 2
 
-    resource_name = "files/" + filename
-
     if os.path.exists(filename):
         output_fn("Checking existing copy of %s" % filename)
         tef = TamperEvidentFile(filename)
@@ -138,12 +136,13 @@ def write_file(filename, output_fn):
             os.rename(filename, bak_name)
 
     output_fn("Reading edx_lint/files/%s" % filename)
-    resource_string = pkg_resources.resource_string("edx_lint", resource_name).decode("utf8")
+
+    file_content = get_file_content(filename)
 
     tweaks_name = None
     if metadata.format == "ini":
         cfg = configparser.RawConfigParser()
-        cfg.read_string(resource_string, resource_name)
+        cfg.read_string(file_content, f"<internal {filename}>")
 
         tweaks_name = amend_filename(filename, "_tweaks")
         if os.path.exists(tweaks_name):
@@ -159,13 +158,18 @@ def write_file(filename, output_fn):
     if metadata.format == "ini":
         cfg.write(output_text)
     else:
-        output_text.write(resource_string)
+        output_text.write(file_content)
 
     out_tef = TamperEvidentFile(filename)
     output_bytes = output_text.getvalue().encode("utf8")
     out_tef.write(output_bytes, hashline=metadata.comment)
 
     return 0
+
+
+def get_file_content(filename):
+    """Get the contents of the file that should be written."""
+    return pkg_resources.resource_string("edx_lint", f"files/{filename}").decode("utf8")
 
 
 def amend_filename(filename, amend):
