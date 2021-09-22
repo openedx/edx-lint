@@ -13,6 +13,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+
+5.2.0 - 2021-09-24
+~~~~~~~~~~~~~~~~~~
+
 * Silence the "consider-using-f-string" pylint violation.
 
 * The new "update" command will write all edx-lint-writable files that exist
