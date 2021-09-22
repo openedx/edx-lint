@@ -23,10 +23,11 @@ def load_requirements(*requirements_paths):
     """
     requirements = set()
     for path in requirements_paths:
-        requirements.update(
-            line.split('#')[0].strip() for line in open(path).readlines()
-            if is_requirement(line.strip())
-        )
+        with open(path) as req_file:
+            requirements.update(
+                line.split('#')[0].strip() for line in req_file
+                if is_requirement(line.strip())
+            )
     return list(requirements)
 
 
