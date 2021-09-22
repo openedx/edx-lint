@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.5
+astroid==2.8.0
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -17,21 +17,18 @@ backports.entry-points-selectable==1.1.0
     #   virtualenv
 click==8.0.1
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
     #   click-log
     #   code-annotations
 click-log==0.3.2
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    # via -r requirements/dev.txt
 code-annotations==1.2.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
 coverage==5.5
     # via -r requirements/test.in
-distlib==0.3.2
+distlib==0.3.3
     # via
     #   -r requirements/dev.txt
     #   virtualenv
@@ -78,6 +75,7 @@ pbr==5.6.0
 platformdirs==2.3.0
     # via
     #   -r requirements/dev.txt
+    #   pylint
     #   virtualenv
 pluggy==1.0.0
     # via
@@ -89,21 +87,16 @@ py==1.10.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.6.0
+pylint==2.11.1
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
     #   pylint-plugin-utils
 pylint-celery==0.3
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
-pylint-django==2.3.0
-    # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/dev.txt
+    # via -r requirements/dev.txt
+pylint-django==2.4.4
+    # via -r requirements/dev.txt
 pylint-plugin-utils==0.6
     # via
     #   -r requirements/dev.txt
@@ -127,7 +120,6 @@ pyyaml==5.4.1
     #   code-annotations
 six==1.16.0
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
     #   tox
     #   virtualenv
@@ -153,6 +145,11 @@ tox==3.24.4
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.txt
+typing-extensions==3.10.0.2
+    # via
+    #   -r requirements/dev.txt
+    #   astroid
+    #   pylint
 virtualenv==20.8.0
     # via
     #   -r requirements/dev.txt
@@ -161,3 +158,6 @@ wrapt==1.12.1
     # via
     #   -r requirements/dev.txt
     #   astroid
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
