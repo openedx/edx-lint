@@ -295,6 +295,7 @@ disable=
     # These should be left to the discretion of the reviewer
     bad-continuation,
     bad-indentation,
+    consider-using-f-string,
     duplicate-code,
     file-ignored,
     fixme,

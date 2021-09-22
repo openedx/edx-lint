@@ -315,6 +315,7 @@ enable =
 disable = 
 	bad-continuation,
 	bad-indentation,
+	consider-using-f-string,
 	duplicate-code,
 	file-ignored,
 	fixme,
@@ -483,4 +484,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 4303760e373fa1342225c52294661ccae5902b3c
+# a3b3d132ed233781254fafa64b208fb0b60f759e
