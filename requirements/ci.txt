@@ -6,7 +6,7 @@
 #
 backports.entry-points-selectable==1.1.0
     # via virtualenv
-distlib==0.3.2
+distlib==0.3.3
     # via virtualenv
 filelock==3.0.12
     # via
@@ -24,7 +24,6 @@ pyparsing==2.4.7
     # via packaging
 six==1.16.0
     # via
-    #   -c requirements/constraints.txt
     #   tox
     #   virtualenv
 toml==0.10.2

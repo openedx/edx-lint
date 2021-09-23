@@ -13,6 +13,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Silence the "consider-using-f-string" pylint violation.
+
 * The new "update" command will write all edx-lint-writable files that exist
   on disk.
 
