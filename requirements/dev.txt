@@ -54,7 +54,7 @@ pbr==5.6.0
     # via
     #   -r requirements/base.txt
     #   stevedore
-platformdirs==2.3.0
+platformdirs==2.4.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -117,7 +117,7 @@ typing-extensions==3.10.0.2
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.8.0
+virtualenv==20.8.1
     # via tox
 wrapt==1.12.1
     # via

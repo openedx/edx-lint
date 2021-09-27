@@ -14,7 +14,7 @@ filelock==3.0.12
     #   virtualenv
 packaging==21.0
     # via tox
-platformdirs==2.3.0
+platformdirs==2.4.0
     # via virtualenv
 pluggy==1.0.0
     # via tox
@@ -30,5 +30,5 @@ toml==0.10.2
     # via tox
 tox==3.24.4
     # via -r requirements/ci.in
-virtualenv==20.8.0
+virtualenv==20.8.1
     # via tox
