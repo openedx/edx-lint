@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.8.0
+astroid==2.8.2
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -15,7 +15,7 @@ backports.entry-points-selectable==1.1.0
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-click==8.0.1
+click==8.0.3
     # via
     #   -r requirements/dev.txt
     #   click-log
@@ -26,7 +26,7 @@ code-annotations==1.2.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==6.0
+coverage==6.0.1
     # via -r requirements/test.in
 distlib==0.3.3
     # via
@@ -47,7 +47,7 @@ isort==5.9.3
     # via
     #   -r requirements/dev.txt
     #   pylint
-jinja2==3.0.1
+jinja2==3.0.2
     # via
     #   -r requirements/dev.txt
     #   code-annotations

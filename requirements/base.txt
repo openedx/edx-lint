@@ -4,11 +4,11 @@
 #
 #    make upgrade
 #
-astroid==2.8.0
+astroid==2.8.2
     # via
     #   pylint
     #   pylint-celery
-click==8.0.1
+click==8.0.3
     # via
     #   -r requirements/base.in
     #   click-log
@@ -21,7 +21,7 @@ code-annotations==1.2.0
     #   -r requirements/base.in
 isort==5.9.3
     # via pylint
-jinja2==3.0.1
+jinja2==3.0.2
     # via code-annotations
 lazy-object-proxy==1.6.0
     # via astroid
