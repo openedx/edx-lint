@@ -4,14 +4,14 @@
 #
 #    make upgrade
 #
-astroid==2.8.0
+astroid==2.8.2
     # via
     #   -r requirements/base.txt
     #   pylint
     #   pylint-celery
 backports.entry-points-selectable==1.1.0
     # via virtualenv
-click==8.0.1
+click==8.0.3
     # via
     #   -r requirements/base.txt
     #   click-log
@@ -32,7 +32,7 @@ isort==5.9.3
     # via
     #   -r requirements/base.txt
     #   pylint
-jinja2==3.0.1
+jinja2==3.0.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
