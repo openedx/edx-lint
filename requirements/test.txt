@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.8.2
+astroid==2.8.3
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -26,7 +26,7 @@ code-annotations==1.2.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==6.0.1
+coverage==6.0.2
     # via -r requirements/test.in
 distlib==0.3.3
     # via
@@ -36,7 +36,7 @@ django==2.2.24
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-filelock==3.3.0
+filelock==3.3.1
     # via
     #   -r requirements/dev.txt
     #   tox
@@ -114,7 +114,7 @@ python-slugify==5.0.2
     #   code-annotations
 pytz==2021.3
     # via django
-pyyaml==5.4.1
+pyyaml==6.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -154,7 +154,7 @@ virtualenv==20.8.1
     # via
     #   -r requirements/dev.txt
     #   tox
-wrapt==1.12.1
+wrapt==1.13.2
     # via
     #   -r requirements/dev.txt
     #   astroid
