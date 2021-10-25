@@ -20,7 +20,7 @@ pluggy==1.0.0
     # via tox
 py==1.10.0
     # via tox
-pyparsing==2.4.7
+pyparsing==3.0.1
     # via packaging
 six==1.16.0
     # via
@@ -30,5 +30,5 @@ toml==0.10.2
     # via tox
 tox==3.24.4
     # via -r requirements/ci.in
-virtualenv==20.8.1
+virtualenv==20.9.0
     # via tox
