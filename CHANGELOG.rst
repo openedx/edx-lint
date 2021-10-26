@@ -13,6 +13,9 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.2.1 - 2021-10-26
+~~~~~~~~~~~~~~~~~~
+
 * Include constraint files when generating requirements metadata
 
 5.2.0 - 2021-09-24
