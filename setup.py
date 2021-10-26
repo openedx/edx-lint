@@ -59,7 +59,7 @@ def load_requirements(*requirements_paths):
                     add_version_constraint_or_raise(line, requirements, False)
 
     # process back into list of pkg><=constraints strings
-    return [f'{pkg}{version or ""}' for (pkg, version) in requirements.items()]
+    return [f'{pkg}{version or ""}' for (pkg, version) in sorted(requirements.items())]
 
 
 def is_requirement(line):
