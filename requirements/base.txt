@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.8.3
+astroid==2.8.4
     # via
     #   pylint
     #   pylint-celery
@@ -63,7 +63,7 @@ typing-extensions==3.10.0.2
     # via
     #   astroid
     #   pylint
-wrapt==1.13.2
+wrapt==1.13.3
     # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
