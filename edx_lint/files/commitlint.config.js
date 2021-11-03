@@ -6,9 +6,13 @@ module.exports = {
   rules: {
     'type-enum':
       [2, 'always', [
-        'revert', 'feat', 'fix', 'perf', 'docs', 'test', 'build', 'refactor', 'style', 'chore', 'temp',
+        'revert', 'feat', 'fix', 'perf', 'docs', 'test', 'build', 'refactor', 'style', 'chore', 'temp', 'squash',
       ]],
-
+    'type-enum':
+      [1, 'never', [
+        'squash',
+      ]],
+    
     // Default rules we want to suppress:
     'body-leading-blank': [0, "always"],
     'body-max-line-length': [0, "always"],
