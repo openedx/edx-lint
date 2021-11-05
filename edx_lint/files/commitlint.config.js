@@ -37,6 +37,8 @@ module.exports = {
           const SQUASH = 'squash';
           return [
             // matches squash commits, so use with "never"
+            // - Why does this match on empty type/subject?
+            // - Gives a false warning in this case, but not a big deal.
             subject && subject.startsWith(SQUASH),
             `Reminder to squash all '${SQUASH}' commits`,
           ];
