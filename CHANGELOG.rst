@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.3.0 - 2021-11-05
+~~~~~~~~~~~~~~~~~~
+
+* commitlint config updated to treat "squash:" type commits as warnings instead of errors.
+
 5.2.1 - 2021-10-26
 ~~~~~~~~~~~~~~~~~~
 

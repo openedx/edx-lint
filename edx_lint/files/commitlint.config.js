@@ -8,11 +8,8 @@ module.exports = {
       [2, 'always', [
         'revert', 'feat', 'fix', 'perf', 'docs', 'test', 'build', 'refactor', 'style', 'chore', 'temp', 'squash',
       ]],
-    'type-enum':
-      [1, 'never', [
-        'squash',
-      ]],
-    
+    'squash-invalid': [1, 'never'],
+
     // Default rules we want to suppress:
     'body-leading-blank': [0, "always"],
     'body-max-line-length': [0, "always"],
@@ -32,4 +29,19 @@ module.exports = {
     // Those include the typical "Merged" messages, so those are implicitly ignored:
     // https://github.com/conventional-changelog/commitlint/blob/master/%40commitlint/is-ignored/src/defaults.ts
   ],
+
+  plugins: [
+    {
+      rules: {
+        'squash-invalid': ({subject}) => {
+          const SQUASH = 'squash';
+          return [
+            !subject.startsWith(SQUASH),
+            `Reminder to squash all '${SQUASH}' commits`,
+          ];
+        },
+      },
+    },
+  ],
+
 };
