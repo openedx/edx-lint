@@ -33,10 +33,11 @@ module.exports = {
   plugins: [
     {
       rules: {
-        'squash-invalid': ({subject}) => {
+        'squash-reminder': ({subject}) => {
           const SQUASH = 'squash';
           return [
-            !subject.startsWith(SQUASH),
+            // matches squash commits, so use with "never"
+            subject && subject.startsWith(SQUASH),
             `Reminder to squash all '${SQUASH}' commits`,
           ];
         },
