@@ -8,7 +8,7 @@ module.exports = {
       [2, 'always', [
         'revert', 'feat', 'fix', 'perf', 'docs', 'test', 'build', 'refactor', 'style', 'chore', 'temp', 'squash',
       ]],
-    'allow-squash-match': [1, 'never'],
+    'squash-match': [1, 'never'],
 
     // Default rules we want to suppress:
     'body-leading-blank': [0, "always"],
@@ -33,7 +33,7 @@ module.exports = {
   plugins: [
     {
       rules: {
-        'allow-squash-match': ({subject}) => {
+        'squash-match': ({subject}) => {
           const SQUASH = 'squash';
           return [
             // matches squash commits, so use with "never"
