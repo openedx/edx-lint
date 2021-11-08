@@ -28,7 +28,7 @@ filelock==3.3.2
     # via
     #   tox
     #   virtualenv
-isort==5.9.3
+isort==5.10.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -50,7 +50,7 @@ mccabe==0.6.1
     #   pylint
 packaging==21.2
     # via tox
-pbr==5.6.0
+pbr==5.7.0
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -61,7 +61,7 @@ platformdirs==2.4.0
     #   virtualenv
 pluggy==1.0.0
     # via tox
-py==1.10.0
+py==1.11.0
     # via tox
 pylint==2.11.1
     # via
@@ -117,7 +117,7 @@ typing-extensions==3.10.0.2
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.9.0
+virtualenv==20.10.0
     # via tox
 wrapt==1.13.3
     # via
