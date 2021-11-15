@@ -5,10 +5,10 @@
 #    make upgrade
 #
 wheel==0.35.1
-    # via -r requirements/pip.in
+    # via -r pip.in
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==20.2.4
-    # via -r requirements/pip.in
+pip==21.1
+    # via -r pip.in
 setuptools==50.3.2
-    # via -r requirements/pip.in
+    # via -r pip.in
