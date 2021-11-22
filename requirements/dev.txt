@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.8.5
+astroid==2.8.6
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -24,7 +24,7 @@ code-annotations==1.2.0
     #   -r requirements/base.txt
 distlib==0.3.3
     # via virtualenv
-filelock==3.3.2
+filelock==3.4.0
     # via
     #   tox
     #   virtualenv
@@ -48,9 +48,9 @@ mccabe==0.6.1
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==21.2
+packaging==21.3
     # via tox
-pbr==5.7.0
+pbr==5.8.0
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -78,7 +78,7 @@ pylint-plugin-utils==0.6
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-pyparsing==2.4.7
+pyparsing==3.0.6
     # via packaging
 python-slugify==5.0.2
     # via
