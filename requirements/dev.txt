@@ -22,7 +22,7 @@ code-annotations==1.2.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
-distlib==0.3.3
+distlib==0.3.4
     # via virtualenv
 filelock==3.4.0
     # via

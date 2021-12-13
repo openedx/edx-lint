@@ -30,11 +30,11 @@ code-annotations==1.2.0
     #   -r requirements/dev.txt
 coverage==6.2
     # via -r requirements/test.in
-distlib==0.3.3
+distlib==0.3.4
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==3.2.9
+django==3.2.10
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
