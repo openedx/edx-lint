@@ -23,7 +23,7 @@ isort==5.10.1
     # via pylint
 jinja2==3.0.3
     # via code-annotations
-lazy-object-proxy==1.6.0
+lazy-object-proxy==1.7.1
     # via astroid
 markupsafe==2.0.1
     # via jinja2
@@ -31,7 +31,7 @@ mccabe==0.6.1
     # via pylint
 pbr==5.8.0
     # via stevedore
-platformdirs==2.4.0
+platformdirs==2.4.1
     # via pylint
 pylint==2.12.2
     # via
