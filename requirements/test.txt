@@ -6,17 +6,13 @@
 #
 asgiref==3.4.1
     # via django
-astroid==2.9.0
+astroid==2.9.1
     # via
     #   -r requirements/dev.txt
     #   pylint
     #   pylint-celery
-attrs==21.2.0
+attrs==21.4.0
     # via pytest
-backports.entry-points-selectable==1.1.1
-    # via
-    #   -r requirements/dev.txt
-    #   virtualenv
 click==8.0.3
     # via
     #   -r requirements/dev.txt
@@ -97,9 +93,9 @@ pylint==2.12.2
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via -r requirements/dev.txt
-pylint-django==2.4.4
+pylint-django==2.5.0
     # via -r requirements/dev.txt
-pylint-plugin-utils==0.6
+pylint-plugin-utils==0.7
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -141,7 +137,7 @@ toml==0.10.2
     #   pylint
     #   pytest
     #   tox
-tox==3.24.4
+tox==3.24.5
     # via
     #   -r requirements/dev.txt
     #   tox-battery
@@ -152,7 +148,7 @@ typing-extensions==4.0.1
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.10.0
+virtualenv==20.13.0
     # via
     #   -r requirements/dev.txt
     #   tox
