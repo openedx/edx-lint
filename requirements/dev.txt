@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.9.1
+astroid==2.9.3
     # via
     #   -r requirements/base.txt
     #   pylint
