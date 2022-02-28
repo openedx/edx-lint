@@ -106,7 +106,7 @@ pyparsing==3.0.7
     #   packaging
 pytest==7.0.1
     # via -r requirements/test.in
-python-slugify==6.0.1
+python-slugify==6.1.1
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -149,7 +149,7 @@ typing-extensions==4.1.1
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.13.1
+virtualenv==20.13.2
     # via
     #   -r requirements/dev.txt
     #   tox
