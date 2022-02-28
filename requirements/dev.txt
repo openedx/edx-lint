@@ -78,7 +78,7 @@ pylint-plugin-utils==0.7
     #   pylint-django
 pyparsing==3.0.7
     # via packaging
-python-slugify==6.0.1
+python-slugify==6.1.1
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -115,7 +115,7 @@ typing-extensions==4.1.1
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.13.1
+virtualenv==20.13.2
     # via tox
 wrapt==1.13.3
     # via
