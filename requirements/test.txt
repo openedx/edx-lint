@@ -53,7 +53,7 @@ lazy-object-proxy==1.7.1
     # via
     #   -r requirements/dev.txt
     #   astroid
-markupsafe==2.1.0
+markupsafe==2.1.1
     # via
     #   -r requirements/dev.txt
     #   jinja2
@@ -104,13 +104,13 @@ pyparsing==3.0.7
     # via
     #   -r requirements/dev.txt
     #   packaging
-pytest==7.1.0
+pytest==7.1.1
     # via -r requirements/test.in
 python-slugify==6.1.1
     # via
     #   -r requirements/dev.txt
     #   code-annotations
-pytz==2021.3
+pytz==2022.1
     # via django
 pyyaml==6.0
     # via
@@ -149,7 +149,7 @@ typing-extensions==4.1.1
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.13.3
+virtualenv==20.13.4
     # via
     #   -r requirements/dev.txt
     #   tox
