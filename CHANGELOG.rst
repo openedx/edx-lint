@@ -13,6 +13,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.2.2 - 2022-03-25
+~~~~~~~~~~~~~~~~~~
+
+* fixed import path of a pylint protected function to make
+  edx-lint compatible with `pylint==2.13.0`.
+* Updated testenvs in both tox and CI
+
 5.2.1 - 2021-10-26
 ~~~~~~~~~~~~~~~~~~
 

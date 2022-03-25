@@ -2,7 +2,10 @@
 
 import astroid
 from pylint.checkers import BaseChecker, utils
-from pylint.checkers.classes import _ancestors_to_call
+try:
+    from pylint.checkers.classes import _ancestors_to_call
+except ImportError:
+    from pylint.checkers.classes.class_checker import _ancestors_to_call
 from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors, usable_class_name
