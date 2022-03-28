@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.1
+astroid==2.11.2
     # via
     #   pylint
     #   pylint-celery
@@ -23,7 +23,7 @@ dill==0.3.4
     # via pylint
 isort==5.10.1
     # via pylint
-jinja2==3.1.0
+jinja2==3.1.1
     # via code-annotations
 lazy-object-proxy==1.7.1
     # via astroid
@@ -35,7 +35,7 @@ pbr==5.8.1
     # via stevedore
 platformdirs==2.5.1
     # via pylint
-pylint==2.13.0
+pylint==2.13.2
     # via
     #   -r requirements/base.in
     #   pylint-celery
@@ -43,7 +43,7 @@ pylint==2.13.0
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via -r requirements/base.in
-pylint-django==2.5.2
+pylint-django==2.5.3
     # via -r requirements/base.in
 pylint-plugin-utils==0.7
     # via

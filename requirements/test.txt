@@ -6,7 +6,7 @@
 #
 asgiref==3.5.0
     # via django
-astroid==2.11.1
+astroid==2.11.2
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -49,7 +49,7 @@ isort==5.10.1
     # via
     #   -r requirements/dev.txt
     #   pylint
-jinja2==3.1.0
+jinja2==3.1.1
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -89,7 +89,7 @@ py==1.11.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.13.0
+pylint==2.13.2
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -97,7 +97,7 @@ pylint==2.13.0
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via -r requirements/dev.txt
-pylint-django==2.5.2
+pylint-django==2.5.3
     # via -r requirements/dev.txt
 pylint-plugin-utils==0.7
     # via
@@ -155,7 +155,7 @@ typing-extensions==4.1.1
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.13.4
+virtualenv==20.14.0
     # via
     #   -r requirements/dev.txt
     #   tox
