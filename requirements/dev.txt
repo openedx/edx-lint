@@ -9,7 +9,7 @@ astroid==2.11.2
     #   -r requirements/base.txt
     #   pylint
     #   pylint-celery
-click==8.0.4
+click==8.1.2
     # via
     #   -r requirements/base.txt
     #   click-log
@@ -65,7 +65,7 @@ pluggy==1.0.0
     # via tox
 py==1.11.0
     # via tox
-pylint==2.13.2
+pylint==2.13.4
     # via
     #   -r requirements/base.txt
     #   pylint-celery
