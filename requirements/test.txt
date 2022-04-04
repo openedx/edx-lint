@@ -13,7 +13,7 @@ astroid==2.11.2
     #   pylint-celery
 attrs==21.4.0
     # via pytest
-click==8.0.4
+click==8.1.2
     # via
     #   -r requirements/dev.txt
     #   click-log
@@ -89,7 +89,7 @@ py==1.11.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.13.2
+pylint==2.13.4
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
