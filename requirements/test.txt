@@ -34,7 +34,7 @@ distlib==0.3.4
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==3.2.12
+django==3.2.13
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
@@ -144,18 +144,18 @@ tomli==2.0.1
     #   -r requirements/dev.txt
     #   pylint
     #   pytest
-tox==3.24.5
+tox==3.25.0
     # via
     #   -r requirements/dev.txt
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.txt
-typing-extensions==4.1.1
+typing-extensions==4.2.0
     # via
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.14.0
+virtualenv==20.14.1
     # via
     #   -r requirements/dev.txt
     #   tox
