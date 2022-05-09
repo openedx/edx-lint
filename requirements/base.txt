@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.3
+astroid==2.11.4
     # via
     #   pylint
     #   pylint-celery
@@ -31,11 +31,11 @@ markupsafe==2.1.1
     # via jinja2
 mccabe==0.7.0
     # via pylint
-pbr==5.8.1
+pbr==5.9.0
     # via stevedore
 platformdirs==2.5.2
     # via pylint
-pylint==2.13.7
+pylint==2.13.8
     # via
     #   -r requirements/base.in
     #   pylint-celery
@@ -65,7 +65,7 @@ typing-extensions==4.2.0
     # via
     #   astroid
     #   pylint
-wrapt==1.14.0
+wrapt==1.14.1
     # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:

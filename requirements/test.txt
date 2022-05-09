@@ -6,7 +6,7 @@
 #
 asgiref==3.5.1
     # via django
-astroid==2.11.3
+astroid==2.11.4
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -70,7 +70,7 @@ packaging==21.3
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pbr==5.8.1
+pbr==5.9.0
     # via
     #   -r requirements/dev.txt
     #   stevedore
@@ -89,7 +89,7 @@ py==1.11.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.13.7
+pylint==2.13.8
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -159,7 +159,7 @@ virtualenv==20.14.1
     # via
     #   -r requirements/dev.txt
     #   tox
-wrapt==1.14.0
+wrapt==1.14.1
     # via
     #   -r requirements/dev.txt
     #   astroid
