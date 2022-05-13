@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.4
+astroid==2.11.5
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -80,7 +80,7 @@ pylint-plugin-utils==0.7
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-pyparsing==3.0.8
+pyparsing==3.0.9
     # via packaging
 python-slugify==6.1.2
     # via

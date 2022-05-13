@@ -20,3 +20,7 @@ Django<4.0
 elasticsearch<7.14.0
 
 setuptools<60
+
+# pip-tools fails with latest pip==22.1 version. 
+# The failure details are in the issue https://github.com/jazzband/pip-tools/issues/1617.
+pip<22.1
