@@ -26,7 +26,7 @@ dill==0.3.4
     #   pylint
 distlib==0.3.4
     # via virtualenv
-filelock==3.6.0
+filelock==3.7.0
     # via
     #   tox
     #   virtualenv

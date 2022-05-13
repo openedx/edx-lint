@@ -38,7 +38,7 @@ django==3.2.13
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-filelock==3.6.0
+filelock==3.7.0
     # via
     #   -r requirements/dev.txt
     #   tox
