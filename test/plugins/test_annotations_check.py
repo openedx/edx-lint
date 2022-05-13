@@ -254,18 +254,6 @@ def test_missing_annotation():
     assert expected == messages
 
 
-def test_missing_legacy_annotation():
-    source = """
-    # .. toggle_name: MYNAMESPACE.INCORRECTMYTOGGLE1
-    waffle1 = LegacyWaffleFlag('MYNAMESPACE', 'MYTOGGLE1')
-    """
-    messages = run_pylint(source, "toggle-missing-annotation")
-    expected = {
-        "3:toggle-missing-annotation:missing feature toggle annotation"
-    }
-    assert expected == messages
-
-
 def test_missing_annotation_for_unnamed_toggle():
     source = """
     # annotated waffle flag
