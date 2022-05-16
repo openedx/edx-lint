@@ -35,7 +35,7 @@ pbr==5.9.0
     # via stevedore
 platformdirs==2.5.2
     # via pylint
-pylint==2.13.8
+pylint==2.13.9
     # via
     #   -r requirements/base.in
     #   pylint-celery

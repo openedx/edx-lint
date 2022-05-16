@@ -89,7 +89,7 @@ py==1.11.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.13.8
+pylint==2.13.9
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
