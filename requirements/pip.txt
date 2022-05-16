@@ -9,9 +9,7 @@ wheel==0.35.1
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==20.2.4
-    # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
-    #   -r requirements/pip.in
+    # via -r requirements/pip.in
 setuptools==50.3.2
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
