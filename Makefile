@@ -30,6 +30,8 @@ compile-requirements: ## compile the requirements/*.txt files with the latest pa
 	# Make sure to compile files after any other files they include!
 	pip-compile -v --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/pip-tools.txt requirements/pip-tools.in
+	pip install -qr requirements/pip.txt
+	pip install -qr requirements/pip-tools.txt
 	pip-compile -v ${COMPILE_OPTS} -o requirements/base.txt requirements/base.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/dev.txt requirements/dev.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/test.txt requirements/test.in
