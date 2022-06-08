@@ -13,7 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.2.3 - 2022-06-08
+~~~~~~~~~~~~~~~~~~
+
 * Removed support of LegacyWaffle* checks, since the classes no longer exist.
+* Removed deleted pylint messages from common pylintrc file
 
 5.2.2 - 2022-03-25
 ~~~~~~~~~~~~~~~~~~
