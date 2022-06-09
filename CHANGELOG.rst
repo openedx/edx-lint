@@ -13,7 +13,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
-5.2.3 - 2022-06-08
+5.2.3 - 2022-06-09
 ~~~~~~~~~~~~~~~~~~
 
 * Removed support of LegacyWaffle* checks, since the classes no longer exist.
