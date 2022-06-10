@@ -263,9 +263,6 @@ disable=
     feature-toggle-needs-doc,
     illegal-waffle-usage,
 
-    # These can't be used in python 3 code
-    non-ascii-bytes-literal,
-
     # We want to allow developers to use f-strings for readability
     logging-fstring-interpolation,
 
