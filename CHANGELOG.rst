@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.2.4 - 2022-06-10
+~~~~~~~~~~~~~~~~~~
+
+* Updated `pylintrc` template for `edx_lint write pylintrc` command for `pylint>=2.14.0`.
+
 5.2.3 - 2022-06-09
 ~~~~~~~~~~~~~~~~~~
 

@@ -56,13 +56,11 @@ enable=
     cell-var-from-loop,
     confusing-with-statement,
     continue-in-finally,
-    cyclical-import,
     dangerous-default-value,
     duplicate-argument-name,
     duplicate-bases,
     duplicate-except,
     duplicate-key,
-    eq-without-hash,
     expression-not-assigned,
     format-combined-specification,
     format-needs-mapping,
@@ -71,11 +69,9 @@ enable=
     import-error,
     import-self,
     inconsistent-mro,
-    indexing-exception,
     inherit-non-class,
     init-is-generator,
     invalid-all-object,
-    invalid-encoded-data,
     invalid-format-index,
     invalid-length-returned,
     invalid-sequence-index,
@@ -93,9 +89,6 @@ enable=
     missing-format-argument-key,
     missing-format-attribute,
     missing-format-string-key,
-    missing-super-argument,
-    mixed-fomat-string,
-    model-unicode-not-callable,
     no-member,
     no-method-argument,
     no-name-in-module,
@@ -104,8 +97,6 @@ enable=
     non-iterator-returned,
     non-parent-method-called,
     nonexistent-operator,
-    nonimplemented-raised,
-    nonstandard-exception,
     not-a-mapping,
     not-an-iterable,
     not-callable,
@@ -113,24 +104,18 @@ enable=
     not-in-loop,
     pointless-statement,
     pointless-string-statement,
-    property-on-old-class,
     raising-bad-type,
     raising-non-exception,
     redefined-builtin,
-    redefined-in-handler,
     redefined-outer-name,
-    redefined-variable-type,
     redundant-keyword-arg,
-    relative-import,
     repeated-keyword,
     return-arg-in-generator,
     return-in-init,
     return-outside-function,
     signature-differs,
-    slots-on-old-class,
     super-init-not-called,
     super-method-not-called,
-    super-on-old-class,
     syntax-error,
     test-inherits-tests,
     too-few-format-args,
@@ -138,7 +123,6 @@ enable=
     too-many-function-args,
     translation-of-non-string,
     truncated-format-string,
-    unbalance-tuple-unpacking,
     undefined-all-variable,
     undefined-loop-variable,
     undefined-variable,
@@ -157,8 +141,6 @@ enable=
 
     # Checking failed for some reason
     astroid-error,
-    django-not-available-placeholder,
-    django-not-available,
     fatal,
     method-check-failed,
     parse-error,
@@ -194,14 +176,10 @@ enable=
     literal-used-as-attribute,
     logging-format-interpolation,
     logging-not-lazy,
-    model-has-unicode,
-    model-missing-unicode,
-    model-no-explicit-unicode,
     multiple-imports,
     multiple-statements,
     no-classmethod-decorator,
     no-staticmethod-decorator,
-    old-style-class,
     protected-access,
     redundant-unittest-assert,
     reimported,
@@ -265,11 +243,7 @@ disable=
     global-statement,
     invalid-name,
     locally-disabled,
-    locally-enabled,
-    lowercase-l-suffix,
-    misplaced-comparison-constant,
     no-else-return,
-    no-self-use,
     suppressed-message,
     too-few-public-methods,
     too-many-ancestors,
@@ -289,12 +263,6 @@ disable=
     feature-toggle-needs-doc,
     illegal-waffle-usage,
 
-    # These can't be used in python 3 code
-    long-suffix,
-    non-ascii-bytes-literal,
-    old-ne-operator,
-    old-octal-literal,
-
     # We want to allow developers to use f-strings for readability
     logging-fstring-interpolation,
 
@@ -304,11 +272,6 @@ disable=
 # (visual studio) and html. You can also give a reporter class, eg
 # mypackage.mymodule.MyReporterClass.
 output-format=text
-
-# Put messages in a separate file for each module / package specified on the
-# command line instead of printing them on stdout. Reports (if any) will be
-# written in a file name "pylint_global.[txt|html]".
-files-output=no
 
 # Tells whether to display a full report or only the messages
 reports=no
@@ -322,9 +285,6 @@ score=no
 
 
 [BASIC]
-
-# List of builtins function names that should not be used, separated by a comma
-bad-functions=map,filter,apply,input
 
 # Regular expression which should only match correct module names
 module-rgx=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
@@ -390,9 +350,6 @@ ignore-long-lines=^\s*(# )?((<?https?://\S+>?)|(\.\. \w+: .*))$
 # Allow the body of an if to be on the same line as the test if there is no
 # else.
 single-line-if-stmt=no
-
-# List of optional constructs for which whitespace checking is disabled
-no-space-check=trailing-comma,dict-separator
 
 # Maximum number of lines in a module
 max-module-lines=1000
