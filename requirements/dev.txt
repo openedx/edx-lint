@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.5
+astroid==2.11.6
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -65,7 +65,7 @@ pluggy==1.0.0
     # via tox
 py==1.11.0
     # via tox
-pylint==2.14.1
+pylint==2.14.3
     # via
     #   -r requirements/base.txt
     #   pylint-celery
