@@ -159,7 +159,7 @@ typing-extensions==4.2.0
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.14.1
+virtualenv==20.15.0
     # via
     #   -r requirements/dev.txt
     #   tox
