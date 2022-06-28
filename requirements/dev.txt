@@ -124,7 +124,7 @@ typing-extensions==4.2.0
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.14.1
+virtualenv==20.15.0
     # via tox
 wrapt==1.14.1
     # via
