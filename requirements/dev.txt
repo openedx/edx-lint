@@ -65,7 +65,7 @@ pluggy==1.0.0
     # via tox
 py==1.11.0
     # via tox
-pylint==2.14.3
+pylint==2.14.4
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -113,18 +113,18 @@ tomlkit==0.11.0
     # via
     #   -r requirements/base.txt
     #   pylint
-tox==3.25.0
+tox==3.25.1
     # via
     #   -r requirements/dev.in
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.in
-typing-extensions==4.2.0
+typing-extensions==4.3.0
     # via
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.15.0
+virtualenv==20.15.1
     # via tox
 wrapt==1.14.1
     # via
