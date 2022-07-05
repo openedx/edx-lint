@@ -4,13 +4,13 @@
 #
 #    make upgrade
 #
-wheel==0.35.1
+wheel==0.37.1
     # via -r requirements/pip.in
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==20.2.4
+pip==22.1.2
     # via -r requirements/pip.in
-setuptools==50.3.2
+setuptools==59.8.0
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/pip.in
