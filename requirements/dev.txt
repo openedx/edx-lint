@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.6
+astroid==2.11.7
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -109,7 +109,7 @@ tomli==2.0.1
     # via
     #   -r requirements/base.txt
     #   pylint
-tomlkit==0.11.0
+tomlkit==0.11.1
     # via
     #   -r requirements/base.txt
     #   pylint
