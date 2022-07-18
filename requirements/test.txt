@@ -6,7 +6,7 @@
 #
 asgiref==3.5.2
     # via django
-astroid==2.11.6
+astroid==2.11.7
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -24,17 +24,17 @@ code-annotations==1.3.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==6.4.1
+coverage==6.4.2
     # via -r requirements/test.in
 dill==0.3.5.1
     # via
     #   -r requirements/dev.txt
     #   pylint
-distlib==0.3.4
+distlib==0.3.5
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==3.2.13
+django==3.2.14
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
@@ -89,7 +89,7 @@ py==1.11.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.14.4
+pylint==2.14.5
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -127,7 +127,7 @@ six==1.16.0
     #   virtualenv
 sqlparse==0.4.2
     # via django
-stevedore==3.5.0
+stevedore==4.0.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -144,7 +144,7 @@ tomli==2.0.1
     #   -r requirements/dev.txt
     #   pylint
     #   pytest
-tomlkit==0.11.0
+tomlkit==0.11.1
     # via
     #   -r requirements/dev.txt
     #   pylint
