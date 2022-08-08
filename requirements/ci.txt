@@ -26,5 +26,5 @@ toml==0.10.2
     # via tox
 tox==3.25.1
     # via -r requirements/ci.in
-virtualenv==20.16.2
+virtualenv==20.16.3
     # via tox
