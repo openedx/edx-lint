@@ -108,7 +108,7 @@ tomli==2.0.1
     # via
     #   -r requirements/base.txt
     #   pylint
-tomlkit==0.11.1
+tomlkit==0.11.2
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -123,7 +123,7 @@ typing-extensions==4.3.0
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.16.2
+virtualenv==20.16.3
     # via tox
 wrapt==1.14.1
     # via
