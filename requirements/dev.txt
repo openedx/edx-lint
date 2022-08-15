@@ -26,7 +26,7 @@ dill==0.3.5.1
     #   pylint
 distlib==0.3.5
     # via virtualenv
-filelock==3.7.1
+filelock==3.8.0
     # via
     #   tox
     #   virtualenv
@@ -52,7 +52,7 @@ mccabe==0.7.0
     #   pylint
 packaging==21.3
     # via tox
-pbr==5.9.0
+pbr==5.10.0
     # via
     #   -r requirements/base.txt
     #   stevedore
@@ -108,7 +108,7 @@ tomli==2.0.1
     # via
     #   -r requirements/base.txt
     #   pylint
-tomlkit==0.11.2
+tomlkit==0.11.4
     # via
     #   -r requirements/base.txt
     #   pylint
