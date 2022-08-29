@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.7
+astroid==2.12.4
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -24,7 +24,7 @@ dill==0.3.5.1
     # via
     #   -r requirements/base.txt
     #   pylint
-distlib==0.3.5
+distlib==0.3.6
     # via virtualenv
 filelock==3.8.0
     # via
@@ -65,7 +65,7 @@ pluggy==1.0.0
     # via tox
 py==1.11.0
     # via tox
-pylint==2.14.5
+pylint==2.15.0
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -129,6 +129,3 @@ wrapt==1.14.1
     # via
     #   -r requirements/base.txt
     #   astroid
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools

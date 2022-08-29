@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.7
+astroid==2.12.4
     # via
     #   pylint
     #   pylint-celery
@@ -35,7 +35,7 @@ pbr==5.10.0
     # via stevedore
 platformdirs==2.5.2
     # via pylint
-pylint==2.14.5
+pylint==2.15.0
     # via
     #   -r requirements/base.in
     #   pylint-celery
@@ -69,6 +69,3 @@ typing-extensions==4.3.0
     #   pylint
 wrapt==1.14.1
     # via astroid
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
