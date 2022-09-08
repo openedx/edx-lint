@@ -33,4 +33,4 @@ Additional notes:
 * Any future lint checks added to an optional plugin should follow the same process detailed under `Adding a new lint check`_, because anyone may have already enabled the optional plugin and will automatically get any new checks.
 * If an optional plugin should later become a default plugin, we don't yet have clear guidance on whether to simply add the plugin as a new default, or move its implementation to the main package. In either case, this would be considered a breaking change.
 
-.. _an optional plugin introduced as a subpackage: https://github.com/edx/edx-lint/pull/144/files
+.. _an optional plugin introduced as a subpackage: https://github.com/openedx/edx-lint/pull/144/files

@@ -42,6 +42,7 @@ class CommandTest(unittest.TestCase):
         Arguments:
             argv (list) -- arguments to pass to the edx_lint script
         """
+        self    # pylint: disable=pointless-statement
         return main.main(argv)
 
     def assert_file(self, filename, contains=None, not_contains=None):

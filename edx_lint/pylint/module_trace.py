@@ -41,6 +41,7 @@ class ModuleTracingChecker(BaseChecker):
 
     def visit_module(self, node):
         """Called for each module being examined."""
+        self    # pylint: disable=pointless-statement
         with open(FILENAME, "a") as f:
             f.write(node.file)
             f.write("\n")

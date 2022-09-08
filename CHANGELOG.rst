@@ -121,7 +121,7 @@ edx-lint will now ignore the logging-fstring-interpolation warning in pylint.
 
 * Here is a `link to additional commits`_ that may or may not warrant changelog entries, but were committed before reminding developers to update the changelog.
 
-.. _link to additional commits: https://github.com/edx/edx-lint/compare/1.5.2...a29f286
+.. _link to additional commits: https://github.com/openedx/edx-lint/compare/1.5.2...a29f286
 
 [1.5.2] - 2020-08-20
 ~~~~~~~~~~~~~~~~~~~~
@@ -155,4 +155,4 @@ Older versions
 
 Older versions were documented as `Github releases`_ only.
 
-.. _Github releases: https://github.com/edx/edx-lint/releases
+.. _Github releases: https://github.com/openedx/edx-lint/releases
