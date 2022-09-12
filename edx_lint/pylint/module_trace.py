@@ -41,6 +41,10 @@ class ModuleTracingChecker(BaseChecker):
 
     def visit_module(self, node):
         """Called for each module being examined."""
+        # This pointless statement is here because removing the statement causes a different warning. Currently we run
+        # pylint at multiple versions in the Open edX platform.  However, the other warning (no-self-use) exists in the
+        # old version of pylint (pre 2.13.0) but not the new version. This is the only way to fix the warning in a way
+        # that will work for both the old and new version.
         self    # pylint: disable=pointless-statement
         with open(FILENAME, "a") as f:
             f.write(node.file)
