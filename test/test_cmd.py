@@ -42,6 +42,10 @@ class CommandTest(unittest.TestCase):
         Arguments:
             argv (list) -- arguments to pass to the edx_lint script
         """
+        # This pointless statement is here because removing the statement causes a different warning. Currently we run
+        # pylint at multiple versions in the Open edX platform.  However, the other warning (no-self-use) exists in the
+        # old version of pylint (pre 2.13.0) but not the new version. This is the only way to fix the warning in a way
+        # that will work for both the old and new version.
         self    # pylint: disable=pointless-statement
         return main.main(argv)
 
