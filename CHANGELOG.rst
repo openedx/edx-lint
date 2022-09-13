@@ -13,6 +13,16 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.3.0 - 2022-09-15
+~~~~~~~~~~~~~~~~~~
+
+* Improvements to the ``check`` command:
+
+  - It now exits with a failure status if something is wrong.
+  - With no file name arguments, it will check all of your files that edx_lint
+    can write.
+  - The messages are less chatty.
+
 5.2.5 - 2022-09-08
 ~~~~~~~~~~~~~~~~~~
 

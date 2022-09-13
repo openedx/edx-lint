@@ -1,5 +1,7 @@
 """ Tests for the command line executable. """
 
+import contextlib
+import io
 import os
 import shutil
 import tempfile
@@ -16,6 +18,21 @@ PYLINTRC_BACKUP = "pylintrc_backup"
 EDITORCONFIG = ".editorconfig"
 
 JUST_TESTING = "just_for_testing.txt"
+
+
+@contextlib.contextmanager
+def capture_output():
+    """
+    Capture all of stdout and stderr, and return a StringIO.
+
+    Note: using this means the output doesn't go to the real stdout. If you
+    use the -s switch to see output, you won't see output inside this context.
+
+    """
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        with contextlib.redirect_stderr(output):
+            yield output
 
 
 class CommandTest(unittest.TestCase):
@@ -160,3 +177,51 @@ class UpdateCommandTest(CommandTest):
         self.assert_file(PYLINTRC_BACKUP, contains="not_really = pylintrc")
         # The pylintrc file was written by edx-lint.
         self.assert_file(PYLINTRC, contains="[MASTER]")
+
+
+class CheckCommandTest(CommandTest):
+    """Tests for the `check` command."""
+
+    def test_happy_path(self):
+        self.assertEqual(0, self.call_command(["write", PYLINTRC]))
+        with capture_output() as output:
+            self.assertEqual(0, self.call_command(["check", PYLINTRC]))
+        expected = "pylintrc is good\n"
+        self.assertEqual(output.getvalue(), expected)
+
+    def test_handwritten_is_ok(self):
+        # Create a hand-written pylintrc file:
+        with open(PYLINTRC, "w") as pylintrc:
+            pylintrc.write("[bogus]\nnot_really = pylintrc\n")
+
+        with capture_output() as output:
+            self.assertEqual(0, self.call_command(["check", PYLINTRC]))
+        expected = "pylintrc wasn't written by edx_lint\n"
+        self.assertEqual(output.getvalue(), expected)
+
+    def test_handedited_fails(self):
+        self.assertEqual(0, self.call_command(["write", PYLINTRC]))
+        with open(PYLINTRC, "a") as pylintrc:
+            pylintrc.write("More stuff by hand\n")
+
+        with capture_output() as output:
+            self.assertEqual(1, self.call_command(["check", PYLINTRC]))
+        expected = "pylintrc seems to have been edited\n"
+        self.assertEqual(output.getvalue(), expected)
+
+    def test_all_files(self):
+        self.assertEqual(0, self.call_command(["write", PYLINTRC]))
+        self.assertEqual(0, self.call_command(["write", EDITORCONFIG]))
+
+        with capture_output() as output:
+            self.assertEqual(0, self.call_command(["check"]))
+        expected = (
+            "pylintrc is good\n" +
+            ".editorconfig is good\n"
+        )
+        self.assertEqual(output.getvalue(), expected)
+
+    def test_cant_check_a_missing_file(self):
+        with capture_output() as output:
+            self.assertEqual(2, self.call_command(["check", "xyzzy.foo"]))
+        self.assertEqual(output.getvalue(), "xyzzy.foo doesn't exist\n")
