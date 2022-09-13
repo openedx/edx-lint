@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.2.5 - 2022-09-08
+~~~~~~~~~~~~~~~~~~
+
+* Updated GitHub references from the ``edx`` GitHub organization to ``openedx``.
+
 5.2.4 - 2022-06-10
 ~~~~~~~~~~~~~~~~~~
 
