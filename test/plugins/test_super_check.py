@@ -33,7 +33,7 @@ def test_unittest_super_check(method):
     ).format(method=method)
     messages = run_pylint(source, MSG_IDS)
     expected = {
-        "A:super-method-not-called:super(...).{}() not called (unittest.case.TestCase)".format(
+        "14:non-parent-method-called:{}() was called from a non-parent class (unittest.case.TestCase)".format(
             method
         )
     }
@@ -56,9 +56,7 @@ def test_django_super_check(method):
         """
     ).format(method=method)
     messages = run_pylint(source, MSG_IDS)
-    expected = {
-        "A:super-method-not-called:super(...).setUpTestData() not called (django.test.testcases.TestCase)"
-    }
+    expected = set()
     assert expected == messages
 
 
