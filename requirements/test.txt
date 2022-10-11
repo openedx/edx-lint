@@ -6,7 +6,7 @@
 #
 asgiref==3.5.2
     # via django
-astroid==2.12.10
+astroid==2.11.7
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -89,8 +89,9 @@ py==1.11.0
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-pylint==2.15.3
+pylint==2.14.5
     # via
+    #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
@@ -163,3 +164,6 @@ wrapt==1.14.1
     # via
     #   -r requirements/dev.txt
     #   astroid
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
