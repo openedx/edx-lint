@@ -95,7 +95,7 @@ six==1.16.0
     # via
     #   -r requirements/base.txt
     #   tox
-stevedore==4.0.0
+stevedore==4.0.1
     # via
     #   -r requirements/base.txt
     #   code-annotations
