@@ -33,7 +33,7 @@ mccabe==0.7.0
     # via pylint
 pbr==5.11.0
     # via stevedore
-platformdirs==2.5.2
+platformdirs==2.5.3
     # via pylint
 pylint==2.14.5
     # via
