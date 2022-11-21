@@ -38,7 +38,7 @@ django==3.2.16
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-exceptiongroup==1.0.2
+exceptiongroup==1.0.4
     # via pytest
 filelock==3.8.0
     # via
@@ -112,7 +112,7 @@ pyparsing==3.0.9
     #   packaging
 pytest==7.2.0
     # via -r requirements/test.in
-python-slugify==6.1.2
+python-slugify==7.0.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -146,7 +146,7 @@ tomlkit==0.11.6
     # via
     #   -r requirements/dev.txt
     #   pylint
-tox==3.27.0
+tox==3.27.1
     # via
     #   -r requirements/dev.txt
     #   tox-battery

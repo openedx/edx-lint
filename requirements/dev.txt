@@ -83,7 +83,7 @@ pylint-plugin-utils==0.7
     #   pylint-django
 pyparsing==3.0.9
     # via packaging
-python-slugify==6.1.2
+python-slugify==7.0.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -112,7 +112,7 @@ tomlkit==0.11.6
     # via
     #   -r requirements/base.txt
     #   pylint
-tox==3.27.0
+tox==3.27.1
     # via
     #   -r requirements/dev.in
     #   tox-battery
