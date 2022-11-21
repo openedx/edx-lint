@@ -50,7 +50,7 @@ pylint-plugin-utils==0.7
     # via
     #   pylint-celery
     #   pylint-django
-python-slugify==6.1.2
+python-slugify==7.0.0
     # via code-annotations
 pyyaml==6.0
     # via code-annotations
