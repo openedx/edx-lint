@@ -5,4 +5,4 @@ code-annotations>=1.1.0
 
 # pylint>=2.15.0 contains breaking changes
 # Failing python tests will be fixed in a later PR
-pylint<2.15.0
+# pylint<2.15.0
