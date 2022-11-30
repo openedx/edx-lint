@@ -65,8 +65,9 @@ pluggy==1.0.0
     # via tox
 py==1.11.0
     # via tox
-pylint==2.15.7
+pylint==2.15.0
     # via
+    #   -c requirements/constraints.txt
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django

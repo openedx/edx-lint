@@ -35,8 +35,9 @@ pbr==5.11.0
     # via stevedore
 platformdirs==2.5.4
     # via pylint
-pylint==2.15.7
+pylint==2.15.0
     # via
+    #   -c requirements/constraints.txt
     #   -r requirements/base.in
     #   pylint-celery
     #   pylint-django

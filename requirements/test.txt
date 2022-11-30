@@ -90,8 +90,9 @@ py==1.11.0
     # via
     #   -r requirements/dev.txt
     #   tox
-pylint==2.15.7
+pylint==2.15.0
     # via
+    #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
