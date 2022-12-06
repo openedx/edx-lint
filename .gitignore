@@ -22,3 +22,6 @@ dist/
 
 #pyenv
 .python-version
+
+#venv
+.venv/

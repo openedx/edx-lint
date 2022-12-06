@@ -31,7 +31,7 @@ def test_unittest_super_check(method):
             pass
         """
     ).format(method=method)
-    messages = run_pylint(source, MSG_IDS)
+    messages = run_pylint(source, "all")
     expected = {
         "A:super-method-not-called:super(...).{}() not called (unittest.case.TestCase)".format(
             method
