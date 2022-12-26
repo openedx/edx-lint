@@ -30,7 +30,7 @@ filelock==3.8.2
     # via
     #   tox
     #   virtualenv
-isort==5.10.1
+isort==5.11.4
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -110,7 +110,7 @@ tomlkit==0.11.6
     # via
     #   -r requirements/base.txt
     #   pylint
-tox==3.27.1
+tox==3.28.0
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.in
