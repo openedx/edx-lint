@@ -26,11 +26,11 @@ dill==0.3.6
     #   pylint
 distlib==0.3.6
     # via virtualenv
-filelock==3.8.2
+filelock==3.9.0
     # via
     #   tox
     #   virtualenv
-isort==5.10.1
+isort==5.11.4
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -56,7 +56,7 @@ pbr==5.11.0
     # via
     #   -r requirements/base.txt
     #   stevedore
-platformdirs==2.6.0
+platformdirs==2.6.2
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -110,7 +110,7 @@ tomlkit==0.11.6
     # via
     #   -r requirements/base.txt
     #   pylint
-tox==3.27.1
+tox==3.28.0
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.in
