@@ -31,7 +31,7 @@ markupsafe==2.1.1
     # via jinja2
 mccabe==0.7.0
     # via pylint
-pbr==5.11.0
+pbr==5.11.1
     # via stevedore
 platformdirs==2.6.2
     # via pylint

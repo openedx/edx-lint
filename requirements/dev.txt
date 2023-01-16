@@ -52,7 +52,7 @@ mccabe==0.7.0
     #   pylint
 packaging==23.0
     # via tox
-pbr==5.11.0
+pbr==5.11.1
     # via
     #   -r requirements/base.txt
     #   stevedore
