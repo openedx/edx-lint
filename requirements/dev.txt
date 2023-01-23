@@ -42,7 +42,7 @@ lazy-object-proxy==1.9.0
     # via
     #   -r requirements/base.txt
     #   astroid
-markupsafe==2.1.1
+markupsafe==2.1.2
     # via
     #   -r requirements/base.txt
     #   jinja2
@@ -52,7 +52,7 @@ mccabe==0.7.0
     #   pylint
 packaging==23.0
     # via tox
-pbr==5.11.0
+pbr==5.11.1
     # via
     #   -r requirements/base.txt
     #   stevedore
