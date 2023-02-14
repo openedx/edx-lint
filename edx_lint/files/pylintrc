@@ -236,6 +236,7 @@ enable=
 disable=
     # These should be left to the discretion of the reviewer
     bad-indentation,
+    broad-exception-raised,
     consider-using-f-string,
     duplicate-code,
     file-ignored,

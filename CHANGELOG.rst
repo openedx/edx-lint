@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.3.1 - 2023-02-14
+~~~~~~~~~~~~~~~~~~
+
+* Disabled new warning from pylint 2.16.0: broad-exception-raised
+
 5.3.0 - 2022-09-15
 ~~~~~~~~~~~~~~~~~~
 
