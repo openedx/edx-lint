@@ -13,6 +13,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.3.2 - 2023-02-15
+~~~~~~~~~~~~~~~~~~
+
+* Removed pylint<2.15 constraint and updated tests for new version
+* Removed CI tests for old pylint versions
+
 5.3.1 - 2023-02-14
 ~~~~~~~~~~~~~~~~~~
 
