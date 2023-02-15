@@ -68,9 +68,9 @@ def run_pylint(source, msg_ids, *cmd_args):
 
     pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", "--load-plugins=edx_lint.pylint", *cmd_args]
     if pylint_numversion >= (2, 0):
-        kwargs = dict(do_exit=False)
+        kwargs = {"do_exit": False}
     else:
-        kwargs = dict(exit=False)
+        kwargs = {"exit": False}
 
     Run(pylint_args, reporter=reporter, **kwargs)
 
