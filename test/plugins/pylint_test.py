@@ -68,9 +68,9 @@ def run_pylint(source, msg_ids, *cmd_args):
 
     pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", "--load-plugins=edx_lint.pylint", *cmd_args]
     if pylint_numversion >= (2, 0):
-        kwargs = dict(do_exit=False)
+        kwargs = {"do_exit": False}
     else:
-        kwargs = dict(exit=False)
+        kwargs = {"exit": False}
 
     Run(pylint_args, reporter=reporter, **kwargs)
 
@@ -122,7 +122,7 @@ def test_invalid_python():
     message = messages.pop()
     # Pylint 1.x says the source is <string>, Pylint 2.x says <unknown>
     message = message.replace("<string>", "XXX").replace("<unknown>", "XXX")
-    assert message == "1:syntax-error:invalid syntax (XXX, line 1)"
+    assert message == "1:syntax-error:Parsing failed: 'invalid syntax (XXX, line 1)'"
 
 
 # I would have tested that the msgids must be valid, but pylint doesn't seem

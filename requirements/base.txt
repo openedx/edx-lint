@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.11.7
+astroid==2.14.2
     # via
     #   pylint
     #   pylint-celery
@@ -35,9 +35,8 @@ pbr==5.11.1
     # via stevedore
 platformdirs==3.0.0
     # via pylint
-pylint==2.14.5
+pylint==2.16.2
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/base.in
     #   pylint-celery
     #   pylint-django
@@ -64,12 +63,9 @@ tomli==2.0.1
     # via pylint
 tomlkit==0.11.6
     # via pylint
-typing-extensions==4.4.0
+typing-extensions==4.5.0
     # via
     #   astroid
     #   pylint
 wrapt==1.14.1
     # via astroid
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools

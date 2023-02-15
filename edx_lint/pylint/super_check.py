@@ -4,7 +4,7 @@ import astroid
 from pylint.checkers import BaseChecker, utils
 try:
     from pylint.checkers.classes import _ancestors_to_call
-except ImportError:
+except ImportError:  # Backward compatibility with pylint<2.13
     from pylint.checkers.classes.class_checker import _ancestors_to_call
 from pylint.interfaces import IAstroidChecker
 
