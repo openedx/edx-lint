@@ -6,7 +6,7 @@
 #
 asgiref==3.6.0
     # via django
-astroid==2.11.7
+astroid==2.14.2
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -34,7 +34,7 @@ distlib==0.3.6
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==3.2.17
+django==3.2.18
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
@@ -90,9 +90,8 @@ py==1.11.0
     # via
     #   -r requirements/dev.txt
     #   tox
-pylint==2.14.5
+pylint==2.16.2
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
@@ -149,7 +148,7 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.1
     # via -r requirements/dev.txt
-typing-extensions==4.4.0
+typing-extensions==4.5.0
     # via
     #   -r requirements/dev.txt
     #   astroid
@@ -162,6 +161,3 @@ wrapt==1.14.1
     # via
     #   -r requirements/dev.txt
     #   astroid
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
