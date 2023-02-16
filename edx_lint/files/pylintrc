@@ -508,5 +508,5 @@ int-import-graph=
 [EXCEPTIONS]
 
 # Exceptions that will emit a warning when being caught. Defaults to
-# "Exception"
+# "builtins.Exception"
 overgeneral-exceptions=builtins.Exception
