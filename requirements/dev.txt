@@ -80,7 +80,7 @@ pylint-plugin-utils==0.7
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-python-slugify==8.0.0
+python-slugify==8.0.1
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -123,7 +123,7 @@ typing-extensions==4.5.0
     #   pylint
 virtualenv==20.19.0
     # via tox
-wrapt==1.14.1
+wrapt==1.15.0
     # via
     #   -r requirements/base.txt
     #   astroid
