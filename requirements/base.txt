@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.15.0
+astroid==2.15.1
     # via
     #   pylint
     #   pylint-celery
@@ -33,9 +33,9 @@ mccabe==0.7.0
     # via pylint
 pbr==5.11.1
     # via stevedore
-platformdirs==3.1.1
+platformdirs==3.2.0
     # via pylint
-pylint==2.17.0
+pylint==2.17.1
     # via
     #   -r requirements/base.in
     #   pylint-celery

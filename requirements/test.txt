@@ -6,7 +6,7 @@
 #
 asgiref==3.6.0
     # via django
-astroid==2.15.0
+astroid==2.15.1
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -40,7 +40,7 @@ django==3.2.18
     #   -r requirements/test.in
 exceptiongroup==1.1.1
     # via pytest
-filelock==3.10.0
+filelock==3.10.6
     # via
     #   -r requirements/dev.txt
     #   tox
@@ -76,7 +76,7 @@ pbr==5.11.1
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.1.1
+platformdirs==3.2.0
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -90,7 +90,7 @@ py==1.11.0
     # via
     #   -r requirements/dev.txt
     #   tox
-pylint==2.17.0
+pylint==2.17.1
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -111,7 +111,7 @@ python-slugify==8.0.1
     # via
     #   -r requirements/dev.txt
     #   code-annotations
-pytz==2022.7.1
+pytz==2023.2
     # via django
 pyyaml==6.0
     # via
