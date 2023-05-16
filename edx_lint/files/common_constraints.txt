@@ -15,6 +15,10 @@
 # using LTS django version
 Django<4.0
 
+# We are currently testing the latest (unreleased) changes with edx-platform. Adding constraint here as a 
+# preventive measure so even if the package is released by someone, it shouldn't be installed anywhere.
+edx-drf-extensions<=8.7.0 
+
 # elasticsearch>=7.14.0 includes breaking changes in it which caused issues in discovery upgrade process.
 # elastic search changelog: https://www.elastic.co/guide/en/enterprise-search/master/release-notes-7.14.0.html
 elasticsearch<7.14.0
