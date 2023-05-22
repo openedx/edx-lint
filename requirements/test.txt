@@ -6,7 +6,7 @@
 #
 asgiref==3.6.0
     # via django
-astroid==2.15.4
+astroid==2.15.5
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -74,7 +74,7 @@ pbr==5.11.1
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.5.0
+platformdirs==3.5.1
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -98,7 +98,7 @@ pylint-celery==0.3
     # via -r requirements/dev.txt
 pylint-django==2.5.3
     # via -r requirements/dev.txt
-pylint-plugin-utils==0.7
+pylint-plugin-utils==0.8.2
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -121,7 +121,7 @@ six==1.16.0
     #   tox
 sqlparse==0.4.4
     # via django
-stevedore==5.0.0
+stevedore==5.1.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
