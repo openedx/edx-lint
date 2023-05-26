@@ -28,7 +28,7 @@ requirements: ## install the developer requirements
 compile-requirements: export CUSTOM_COMPILE_COMMAND=make upgrade
 compile-requirements: ## compile the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	# Make sure to compile files after any other files they include!
-	pip-compile -v --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
+	pip-compile -v ${COMPILE_OPTS} --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip install -qr requirements/pip.txt
 	pip install -qr requirements/pip-tools.txt
