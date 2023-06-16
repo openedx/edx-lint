@@ -38,7 +38,7 @@ django==3.2.19
     #   -r requirements/test.in
 exceptiongroup==1.1.1
     # via pytest
-filelock==3.12.0
+filelock==3.12.1
     # via
     #   -r requirements/dev.txt
     #   tox
@@ -74,7 +74,7 @@ pbr==5.11.1
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.5.1
+platformdirs==3.5.3
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -103,7 +103,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
-pytest==7.3.1
+pytest==7.3.2
     # via -r requirements/test.in
 python-slugify==8.0.1
     # via
