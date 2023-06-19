@@ -38,7 +38,7 @@ django==3.2.19
     #   -r requirements/test.in
 exceptiongroup==1.1.1
     # via pytest
-filelock==3.12.1
+filelock==3.12.2
     # via
     #   -r requirements/dev.txt
     #   tox
@@ -74,7 +74,7 @@ pbr==5.11.1
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.5.3
+platformdirs==3.6.0
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -151,7 +151,7 @@ typing-extensions==4.6.3
     #   -r requirements/dev.txt
     #   astroid
     #   pylint
-virtualenv==20.23.0
+virtualenv==20.23.1
     # via
     #   -r requirements/dev.txt
     #   tox
