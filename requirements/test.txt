@@ -11,7 +11,7 @@ astroid==2.15.6
     #   -r requirements/dev.txt
     #   pylint
     #   pylint-celery
-click==8.1.4
+click==8.1.5
     # via
     #   -r requirements/dev.txt
     #   click-log
@@ -74,7 +74,7 @@ pbr==5.11.1
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.8.1
+platformdirs==3.9.1
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -149,9 +149,10 @@ tox-battery==0.6.1
 typing-extensions==4.7.1
     # via
     #   -r requirements/dev.txt
+    #   asgiref
     #   astroid
     #   pylint
-virtualenv==20.23.1
+virtualenv==20.24.0
     # via
     #   -r requirements/dev.txt
     #   tox
