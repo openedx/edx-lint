@@ -11,7 +11,7 @@ astroid==2.15.6
     #   -r requirements/dev.txt
     #   pylint
     #   pylint-celery
-click==8.1.6
+click==8.1.7
     # via
     #   -r requirements/dev.txt
     #   click-log
@@ -22,7 +22,7 @@ code-annotations==1.5.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==7.2.7
+coverage==7.3.0
     # via -r requirements/test.in
 dill==0.3.7
     # via
@@ -36,9 +36,9 @@ django==3.2.20
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-exceptiongroup==1.1.2
+exceptiongroup==1.1.3
     # via pytest
-filelock==3.12.2
+filelock==3.12.3
     # via
     #   -r requirements/dev.txt
     #   tox
@@ -74,12 +74,12 @@ pbr==5.11.1
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.9.1
+platformdirs==3.10.0
     # via
     #   -r requirements/dev.txt
     #   pylint
     #   virtualenv
-pluggy==1.2.0
+pluggy==1.3.0
     # via
     #   -r requirements/dev.txt
     #   pytest
@@ -88,7 +88,7 @@ py==1.11.0
     # via
     #   -r requirements/dev.txt
     #   tox
-pylint==2.17.4
+pylint==2.17.5
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -103,7 +103,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
-pytest==7.4.0
+pytest==7.4.1
     # via -r requirements/test.in
 python-slugify==8.0.1
     # via
@@ -135,7 +135,7 @@ tomli==2.0.1
     #   pylint
     #   pytest
     #   tox
-tomlkit==0.11.8
+tomlkit==0.12.1
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -144,15 +144,16 @@ tox==3.28.0
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.txt
     #   tox-battery
-tox-battery==0.6.1
+tox-battery==0.6.2
     # via -r requirements/dev.txt
 typing-extensions==4.7.1
     # via
     #   -r requirements/dev.txt
     #   asgiref
     #   astroid
+    #   filelock
     #   pylint
-virtualenv==20.24.1
+virtualenv==20.24.4
     # via
     #   -r requirements/dev.txt
     #   tox
