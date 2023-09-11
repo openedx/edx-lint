@@ -122,7 +122,7 @@ typing-extensions==4.7.1
     #   astroid
     #   filelock
     #   pylint
-virtualenv==20.24.4
+virtualenv==20.24.5
     # via tox
 wrapt==1.15.0
     # via
