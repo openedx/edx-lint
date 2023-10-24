@@ -1,7 +1,6 @@
 """Checker for using pytest assertion instead of unittest assertion."""
 import astroid
 
-from pylint.interfaces import IAstroidChecker
 from pylint.checkers import BaseChecker, utils
 
 from edx_lint.pylint.common import BASE_ID, check_visitors
@@ -18,8 +17,6 @@ class UnittestAssertChecker(BaseChecker):
     Checks if a unit test assertion is used, Trigger warning to
     replace it with pytest assertions
     """
-
-    __implements__ = (IAstroidChecker,)
 
     name = "unittest-assert-checker"
 
@@ -82,7 +79,7 @@ class UnittestAssertChecker(BaseChecker):
         )
     }
 
-    @utils.check_messages(MESSAGE_ID)
+    @utils.only_required_for_messages(MESSAGE_ID)
     def visit_call(self, node):
         """
         Check that unittest assertions are not used.

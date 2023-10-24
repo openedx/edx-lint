@@ -11,7 +11,6 @@ When a new release is published, we may be able to remove this check.
 """
 
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors
 
@@ -27,8 +26,6 @@ class YamlLoadChecker(BaseChecker):
     Checks for unsafe ``yaml.load()`` calls.
     """
 
-    __implements__ = (IAstroidChecker,)
-
     name = "yaml-load-checker"
 
     MESSAGE_ID = "unsafe-yaml-load"
@@ -43,7 +40,7 @@ class YamlLoadChecker(BaseChecker):
         )
     }
 
-    @utils.check_messages(MESSAGE_ID)
+    @utils.only_required_for_messages(MESSAGE_ID)
     def visit_call(self, node):
         """
         Check whether a call is an unsafe call to yaml.load.

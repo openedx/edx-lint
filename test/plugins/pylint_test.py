@@ -4,7 +4,6 @@ import re
 import textwrap
 import warnings
 
-from pylint.__pkginfo__ import numversion as pylint_numversion
 from pylint.lint import Run
 from pylint.reporters import CollectingReporter
 
@@ -67,10 +66,12 @@ def run_pylint(source, msg_ids, *cmd_args):
     reporter = SimpleReporter()
 
     pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", "--load-plugins=edx_lint.pylint", *cmd_args]
-    if pylint_numversion >= (2, 0):
-        kwargs = {"do_exit": False}
-    else:
-        kwargs = {"exit": False}
+
+    # --disable=all & --enable=all are not compatible
+    if msg_ids == "all":
+        pylint_args.remove("--disable=all")
+
+    kwargs = {"exit": False}
 
     Run(pylint_args, reporter=reporter, **kwargs)
 

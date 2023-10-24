@@ -5,7 +5,6 @@ http://nedbatchelder.com/blog/201505/writing_pylint_plugins.html
 """
 import astroid
 
-from pylint.interfaces import IAstroidChecker
 from pylint.checkers import BaseChecker, utils
 
 from .common import BASE_ID, check_visitors
@@ -22,8 +21,6 @@ class AssertChecker(BaseChecker):
     Implements a few pylint checks on unitests asserts - making sure the right
     assert is used if assertTrue or assertFalse are misused.
     """
-
-    __implements__ = (IAstroidChecker,)
 
     name = "assert-checker"
 
@@ -66,7 +63,7 @@ class AssertChecker(BaseChecker):
     MESSAGE_ID = "wrong-assert-type"
     msgs = {("C%d90" % BASE_ID): ("%s", MESSAGE_ID, "Use assert(Not)Equal instead of assertTrue/False")}
 
-    @utils.check_messages(MESSAGE_ID)
+    @utils.only_required_for_messages(MESSAGE_ID)
     def visit_call(self, node):
         """
         Check that various assertTrue/False functions are not misused.
