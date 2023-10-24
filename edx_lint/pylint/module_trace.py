@@ -12,7 +12,6 @@ a file name to write them to:
 import os
 
 from pylint.checkers import BaseChecker
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors
 
@@ -32,8 +31,6 @@ class ModuleTracingChecker(BaseChecker):
     Not really a checker, it doesn't generate any messages.  There's probably
     a better way to hook into pylint to do this.
     """
-
-    __implements__ = (IAstroidChecker,)
 
     name = "module-tracing-checker"
 
