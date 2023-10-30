@@ -6,7 +6,7 @@
 #
 distlib==0.3.7
     # via virtualenv
-filelock==3.12.4
+filelock==3.13.0
     # via
     #   tox
     #   virtualenv
