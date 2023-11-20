@@ -26,7 +26,7 @@ dill==0.3.7
     #   pylint
 distlib==0.3.7
     # via virtualenv
-filelock==3.13.0
+filelock==3.13.1
     # via
     #   tox
     #   virtualenv
@@ -47,13 +47,16 @@ mccabe==0.7.0
     #   -r requirements/base.txt
     #   pylint
 packaging==23.2
-    # via tox
-pbr==5.11.1
+    # via
+    #   pyproject-api
+    #   tox
+pbr==6.0.0
     # via
     #   -r requirements/base.txt
     #   stevedore
 platformdirs==3.11.0
     # via
+    #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/base.txt
     #   pylint
     #   virtualenv
@@ -100,14 +103,14 @@ tomli==2.0.1
     # via
     #   -r requirements/base.txt
     #   pylint
+    #   pyproject-api
     #   tox
-tomlkit==0.12.1
+tomlkit==0.12.3
     # via
     #   -r requirements/base.txt
     #   pylint
 tox==3.28.0
     # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.in
     #   tox-battery
 tox-battery==0.6.2
