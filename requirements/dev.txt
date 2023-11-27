@@ -120,5 +120,5 @@ typing-extensions==4.8.0
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.24.6
+virtualenv==20.24.7
     # via tox
