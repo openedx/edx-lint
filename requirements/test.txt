@@ -36,7 +36,7 @@ django==3.2.23
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-exceptiongroup==1.1.3
+exceptiongroup==1.2.0
     # via pytest
 filelock==3.13.1
     # via
@@ -148,7 +148,7 @@ typing-extensions==4.8.0
     #   asgiref
     #   astroid
     #   pylint
-virtualenv==20.24.6
+virtualenv==20.24.7
     # via
     #   -r requirements/dev.txt
     #   tox
