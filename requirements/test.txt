@@ -148,7 +148,7 @@ typing-extensions==4.8.0
     #   asgiref
     #   astroid
     #   pylint
-virtualenv==20.24.7
+virtualenv==20.25.0
     # via
     #   -r requirements/dev.txt
     #   tox
