@@ -70,9 +70,8 @@ pbr==6.0.0
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.11.0
+platformdirs==4.0.0
     # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.txt
     #   pylint
     #   virtualenv
@@ -148,7 +147,7 @@ typing-extensions==4.8.0
     #   asgiref
     #   astroid
     #   pylint
-virtualenv==20.24.7
+virtualenv==20.25.0
     # via
     #   -r requirements/dev.txt
     #   tox
