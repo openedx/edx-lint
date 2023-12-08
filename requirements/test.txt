@@ -70,9 +70,8 @@ pbr==6.0.0
     # via
     #   -r requirements/dev.txt
     #   stevedore
-platformdirs==3.11.0
+platformdirs==4.0.0
     # via
-    #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/dev.txt
     #   pylint
     #   virtualenv
