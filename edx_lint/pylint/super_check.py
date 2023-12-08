@@ -6,7 +6,6 @@ try:
     from pylint.checkers.classes import _ancestors_to_call
 except ImportError:  # Backward compatibility with pylint<2.13
     from pylint.checkers.classes.class_checker import _ancestors_to_call
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors, usable_class_name
 
@@ -28,8 +27,6 @@ class UnitTestSetupSuperChecker(BaseChecker):
 
     """
 
-    __implements__ = (IAstroidChecker,)
-
     name = "unit-test-super-checker"
 
     NOT_CALLED_MESSAGE_ID = "super-method-not-called"
@@ -50,7 +47,7 @@ class UnitTestSetupSuperChecker(BaseChecker):
         ),
     }
 
-    @utils.check_messages(NOT_CALLED_MESSAGE_ID, NON_PARENT_MESSAGE_ID)
+    @utils.only_required_for_messages(NOT_CALLED_MESSAGE_ID, NON_PARENT_MESSAGE_ID)
     def visit_functiondef(self, node):
         """Called for every function definition in the source code."""
         # ignore actual functions

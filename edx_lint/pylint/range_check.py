@@ -3,7 +3,6 @@
 import astroid
 
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors
 
@@ -31,8 +30,6 @@ class RangeChecker(BaseChecker):
 
     """
 
-    __implements__ = (IAstroidChecker,)
-
     name = "range-checker"
 
     RANGE_FUNCTIONS = ["range", "xrange"]
@@ -40,7 +37,7 @@ class RangeChecker(BaseChecker):
     MESSAGE_ID = "simplifiable-range"
     msgs = {("C%d20" % BASE_ID): ("%s() call could be %s-argument", MESSAGE_ID, "range() call could be simplified")}
 
-    @utils.check_messages(MESSAGE_ID)
+    @utils.only_required_for_messages(MESSAGE_ID)
     def visit_call(self, node):
         """Called for every function call in the source code."""
         if not isinstance(node.func, astroid.Name):
