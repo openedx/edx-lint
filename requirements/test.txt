@@ -4,29 +4,13 @@
 #
 #    make upgrade
 #
-annotated-types==0.6.0
-    # via
-    #   -r requirements/dev.txt
-    #   pydantic
 asgiref==3.7.2
     # via django
-astroid==3.0.1
+astroid==3.0.2
     # via
     #   -r requirements/dev.txt
     #   pylint
     #   pylint-celery
-cerberus==1.3.5
-    # via
-    #   -r requirements/dev.txt
-    #   plette
-certifi==2023.11.17
-    # via
-    #   -r requirements/dev.txt
-    #   requests
-charset-normalizer==3.3.2
-    # via
-    #   -r requirements/dev.txt
-    #   requests
 click==8.1.7
     # via
     #   -r requirements/dev.txt
@@ -38,25 +22,20 @@ code-annotations==1.5.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==7.3.2
+coverage==7.3.3
     # via -r requirements/test.in
 dill==0.3.7
     # via
     #   -r requirements/dev.txt
     #   pylint
-distlib==0.3.7
+distlib==0.3.8
     # via
     #   -r requirements/dev.txt
-    #   requirementslib
     #   virtualenv
 django==3.2.23
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-docopt==0.6.2
-    # via
-    #   -r requirements/dev.txt
-    #   pipreqs
 exceptiongroup==1.2.0
     # via pytest
 filelock==3.13.1
@@ -64,13 +43,9 @@ filelock==3.13.1
     #   -r requirements/dev.txt
     #   tox
     #   virtualenv
-idna==3.6
-    # via
-    #   -r requirements/dev.txt
-    #   requests
 iniconfig==2.0.0
     # via pytest
-isort==5.13.0
+isort==5.13.2
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -95,29 +70,11 @@ pbr==6.0.0
     # via
     #   -r requirements/dev.txt
     #   stevedore
-pep517==0.13.1
-    # via
-    #   -r requirements/dev.txt
-    #   requirementslib
-pip-api==0.0.30
-    # via
-    #   -r requirements/dev.txt
-    #   isort
-pipreqs==0.4.13
-    # via
-    #   -r requirements/dev.txt
-    #   isort
 platformdirs==4.1.0
     # via
     #   -r requirements/dev.txt
     #   pylint
-    #   requirementslib
     #   virtualenv
-plette[validation]==0.4.4
-    # via
-    #   -r requirements/dev.txt
-    #   plette
-    #   requirementslib
 pluggy==1.3.0
     # via
     #   -r requirements/dev.txt
@@ -127,15 +84,7 @@ py==1.11.0
     # via
     #   -r requirements/dev.txt
     #   tox
-pydantic==2.5.2
-    # via
-    #   -r requirements/dev.txt
-    #   requirementslib
-pydantic-core==2.14.5
-    # via
-    #   -r requirements/dev.txt
-    #   pydantic
-pylint==3.0.2
+pylint==3.0.3
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -162,15 +111,6 @@ pyyaml==6.0.1
     # via
     #   -r requirements/dev.txt
     #   code-annotations
-requests==2.31.0
-    # via
-    #   -r requirements/dev.txt
-    #   requirementslib
-    #   yarg
-requirementslib==3.0.0
-    # via
-    #   -r requirements/dev.txt
-    #   isort
 six==1.16.0
     # via
     #   -r requirements/dev.txt
@@ -188,16 +128,13 @@ text-unidecode==1.3
 tomli==2.0.1
     # via
     #   -r requirements/dev.txt
-    #   pep517
     #   pylint
     #   pytest
     #   tox
 tomlkit==0.12.3
     # via
     #   -r requirements/dev.txt
-    #   plette
     #   pylint
-    #   requirementslib
 tox==3.28.0
     # via
     #   -r requirements/dev.txt
@@ -207,25 +144,10 @@ tox-battery==0.6.2
 typing-extensions==4.9.0
     # via
     #   -r requirements/dev.txt
-    #   annotated-types
     #   asgiref
     #   astroid
-    #   pydantic
-    #   pydantic-core
     #   pylint
-urllib3==2.1.0
-    # via
-    #   -r requirements/dev.txt
-    #   requests
 virtualenv==20.25.0
     # via
     #   -r requirements/dev.txt
     #   tox
-yarg==0.1.9
-    # via
-    #   -r requirements/dev.txt
-    #   pipreqs
-
-# The following packages are considered to be unsafe in a requirements file:
-# pip
-# setuptools
