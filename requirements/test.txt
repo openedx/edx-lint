@@ -22,7 +22,7 @@ code-annotations==1.5.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==7.3.3
+coverage==7.4.0
     # via -r requirements/test.in
 dill==0.3.7
     # via
@@ -49,7 +49,7 @@ isort==5.13.2
     # via
     #   -r requirements/dev.txt
     #   pylint
-jinja2==3.1.2
+jinja2==3.1.3
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -99,7 +99,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
-pytest==7.4.3
+pytest==7.4.4
     # via -r requirements/test.in
 python-slugify==8.0.1
     # via
