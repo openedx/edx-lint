@@ -20,7 +20,7 @@ code-annotations==1.5.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
-dill==0.3.7
+dill==0.3.8
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -59,7 +59,7 @@ platformdirs==4.1.0
     #   -r requirements/base.txt
     #   pylint
     #   virtualenv
-pluggy==1.3.0
+pluggy==1.4.0
     # via tox
 py==1.11.0
     # via tox
@@ -78,7 +78,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-python-slugify==8.0.1
+python-slugify==8.0.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
