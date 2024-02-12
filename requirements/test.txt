@@ -32,7 +32,7 @@ distlib==0.3.8
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==3.2.23
+django==3.2.24
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
@@ -101,7 +101,7 @@ pylint-plugin-utils==0.8.2
     #   pylint-django
 pytest==8.0.0
     # via -r requirements/test.in
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via
     #   -r requirements/dev.txt
     #   code-annotations

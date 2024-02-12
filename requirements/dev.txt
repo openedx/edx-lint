@@ -78,7 +78,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via
     #   -r requirements/base.txt
     #   code-annotations
