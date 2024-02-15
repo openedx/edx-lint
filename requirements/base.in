@@ -6,4 +6,5 @@ click-log
 pylint
 pylint-django
 pylint-celery
+setuptools
 six

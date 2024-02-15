@@ -123,8 +123,12 @@ def test_invalid_python():
     message = messages.pop()
     # Pylint 1.x says the source is <string>, Pylint 2.x says <unknown>
     message = message.replace("<string>", "XXX").replace("<unknown>", "XXX")
-    assert message == "1:syntax-error:Parsing failed: 'invalid syntax (XXX, line 1)'"
-
+    assert message in (
+        # Pre python 3.12 this error is returned
+        "1:syntax-error:Parsing failed: 'invalid syntax (XXX, line 1)'",
+        # Pythong 3.12+ this is the error
+        "1:syntax-error:Parsing failed: 'unterminated string literal (detected at line 1) (XXX, line 1)'",
+    )
 
 # I would have tested that the msgids must be valid, but pylint doesn't seem
 # to mind being told to enable non-existent msgids.

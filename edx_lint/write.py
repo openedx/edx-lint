@@ -6,6 +6,7 @@ import os
 import os.path
 
 import pkg_resources
+
 from six.moves import cStringIO
 from six.moves import configparser
 
