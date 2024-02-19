@@ -13,6 +13,55 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.3.5 - 2023-04-29
+~~~~~~~~~~~~~~~~~~
+
+* added support for pylint 3
+
+5.3.2 - 2023-02-15
+~~~~~~~~~~~~~~~~~~
+
+* Removed pylint<2.15 constraint and updated tests for new version
+* Removed CI tests for old pylint versions
+
+5.3.1 - 2023-02-14
+~~~~~~~~~~~~~~~~~~
+
+* Disabled new warning from pylint 2.16.0: broad-exception-raised
+
+5.3.0 - 2022-09-15
+~~~~~~~~~~~~~~~~~~
+
+* Improvements to the ``check`` command:
+
+  - It now exits with a failure status if something is wrong.
+  - With no file name arguments, it will check all of your files that edx_lint
+    can write.
+  - The messages are less chatty.
+
+5.2.5 - 2022-09-08
+~~~~~~~~~~~~~~~~~~
+
+* Updated GitHub references from the ``edx`` GitHub organization to ``openedx``.
+
+5.2.4 - 2022-06-10
+~~~~~~~~~~~~~~~~~~
+
+* Updated `pylintrc` template for `edx_lint write pylintrc` command for `pylint>=2.14.0`.
+
+5.2.3 - 2022-06-09
+~~~~~~~~~~~~~~~~~~
+
+* Removed support of LegacyWaffle* checks, since the classes no longer exist.
+* Removed deleted pylint messages from common pylintrc file
+
+5.2.2 - 2022-03-25
+~~~~~~~~~~~~~~~~~~
+
+* fixed import path of a pylint protected function to make
+  edx-lint compatible with `pylint==2.13.0`.
+* Updated testenvs in both tox and CI
+
 5.2.1 - 2021-10-26
 ~~~~~~~~~~~~~~~~~~
 
@@ -103,7 +152,7 @@ edx-lint will now ignore the logging-fstring-interpolation warning in pylint.
 
 * Here is a `link to additional commits`_ that may or may not warrant changelog entries, but were committed before reminding developers to update the changelog.
 
-.. _link to additional commits: https://github.com/edx/edx-lint/compare/1.5.2...a29f286
+.. _link to additional commits: https://github.com/openedx/edx-lint/compare/1.5.2...a29f286
 
 [1.5.2] - 2020-08-20
 ~~~~~~~~~~~~~~~~~~~~
@@ -137,4 +186,4 @@ Older versions
 
 Older versions were documented as `Github releases`_ only.
 
-.. _Github releases: https://github.com/edx/edx-lint/releases
+.. _Github releases: https://github.com/openedx/edx-lint/releases

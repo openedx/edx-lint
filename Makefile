@@ -7,7 +7,7 @@ help: ## display this help message
 	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | sort | awk -F ':.*?## ' 'NF==2 {printf "\033[36m  %-25s\033[0m %s\n", $$1, $$2}'
 
 test: ## run all the tests
-	tox -e py38-pylint24,coverage
+	tox
 
 pylint: ## check our own code with pylint
 	tox -e pylint
@@ -28,8 +28,10 @@ requirements: ## install the developer requirements
 compile-requirements: export CUSTOM_COMPILE_COMMAND=make upgrade
 compile-requirements: ## compile the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	# Make sure to compile files after any other files they include!
-	pip-compile -v --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
+	pip-compile -v ${COMPILE_OPTS} --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/pip-tools.txt requirements/pip-tools.in
+	pip install -qr requirements/pip.txt
+	pip install -qr requirements/pip-tools.txt
 	pip-compile -v ${COMPILE_OPTS} -o requirements/base.txt requirements/base.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/dev.txt requirements/dev.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/test.txt requirements/test.in

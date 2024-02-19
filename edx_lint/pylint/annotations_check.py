@@ -7,12 +7,11 @@ import re
 
 import pkg_resources
 
-from astroid.node_classes import Const, Name
+from astroid.nodes.node_classes import Const, Name
 from code_annotations import annotation_errors
 from code_annotations.base import AnnotationConfig
 from code_annotations.find_static import StaticSearch
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors
 
@@ -31,7 +30,7 @@ def check_all_messages(msgs):
     """
     Decorator to automatically assign all messages from a class to the list of messages handled by a checker method.
 
-    Inspired by pylint.checkers.util.check_messages
+    Inspired by pylint.checkers.util.only_required_for_messages
     """
 
     def store_messages(func):
@@ -93,8 +92,6 @@ class FeatureToggleChecker(BaseChecker):
     Checks that feature toggles are properly annotated and best practices
     are followed.
     """
-
-    __implements__ = (IAstroidChecker,)
 
     name = "feature-toggle-checker"
 
@@ -218,7 +215,7 @@ class FeatureToggleChecker(BaseChecker):
                 self.ILLEGAL_WAFFLE_MESSAGE_ID, args=(feature_toggle_name,), node=node
             )
 
-    @utils.check_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID, ILLEGAL_WAFFLE_MESSAGE_ID)
+    @utils.only_required_for_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID, ILLEGAL_WAFFLE_MESSAGE_ID)
     def visit_call(self, node):
         """
         Performs various checks on Call nodes.
@@ -226,7 +223,7 @@ class FeatureToggleChecker(BaseChecker):
         self.check_waffle_class_annotated(node)
         self.check_illegal_waffle_usage(node)
 
-    @utils.check_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID)
+    @utils.only_required_for_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID)
     def visit_classdef(self, node):
         """
         Checks class definitions for potential ConfigurationModel
@@ -234,7 +231,7 @@ class FeatureToggleChecker(BaseChecker):
         """
         self.check_configuration_model_annotated(node)
 
-    @utils.check_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID)
+    @utils.only_required_for_messages(TOGGLE_NOT_ANNOTATED_MESSAGE_ID)
     def visit_dict(self, node):
         """
         Checks Dict nodes in case a Django FEATURES dictionary is being
@@ -301,7 +298,6 @@ class CodeAnnotationChecker(AnnotationBaseChecker):
     CodeAnnotationChecker.CONFIG_FILENAMES (see AnnotationBaseChecker docs).
     """
     CONFIG_FILENAMES = ["feature_toggle_annotations.yaml", "setting_annotations.yaml"]
-    __implements__ = (IAstroidChecker,)
     name = "code-annotations"
     msgs = {
         ("E%d%d" % (BASE_ID, index + 50)): (
@@ -337,8 +333,6 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
     """
 
     CONFIG_FILENAMES = ["feature_toggle_annotations.yaml"]
-
-    __implements__ = (IAstroidChecker,)
 
     name = "toggle-annotations"
 
@@ -388,7 +382,6 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         ),
     }
 
-    LEGACY_TOGGLE_FUNC_NAMES = ["LegacyWaffleFlag", "LegacyWaffleSwitch"]
     TOGGLE_FUNC_NAMES = [
         "WaffleFlag",
         "NonNamespacedWaffleFlag",
@@ -396,7 +389,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         "NonNamespacedWaffleSwitch",
         "CourseWaffleFlag",
         "ExperimentWaffleFlag",
-    ] + LEGACY_TOGGLE_FUNC_NAMES
+    ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -472,7 +465,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
                 line=line_number,
             )
 
-    @utils.check_messages(MISSING_ANNOTATION)
+    @utils.only_required_for_messages(MISSING_ANNOTATION)
     def visit_call(self, node):
         """
         Check for missing annotations.
@@ -483,7 +476,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
                 node=node,
             )
 
-    @utils.check_messages(INVALID_DJANGO_WAFFLE_IMPORT)
+    @utils.only_required_for_messages(INVALID_DJANGO_WAFFLE_IMPORT)
     def visit_import(self, node):
         if node.names[0][0] == "waffle":
             self.add_message(
@@ -491,7 +484,7 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
                 node=node,
             )
 
-    @utils.check_messages(INVALID_DJANGO_WAFFLE_IMPORT)
+    @utils.only_required_for_messages(INVALID_DJANGO_WAFFLE_IMPORT)
     def visit_importfrom(self, node):
         if node.modname == "waffle":
             self.add_message(
@@ -522,11 +515,6 @@ class FeatureToggleAnnotationChecker(AnnotationBaseChecker):
         # Check literal toggle name arguments
         if node.args and isinstance(node.args[0], Const) and isinstance(node.args[0].value, str):
             toggle_name = node.args[0].value
-            if node.func.name in self.LEGACY_TOGGLE_FUNC_NAMES:
-                # For legacy toggles
-                if isinstance(node.args[1], Const) and isinstance(node.args[1].value, str):
-                    namespace = toggle_name
-                    toggle_name = namespace + "." + node.args[1].value
             if toggle_name not in self.current_module_annotated_toggle_names:
                 return True
         return False
@@ -538,8 +526,6 @@ class SettingAnnotationChecker(AnnotationBaseChecker):
     """
 
     CONFIG_FILENAMES = ["setting_annotations.yaml"]
-
-    __implements__ = (IAstroidChecker,)
 
     name = "setting-annotations"
 

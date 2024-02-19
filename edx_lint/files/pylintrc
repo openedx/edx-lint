@@ -56,20 +56,12 @@ enable=
     cell-var-from-loop,
     confusing-with-statement,
     continue-in-finally,
-    cyclical-import,
     dangerous-default-value,
-    dict-items-not-iterating,
-    dict-keys-not-iterating,
-    dict-values-not-iterating,
     duplicate-argument-name,
     duplicate-bases,
     duplicate-except,
     duplicate-key,
-    eq-without-hash,
-    exception-escape,
-    exception-message-attribute,
     expression-not-assigned,
-    filter-builtin-not-iterating,
     format-combined-specification,
     format-needs-mapping,
     function-redefined,
@@ -77,33 +69,26 @@ enable=
     import-error,
     import-self,
     inconsistent-mro,
-    indexing-exception,
     inherit-non-class,
     init-is-generator,
     invalid-all-object,
-    invalid-encoded-data,
     invalid-format-index,
     invalid-length-returned,
     invalid-sequence-index,
     invalid-slice-index,
     invalid-slots-object,
     invalid-slots,
-    invalid-str-codec,
     invalid-unary-operand-type,
     logging-too-few-args,
     logging-too-many-args,
     logging-unsupported-format,
     lost-exception,
-    map-builtin-not-iterating,
     method-hidden,
     misplaced-bare-raise,
     misplaced-future,
     missing-format-argument-key,
     missing-format-attribute,
     missing-format-string-key,
-    missing-super-argument,
-    mixed-fomat-string,
-    model-unicode-not-callable,
     no-member,
     no-method-argument,
     no-name-in-module,
@@ -112,8 +97,6 @@ enable=
     non-iterator-returned,
     non-parent-method-called,
     nonexistent-operator,
-    nonimplemented-raised,
-    nonstandard-exception,
     not-a-mapping,
     not-an-iterable,
     not-callable,
@@ -121,35 +104,25 @@ enable=
     not-in-loop,
     pointless-statement,
     pointless-string-statement,
-    property-on-old-class,
     raising-bad-type,
     raising-non-exception,
-    raising-string,
-    range-builtin-not-iterating,
     redefined-builtin,
-    redefined-in-handler,
     redefined-outer-name,
-    redefined-variable-type,
     redundant-keyword-arg,
-    relative-import,
     repeated-keyword,
     return-arg-in-generator,
     return-in-init,
     return-outside-function,
     signature-differs,
-    slots-on-old-class,
     super-init-not-called,
     super-method-not-called,
-    super-on-old-class,
     syntax-error,
-    sys-max-int,
     test-inherits-tests,
     too-few-format-args,
     too-many-format-args,
     too-many-function-args,
     translation-of-non-string,
     truncated-format-string,
-    unbalance-tuple-unpacking,
     undefined-all-variable,
     undefined-loop-variable,
     undefined-variable,
@@ -165,12 +138,9 @@ enable=
     used-before-assignment,
     using-constant-test,
     yield-outside-function,
-    zip-builtin-not-iterating,
 
     # Checking failed for some reason
     astroid-error,
-    django-not-available-placeholder,
-    django-not-available,
     fatal,
     method-check-failed,
     parse-error,
@@ -197,7 +167,6 @@ enable=
     bad-classmethod-argument,
     bad-mcs-classmethod-argument,
     bad-mcs-method-argument,
-    bad-whitespace,
     bare-except,
     broad-except,
     consider-iterating-dictionary,
@@ -207,16 +176,10 @@ enable=
     literal-used-as-attribute,
     logging-format-interpolation,
     logging-not-lazy,
-    metaclass-assignment,
-    model-has-unicode,
-    model-missing-unicode,
-    model-no-explicit-unicode,
     multiple-imports,
     multiple-statements,
     no-classmethod-decorator,
     no-staticmethod-decorator,
-    old-raise-syntax,
-    old-style-class,
     protected-access,
     redundant-unittest-assert,
     reimported,
@@ -249,7 +212,6 @@ enable=
 
     # These should be auto-fixed by any competent editor
     missing-final-newline,
-    mixed-indentation,
     mixed-line-endings,
     trailing-newlines,
     trailing-whitespace,
@@ -262,26 +224,6 @@ enable=
     unrecognized-inline-option,
     useless-suppression,
 
-    # These note methods that aren't used by python 3,
-    # and can be removed.
-    cmp-method,
-    coerce-method,
-    delslice-method,
-    dict-iter-method,
-    dict-view-method,
-    div-method,
-    getslice-method,
-    hex-method,
-    idiv-method,
-    next-method-called,
-    next-method-defined,
-    nonzero-method,
-    oct-method,
-    rdiv-method,
-    setslice-method,
-    using-cmp-argument,
-
-
 # Disable the message, report, category or checker with the given id(s). You
 # can either give multiple identifiers separated by comma (,) or put this
 # option multiple times (only on the command line, not in the configuration
@@ -293,8 +235,8 @@ enable=
 # --disable=W"
 disable=
     # These should be left to the discretion of the reviewer
-    bad-continuation,
     bad-indentation,
+    broad-exception-raised,
     consider-using-f-string,
     duplicate-code,
     file-ignored,
@@ -302,12 +244,7 @@ disable=
     global-statement,
     invalid-name,
     locally-disabled,
-    locally-enabled,
-    lowercase-l-suffix,
-    misplaced-comparison-constant,
     no-else-return,
-    no-init,
-    no-self-use,
     suppressed-message,
     too-few-public-methods,
     too-many-ancestors,
@@ -327,45 +264,6 @@ disable=
     feature-toggle-needs-doc,
     illegal-waffle-usage,
 
-    # These can't be used in python 3 code
-    apply-builtin,
-    backtick,
-    bad-python3-import,
-    basestring-builtin,
-    buffer-builtin,
-    cmp-builtin,
-    coerce-builtin,
-    deprecated-itertools-function,
-    deprecated-operator-function,
-    deprecated-str-translate-call,
-    deprecated-string-function,
-    deprecated-sys-function,
-    deprecated-types-field,
-    deprecated-urllib-function,
-    execfile-builtin,
-    file-builtin,
-    import-star-module-level,
-    input-builtin,
-    intern-builtin,
-    long-builtin,
-    long-suffix,
-    no-absolute-import,
-    non-ascii-bytes-literal,
-    old-division,
-    old-ne-operator,
-    old-octal-literal,
-    parameter-unpacking,
-    print-statement,
-    raw_input-builtin,
-    reduce-builtin,
-    reload-builtin,
-    round-builtin,
-    standarderror-builtin,
-    unichr-builtin,
-    unicode-builtin,
-    unpacking-in-except,
-    xrange-builtin,
-
     # We want to allow developers to use f-strings for readability
     logging-fstring-interpolation,
 
@@ -375,11 +273,6 @@ disable=
 # (visual studio) and html. You can also give a reporter class, eg
 # mypackage.mymodule.MyReporterClass.
 output-format=text
-
-# Put messages in a separate file for each module / package specified on the
-# command line instead of printing them on stdout. Reports (if any) will be
-# written in a file name "pylint_global.[txt|html]".
-files-output=no
 
 # Tells whether to display a full report or only the messages
 reports=no
@@ -393,9 +286,6 @@ score=no
 
 
 [BASIC]
-
-# List of builtins function names that should not be used, separated by a comma
-bad-functions=map,filter,apply,input
 
 # Regular expression which should only match correct module names
 module-rgx=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
@@ -461,9 +351,6 @@ ignore-long-lines=^\s*(# )?((<?https?://\S+>?)|(\.\. \w+: .*))$
 # Allow the body of an if to be on the same line as the test if there is no
 # else.
 single-line-if-stmt=no
-
-# List of optional constructs for which whitespace checking is disabled
-no-space-check=trailing-comma,dict-separator
 
 # Maximum number of lines in a module
 max-module-lines=1000
@@ -621,5 +508,5 @@ int-import-graph=
 [EXCEPTIONS]
 
 # Exceptions that will emit a warning when being caught. Defaults to
-# "Exception"
-overgeneral-exceptions=Exception
+# "builtins.Exception"
+overgeneral-exceptions=builtins.Exception

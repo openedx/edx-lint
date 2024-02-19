@@ -99,10 +99,7 @@ How To Contribute
 
 Contributions are very welcome.
 
-Please read `How To Contribute <https://github.com/edx/edx-platform/blob/master/CONTRIBUTING.rst>`_ for details.
-
-Even though it was written with ``edx-platform`` in mind, the guidelines
-should be followed for Open edX code in general.
+Please read `How To Contribute <https://github.com/openedx/.github/blob/master/CONTRIBUTING.md>`_ for details.
 
 
 Getting Help
@@ -113,5 +110,5 @@ The Open edX project has resources for developer support on the `Getting Help`_ 
 
 .. _Getting Help: https://open.edx.org/getting-help
 
-.. |CI| image:: https://github.com/edx/edx-lint/workflows/Python%20CI/badge.svg?branch=master
-.. _CI: https://github.com/edx/edx-lint/actions?query=workflow%3A%22Python+CI%22
+.. |CI| image:: https://github.com/openedx/edx-lint/workflows/Python%20CI/badge.svg?branch=master
+.. _CI: https://github.com/openedx/edx-lint/actions?query=workflow%3A%22Python+CI%22
