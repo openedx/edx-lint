@@ -99,7 +99,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
-pytest==8.0.0
+pytest==8.0.1
     # via -r requirements/test.in
 python-slugify==8.0.4
     # via
