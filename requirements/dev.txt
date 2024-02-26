@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==3.0.3
+astroid==3.1.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -63,7 +63,7 @@ pluggy==1.4.0
     # via tox
 py==1.11.0
     # via tox
-pylint==3.0.3
+pylint==3.1.0
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -90,7 +90,7 @@ six==1.16.0
     # via
     #   -r requirements/base.txt
     #   tox
-stevedore==5.1.0
+stevedore==5.2.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -114,10 +114,10 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.in
-typing-extensions==4.9.0
+typing-extensions==4.10.0
     # via
     #   -r requirements/base.txt
     #   astroid
     #   pylint
-virtualenv==20.25.0
+virtualenv==20.25.1
     # via tox
