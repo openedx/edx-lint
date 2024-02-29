@@ -259,6 +259,7 @@ class AnnotationBaseChecker(BaseChecker):
                 "code_annotations",
                 os.path.join("contrib", "config", config_filename),
             )
+
             config = AnnotationConfig(config_path, verbosity=-1)
             search = StaticSearch(config)
             self.config_search.append((config, search))
