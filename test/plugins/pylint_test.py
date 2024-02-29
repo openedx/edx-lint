@@ -122,8 +122,8 @@ def test_invalid_python():
     assert len(messages) == 1
     message = messages.pop()
     # Pylint 1.x says the source is <string>, Pylint 2.x says <unknown>
-    message = message.replace("<string>", "XXX").replace("<unknown>", "XXX")
-    assert message == "1:syntax-error:Parsing failed: 'invalid syntax (XXX, line 1)'"
+    message = message.replace("<string>", "source").replace("<unknown>", "source")
+    assert message == "1:syntax-error:Parsing failed: 'invalid syntax (source, line 1)'"
 
 
 # I would have tested that the msgids must be valid, but pylint doesn't seem
