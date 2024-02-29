@@ -121,8 +121,6 @@ def test_invalid_python():
     messages = run_pylint(source, "all")
     assert len(messages) == 1
     message = messages.pop()
-    # Pylint 1.x says the source is <string>, Pylint 2.x says <unknown>
-    message = message.replace("<string>", "source").replace("<unknown>", "source")
     assert message == "1:syntax-error:Parsing failed: 'invalid syntax (source, line 1)'"
 
 
