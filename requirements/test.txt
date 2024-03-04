@@ -11,6 +11,8 @@ astroid==3.1.0
     #   -r requirements/dev.txt
     #   pylint
     #   pylint-celery
+backports-zoneinfo==0.2.1
+    # via django
 click==8.1.7
     # via
     #   -r requirements/dev.txt
@@ -32,7 +34,7 @@ distlib==0.3.8
     # via
     #   -r requirements/dev.txt
     #   virtualenv
-django==3.2.24
+django==4.2.10
     # via
     #   -c requirements/../edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
@@ -99,14 +101,12 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
-pytest==8.0.2
+pytest==8.1.0
     # via -r requirements/test.in
 python-slugify==8.0.4
     # via
     #   -r requirements/dev.txt
     #   code-annotations
-pytz==2024.1
-    # via django
 pyyaml==6.0.1
     # via
     #   -r requirements/dev.txt
@@ -131,7 +131,7 @@ tomli==2.0.1
     #   pylint
     #   pytest
     #   tox
-tomlkit==0.12.3
+tomlkit==0.12.4
     # via
     #   -r requirements/dev.txt
     #   pylint
