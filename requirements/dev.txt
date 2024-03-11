@@ -46,7 +46,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==23.2
+packaging==24.0
     # via
     #   pyproject-api
     #   tox
