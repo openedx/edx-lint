@@ -28,4 +28,5 @@ django-simple-history==3.0.0
 # adding the opentelemetry dependency. However, when we compile pip-tools.txt,
 # that uses version 7.x, and then there's no undoing that when compiling base.txt.
 # So we need to pin it globally, for now.
+# Ticket for unpinning: https://github.com/openedx/edx-lint/issues/407
 importlib-metadata<7
