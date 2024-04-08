@@ -20,7 +20,7 @@ click==8.1.7
     #   code-annotations
 click-log==0.4.0
     # via -r requirements/dev.txt
-code-annotations==1.7.0
+code-annotations==1.8.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
@@ -40,7 +40,7 @@ django==4.2.11
     #   -r requirements/test.in
 exceptiongroup==1.2.0
     # via pytest
-filelock==3.13.1
+filelock==3.13.3
     # via
     #   -r requirements/dev.txt
     #   tox
@@ -141,7 +141,7 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.txt
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   -r requirements/dev.txt
     #   asgiref
