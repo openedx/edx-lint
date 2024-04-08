@@ -1,0 +1,32 @@
+# This file records information about this repo. Its use is described in OEP-55:
+# https://open-edx-proposals.readthedocs.io/en/latest/processes/oep-0055-proc-project-maintainers.html
+
+apiVersion: backstage.io/v1alpha1
+# (Required) Acceptable Values: Component, Resource, System
+# Use `Component` unless you know how backstage works and what the other kinds mean.
+kind: Component
+metadata:
+  # (Required) Must be the name of the repo, without the owning organization.
+  name: 'edx-lint'
+  description: "Custom tooling for pylint and other repo management tools"
+  links:
+
+  annotations:
+    # (Optional) We use the below annotation to indicate whether or not this
+    # repository should be tagged for openedx releases and which branch is tagged.
+    openedx.org/release: null
+spec:
+
+  # (Required) This can be a group (`group:<github_group_name>`) or a user (`user:<github_username>`).
+  # Don't forget the "user:" or "group:" prefix. Groups must be GitHub team
+  # names in the openedx GitHub organization: https://github.com/orgs/openedx/teams
+  #
+  # If you need a new team created, create an issue with Axim engineering:
+  # https://github.com/openedx/axim-engineering/issues/new/choose
+  owner: group:axim-engineering
+
+  # (Required) Acceptable Type Values: service, website, library
+  type: 'library'
+
+  # (Required) Acceptable Lifecycle Values: experimental, production, deprecated
+  lifecycle: 'production'
