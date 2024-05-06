@@ -10,20 +10,20 @@ astroid==3.1.0
     #   pylint-celery
 click==8.1.7
     # via
-    #   -r requirements/base.in
+    #   -r base.in
     #   click-log
     #   code-annotations
 click-log==0.4.0
-    # via -r requirements/base.in
+    # via -r base.in
 code-annotations==1.7.0
     # via
-    #   -c requirements/constraints.txt
-    #   -r requirements/base.in
+    #   -c constraints.txt
+    #   -r base.in
 dill==0.3.8
     # via pylint
 isort==5.13.2
     # via pylint
-jinja2==3.1.3
+jinja2==3.1.4
     # via code-annotations
 markupsafe==2.1.5
     # via jinja2
@@ -35,14 +35,14 @@ platformdirs==4.2.0
     # via pylint
 pylint==3.1.0
     # via
-    #   -r requirements/base.in
+    #   -r base.in
     #   pylint-celery
     #   pylint-django
     #   pylint-plugin-utils
 pylint-celery==0.3
-    # via -r requirements/base.in
+    # via -r base.in
 pylint-django==2.5.5
-    # via -r requirements/base.in
+    # via -r base.in
 pylint-plugin-utils==0.8.2
     # via
     #   pylint-celery
@@ -52,7 +52,7 @@ python-slugify==8.0.4
 pyyaml==6.0.1
     # via code-annotations
 six==1.16.0
-    # via -r requirements/base.in
+    # via -r base.in
 stevedore==5.2.0
     # via code-annotations
 text-unidecode==1.3
