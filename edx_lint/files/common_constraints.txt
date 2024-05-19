@@ -30,3 +30,7 @@ django-simple-history==3.0.0
 # So we need to pin it globally, for now.
 # Ticket for unpinning: https://github.com/openedx/edx-lint/issues/407
 importlib-metadata<7
+
+# Support for backports.zoneinfo in Python 3.9+ is currently minimal
+# https://pypi.org/project/backports.zoneinfo/
+backports.zoneinfo;python_version<"3.9"
