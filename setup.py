@@ -13,15 +13,20 @@ A collection of code quality tools:
 
 import os
 import re
+
 import setuptools
 
 
 def load_requirements(*requirements_paths):
     """
-    Load all requirements from the specified requirements files, including any constraints from other files that
-    are pulled in.
+    Load all requirements from the specified requirements files.
+
+    Requirements will include any constraints from files specified
+    with -c in the requirements files.
     Returns a list of requirement strings.
     """
+    # UPDATED VIA SEMGREP - if you need to remove/modify this method remove this line and add a comment specifying why.
+
     requirements = {}
     constraint_files = set()
 
@@ -38,7 +43,9 @@ def load_requirements(*requirements_paths):
             # constraints in place
             if existing_version_constraints and existing_version_constraints != version_constraints:
                 raise BaseException(f'Multiple constraint definitions found for {package}:'
-                                    f' "{existing_version_constraints}" and "{version_constraints}".')
+                                    f' "{existing_version_constraints}" and "{version_constraints}".'
+                                    f'Combine constraints into one location with {package}'
+                                    f'{existing_version_constraints},{version_constraints}.')
             if add_if_not_present or package in current_requirements:
                 current_requirements[package] = version_constraints
 
@@ -59,7 +66,8 @@ def load_requirements(*requirements_paths):
                     add_version_constraint_or_raise(line, requirements, False)
 
     # process back into list of pkg><=constraints strings
-    return [f'{pkg}{version or ""}' for (pkg, version) in sorted(requirements.items())]
+    constrained_requirements = [f'{pkg}{version or ""}' for (pkg, version) in sorted(requirements.items())]
+    return constrained_requirements]
 
 
 def is_requirement(line):
