@@ -13,6 +13,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.3.7 - 2024-07-15
+~~~~~~~~~~~~~~~~~~
+
+* Remove support for writing commitlint.config.js files since we don't want
+  people to be doing this.
+
 5.3.5 - 2023-04-29
 ~~~~~~~~~~~~~~~~~~
 

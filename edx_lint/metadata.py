@@ -22,10 +22,6 @@ KNOWN_FILES = {
         format="ini",
         comment="# {}",
     ),
-    "commitlint.config.js": Metadata(
-        format="js",
-        comment="// {}",
-    ),
 
     "just_for_testing.txt": Metadata(
         format="txt",
@@ -33,7 +29,7 @@ KNOWN_FILES = {
         internal_only=True,
     ),
     # BTW: common_constraints.txt is in the resources, but isn't a file
-    # that edx_lint writes.
+    # that edx_lint writes.  Same with commitlint.config.js
 }
 
 
