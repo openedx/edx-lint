@@ -8,7 +8,7 @@ build==1.2.1
     # via pip-tools
 click==8.1.7
     # via pip-tools
-importlib-metadata==8.0.0
+importlib-metadata==8.2.0
     # via build
 packaging==24.1
     # via build
@@ -22,7 +22,7 @@ tomli==2.0.1
     # via
     #   build
     #   pip-tools
-wheel==0.43.0
+wheel==0.44.0
     # via pip-tools
 zipp==3.19.2
     # via importlib-metadata
