@@ -6,7 +6,7 @@
 #
 asgiref==3.8.1
     # via django
-astroid==3.2.3
+astroid==3.2.4
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -24,7 +24,7 @@ code-annotations==1.8.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==7.6.0
+coverage==7.6.1
     # via -r requirements/test.in
 dill==0.3.8
     # via
@@ -86,7 +86,7 @@ py==1.11.0
     # via
     #   -r requirements/dev.txt
     #   tox
-pylint==3.2.5
+pylint==3.2.6
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -101,7 +101,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/dev.txt
     #   pylint-celery
     #   pylint-django
-pytest==8.2.2
+pytest==8.3.2
     # via -r requirements/test.in
 python-slugify==8.0.4
     # via
@@ -115,7 +115,7 @@ six==1.16.0
     # via
     #   -r requirements/dev.txt
     #   tox
-sqlparse==0.5.0
+sqlparse==0.5.1
     # via django
 stevedore==5.2.0
     # via
