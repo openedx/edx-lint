@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==3.2.3
+astroid==3.2.4
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -63,7 +63,7 @@ pluggy==1.5.0
     # via tox
 py==1.11.0
     # via tox
-pylint==3.2.5
+pylint==3.2.6
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -82,7 +82,7 @@ python-slugify==8.0.4
     # via
     #   -r requirements/base.txt
     #   code-annotations
-pyyaml==6.0.1
+pyyaml==6.0.2
     # via
     #   -r requirements/base.txt
     #   code-annotations

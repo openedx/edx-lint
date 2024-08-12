@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==3.2.3
+astroid==3.2.4
     # via
     #   pylint
     #   pylint-celery
@@ -33,7 +33,7 @@ pbr==6.0.0
     # via stevedore
 platformdirs==4.2.2
     # via pylint
-pylint==3.2.5
+pylint==3.2.6
     # via
     #   -r requirements/base.in
     #   pylint-celery
@@ -49,7 +49,7 @@ pylint-plugin-utils==0.8.2
     #   pylint-django
 python-slugify==8.0.4
     # via code-annotations
-pyyaml==6.0.1
+pyyaml==6.0.2
     # via code-annotations
 six==1.16.0
     # via -r requirements/base.in
