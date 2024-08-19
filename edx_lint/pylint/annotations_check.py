@@ -2,10 +2,8 @@
 Pylint plugin: checks that feature toggles are properly annotated.
 """
 
-import os
+import importlib.resources
 import re
-
-import pkg_resources
 
 from astroid.nodes.node_classes import Const, Name
 from code_annotations import annotation_errors
@@ -255,9 +253,10 @@ class AnnotationBaseChecker(BaseChecker):
         super().__init__(*args, **kwargs)
         self.config_search = []
         for config_filename in self.CONFIG_FILENAMES:
-            config_path = pkg_resources.resource_filename(
-                "code_annotations",
-                os.path.join("contrib", "config", config_filename),
+            config_path = str(
+                importlib.resources.files("code_annotations").joinpath(
+                    "contrib", "config", config_filename
+                )
             )
             config = AnnotationConfig(config_path, verbosity=-1)
             search = StaticSearch(config)

@@ -2,17 +2,16 @@
 The logic for writing shared files.
 """
 
+import importlib.resources
 import os
 import os.path
 
-import pkg_resources
-from six.moves import cStringIO
-from six.moves import configparser
+from six.moves import configparser, cStringIO
 
 from edx_lint import __version__
 from edx_lint.configfile import merge_configs
-from edx_lint.tamper_evident import TamperEvidentFile
 from edx_lint.metadata import KNOWN_FILES
+from edx_lint.tamper_evident import TamperEvidentFile
 
 
 def make_header(metadata, filename, tweaks_name):
@@ -169,7 +168,7 @@ def write_file(filename, output_fn):
 
 def get_file_content(filename):
     """Get the contents of the file that should be written."""
-    return pkg_resources.resource_string("edx_lint", f"files/{filename}").decode("utf8")
+    return importlib.resources.files("edx_lint").joinpath(f"files/{filename}").read_text(encoding="utf-8")
 
 
 def amend_filename(filename, amend):
