@@ -13,6 +13,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.4.0 - 2024-08-23
+~~~~~~~~~~~~~~~~~~
+
+* Added support for python 3.12
+* Drop support for python 3.8
+* Replaced pkg_resources with importlib.resources
+
 5.3.7 - 2024-07-15
 ~~~~~~~~~~~~~~~~~~
 

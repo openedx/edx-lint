@@ -121,7 +121,8 @@ def test_invalid_python():
     messages = run_pylint(source, "all")
     assert len(messages) == 1
     message = messages.pop()
-    assert message == "1:syntax-error:Parsing failed: 'invalid syntax (source, line 1)'"
+    assert message == "1:syntax-error:Parsing failed: 'unterminated string "\
+                      "literal (detected at line 1) (source, line 1)'"
 
 
 # I would have tested that the msgids must be valid, but pylint doesn't seem
