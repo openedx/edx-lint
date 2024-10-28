@@ -13,6 +13,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.4.1 - 2024-10-28
+~~~~~~~~~~~~~~~~~~
+
+* Added pin for pip to avoid path issues
+* Used ubunto-latest for builds
+
 5.4.0 - 2024-08-23
 ~~~~~~~~~~~~~~~~~~
 
