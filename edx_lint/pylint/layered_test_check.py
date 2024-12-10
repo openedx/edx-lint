@@ -3,7 +3,6 @@
 import astroid
 
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors
 
@@ -37,8 +36,6 @@ def is_test_case_class(node):
 class LayeredTestClassChecker(BaseChecker):
     """Pylint checker for tests inheriting test methods from other tests."""
 
-    __implements__ = (IAstroidChecker,)
-
     name = "layered-test-class-checker"
 
     MESSAGE_ID = "test-inherits-tests"
@@ -51,7 +48,7 @@ class LayeredTestClassChecker(BaseChecker):
         )
     }
 
-    @utils.check_messages(MESSAGE_ID)
+    @utils.only_required_for_messages(MESSAGE_ID)
     def visit_classdef(self, node):
         """Check each class."""
         if not is_test_case_class(node):

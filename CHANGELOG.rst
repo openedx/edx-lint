@@ -13,6 +13,30 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.4.1 - 2024-10-28
+~~~~~~~~~~~~~~~~~~
+
+* Added pin for pip to avoid path issues
+* Used ubunto-latest for builds
+
+5.4.0 - 2024-08-23
+~~~~~~~~~~~~~~~~~~
+
+* Added support for python 3.12
+* Drop support for python 3.8
+* Replaced pkg_resources with importlib.resources
+
+5.3.7 - 2024-07-15
+~~~~~~~~~~~~~~~~~~
+
+* Remove support for writing commitlint.config.js files since we don't want
+  people to be doing this.
+
+5.3.5 - 2023-04-29
+~~~~~~~~~~~~~~~~~~
+
+* added support for pylint 3
+
 5.3.2 - 2023-02-15
 ~~~~~~~~~~~~~~~~~~
 

@@ -2,7 +2,6 @@
 
 import astroid
 from pylint.checkers import BaseChecker, utils
-from pylint.interfaces import IAstroidChecker
 
 from .common import BASE_ID, check_visitors
 
@@ -29,8 +28,6 @@ class TranslationStringConstantsChecker(BaseChecker):
     The message id is `translation-of-non-string`.
 
     """
-
-    __implements__ = (IAstroidChecker,)
 
     name = "translation-string-checker"
 
@@ -59,7 +56,7 @@ class TranslationStringConstantsChecker(BaseChecker):
         )
     }
 
-    @utils.check_messages(MESSAGE_ID)
+    @utils.only_required_for_messages(MESSAGE_ID)
     def visit_call(self, node):
         """Called for every function call in the source code."""
         if not isinstance(node.func, astroid.Name):

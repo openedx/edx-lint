@@ -4,7 +4,6 @@ import re
 import textwrap
 import warnings
 
-from pylint.__pkginfo__ import numversion as pylint_numversion
 from pylint.lint import Run
 from pylint.reporters import CollectingReporter
 
@@ -67,10 +66,12 @@ def run_pylint(source, msg_ids, *cmd_args):
     reporter = SimpleReporter()
 
     pylint_args = ["source.py", "--disable=all", f"--enable={msg_ids}", "--load-plugins=edx_lint.pylint", *cmd_args]
-    if pylint_numversion >= (2, 0):
-        kwargs = {"do_exit": False}
-    else:
-        kwargs = {"exit": False}
+
+    # --disable=all & --enable=all are not compatible
+    if msg_ids == "all":
+        pylint_args.remove("--disable=all")
+
+    kwargs = {"exit": False}
 
     Run(pylint_args, reporter=reporter, **kwargs)
 
@@ -120,9 +121,8 @@ def test_invalid_python():
     messages = run_pylint(source, "all")
     assert len(messages) == 1
     message = messages.pop()
-    # Pylint 1.x says the source is <string>, Pylint 2.x says <unknown>
-    message = message.replace("<string>", "XXX").replace("<unknown>", "XXX")
-    assert message == "1:syntax-error:Parsing failed: 'invalid syntax (XXX, line 1)'"
+    assert message == "1:syntax-error:Parsing failed: 'unterminated string "\
+                      "literal (detected at line 1) (source, line 1)'"
 
 
 # I would have tested that the msgids must be valid, but pylint doesn't seem
