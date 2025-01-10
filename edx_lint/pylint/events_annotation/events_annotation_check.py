@@ -112,8 +112,6 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
                 event_data = annotation["annotation_data"]
             elif annotation["annotation_token"] == ".. event_description:":
                 event_description = annotation["annotation_data"]
-            elif annotation["annotation_token"] == ".. event_status:":
-                event_status = annotation["annotation_data"]
 
         if not event_type:
             self.add_message(
@@ -145,15 +143,6 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
                 node=node,
                 line=line_number,
             )
-
-        if not event_status:
-            self.add_message(
-                self.NO_STATUS_MESSAGE_ID,
-                args=(event_type,),
-                node=node,
-                line=line_number,
-            )
-
 
     @utils.check_messages(MISSING_ANNOTATION)
     def visit_call(self, node):
