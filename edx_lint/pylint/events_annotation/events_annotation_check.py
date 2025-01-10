@@ -2,12 +2,12 @@
 Pylint plugin: checks that Open edX Events are properly annotated.
 """
 
-from pylint.interfaces import IAstroidChecker
+from astroid.nodes.node_classes import Const, Name
 from pylint.checkers import utils
 
-from edx_lint.pylint.common import BASE_ID
 from edx_lint.pylint.annotations_check import AnnotationBaseChecker, check_all_messages
-from astroid.node_classes import Const, Name
+from edx_lint.pylint.common import BASE_ID
+
 
 def register_checkers(linter):
     """
@@ -15,14 +15,13 @@ def register_checkers(linter):
     """
     linter.register_checker(EventsAnnotationChecker(linter))
 
+
 class EventsAnnotationChecker(AnnotationBaseChecker):
     """
     Perform checks on events annotations.
     """
 
     CONFIG_FILENAMES = ["openedx_events_annotations.yaml"]
-
-    __implements__ = (IAstroidChecker,)
 
     name = "events-annotations"
 
