@@ -296,7 +296,7 @@ class CodeAnnotationChecker(AnnotationBaseChecker):
     When creating a new annotation configuration, its filename should be added to
     CodeAnnotationChecker.CONFIG_FILENAMES (see AnnotationBaseChecker docs).
     """
-    CONFIG_FILENAMES = ["feature_toggle_annotations.yaml", "setting_annotations.yaml", "events_annotations.yaml"]
+    CONFIG_FILENAMES = ["feature_toggle_annotations.yaml", "setting_annotations.yaml"]
     name = "code-annotations"
     msgs = {
         ("E%d%d" % (BASE_ID, index + 50)): (

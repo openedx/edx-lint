@@ -20,7 +20,7 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
     Perform checks on events annotations.
     """
 
-    CONFIG_FILENAMES = ["events_annotations.yaml"]
+    CONFIG_FILENAMES = ["openedx_events_annotations.yaml"]
 
     __implements__ = (IAstroidChecker,)
 
