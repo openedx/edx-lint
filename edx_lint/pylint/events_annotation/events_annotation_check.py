@@ -143,7 +143,7 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
                 line=line_number,
             )
 
-    @utils.check_messages(MISSING_ANNOTATION)
+    @utils.only_required_for_messages(MISSING_ANNOTATION)
     def visit_call(self, node):
         """
         Check for missing annotations.
