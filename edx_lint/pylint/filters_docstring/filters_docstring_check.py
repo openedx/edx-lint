@@ -27,24 +27,24 @@ class FiltersDocstringFormatChecker(BaseChecker):
 
     name = "docstring-format-checker"
 
-    FILTER_DOCSTRING_MISSING_DESCRIPTION = "filter-docstring-missing-description"
-    FILTER_DOCSTRING_MISSING_TYPE = "filter-docstring-missing-type"
-    FILTER_DOCSTRING_MISSING_TRIGGER = "filter-docstring-missing-trigger"
+    DOCSTRING_MISSING_DESCRIPTION = "filter-docstring-missing-description"
+    DOCSTRING_MISSING_TYPE = "filter-docstring-missing-type"
+    DOCSTRING_MISSING_TRIGGER = "filter-docstring-missing-trigger"
 
     msgs = {
         ("E%d90" % BASE_ID): (
             "Filter's (%s) docstring is missing the required description section",
-            FILTER_DOCSTRING_MISSING_DESCRIPTION,
+            DOCSTRING_MISSING_DESCRIPTION,
             "filters docstring is missing the required description section",
         ),
         ("E%d91" % BASE_ID): (
             "Filter's (%s) docstring is missing the required filter type section",
-            FILTER_DOCSTRING_MISSING_TYPE,
+            DOCSTRING_MISSING_TYPE,
             "filters docstring is missing the required filter type section",
         ),
         ("E%d92" % BASE_ID): (
             "Filter's (%s) docstring is missing the required trigger section",
-            FILTER_DOCSTRING_MISSING_TRIGGER,
+            DOCSTRING_MISSING_TRIGGER,
             "filters docstring is missing the required trigger section",
         ),
     }
@@ -52,9 +52,9 @@ class FiltersDocstringFormatChecker(BaseChecker):
     options = ()
 
     @utils.only_required_for_messages(
-        FILTER_DOCSTRING_MISSING_DESCRIPTION,
-        FILTER_DOCSTRING_MISSING_TYPE,
-        FILTER_DOCSTRING_MISSING_TRIGGER,
+        DOCSTRING_MISSING_DESCRIPTION,
+        DOCSTRING_MISSING_TYPE,
+        DOCSTRING_MISSING_TRIGGER,
     )
     def visit_classdef(self, node):
         """Visit a class definition and check its docstring."""
@@ -94,11 +94,11 @@ class FiltersDocstringFormatChecker(BaseChecker):
         ```
         """
         required_sections = [
-            (r"Description:\s*.*\n", self.FILTER_DOCSTRING_MISSING_DESCRIPTION),
-            (r"Filter Type:\s*.*\n", self.FILTER_DOCSTRING_MISSING_TYPE),
+            (r"Description:\s*.*\n", self.DOCSTRING_MISSING_DESCRIPTION),
+            (r"Filter Type:\s*.*\n", self.DOCSTRING_MISSING_TYPE),
             (
                 r"Trigger:\s*(NA|-\s*Repository:\s*[^\n]+\s*-\s*Path:\s*[^\n]+\s*-\s*Function\s*or\s*Method:\s*[^\n]+)",
-                self.FILTER_DOCSTRING_MISSING_TRIGGER,
+                self.DOCSTRING_MISSING_TRIGGER,
             ),
         ]
         error_messages = []
