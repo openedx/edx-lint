@@ -33,19 +33,19 @@ class FiltersDocstringFormatChecker(BaseChecker):
 
     msgs = {
         ("E%d90" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required description section",
+            "Filter's (%s) docstring is missing the required description section or is badly formatted",
             DOCSTRING_MISSING_DESCRIPTION,
-            "filters docstring is missing the required description section",
+            "filters docstring is missing the required description section or is badly formatted",
         ),
         ("E%d91" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required filter type section",
+            "Filter's (%s) docstring is missing the required filter type section or is badly formatted",
             DOCSTRING_MISSING_TYPE,
-            "filters docstring is missing the required filter type section",
+            "filters docstring is missing the required filter type section or is badly formatted",
         ),
         ("E%d92" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required trigger section",
+            "Filter's (%s) docstring is missing the required trigger section or is badly formatted",
             DOCSTRING_MISSING_TRIGGER,
-            "filters docstring is missing the required trigger section",
+            "filters docstring is missing the required trigger section or is badly formatted",
         ),
     }
 
