@@ -8,9 +8,11 @@ A filter's docstring should have the following structure:
 3. Trigger: A line that starts with "Trigger:".
 """
 
-from pylint.checkers import BaseChecker, utils
 import re
-from ..common import BASE_ID
+
+from pylint.checkers import BaseChecker, utils
+
+from edx_lint.pylint.common import BASE_ID
 
 
 def register_checkers(linter):
