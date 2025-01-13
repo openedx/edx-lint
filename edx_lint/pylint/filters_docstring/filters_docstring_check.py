@@ -57,8 +57,17 @@ class FiltersDocstringFormatChecker(BaseChecker):
         DOCSTRING_MISSING_TRIGGER,
     )
     def visit_classdef(self, node):
-        """Visit a class definition and check its docstring."""
+        """
+        Visit a class definition and check its docstring.
+
+        If the class is a subclass of OpenEdxPublicFilter, check the format of its docstring. Skip the
+        OpenEdxPublicFilter class itself.
+
+        """
         if not node.is_subtype_of("openedx_filters.tooling.OpenEdxPublicFilter"):
+            return
+
+        if node.name == "OpenEdxPublicFilter":
             return
 
         docstring = node.doc_node.value if node.doc_node else ""
