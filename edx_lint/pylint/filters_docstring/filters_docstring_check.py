@@ -27,22 +27,22 @@ class FiltersDocstringFormatChecker(BaseChecker):
 
     name = "docstring-format-checker"
 
-    DOCSTRING_MISSING_DESCRIPTION = "filter-docstring-missing-description"
+    DOCSTRING_MISSING_PURPOSE = "filter-docstring-missing-purpose"
     DOCSTRING_MISSING_TYPE = "filter-docstring-missing-type"
     DOCSTRING_MISSING_TRIGGER = "filter-docstring-missing-trigger"
 
     msgs = {
-        ("E%d90" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required description section or is badly formatted",
-            DOCSTRING_MISSING_DESCRIPTION,
-            "filters docstring is missing the required description section or is badly formatted",
-        ),
         ("E%d91" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required filter type section or is badly formatted",
-            DOCSTRING_MISSING_TYPE,
-            "filters docstring is missing the required filter type section or is badly formatted",
+            "Filter's (%s) docstring is missing the required purpose section or is badly formatted",
+            DOCSTRING_MISSING_PURPOSE,
+            "filters docstring is missing the required purpose section or is badly formatted",
         ),
         ("E%d92" % BASE_ID): (
+            "Filter's (%s) docstring is missing the required type section or is badly formatted",
+            DOCSTRING_MISSING_TYPE,
+            "filters docstring is missing the required type section or is badly formatted",
+        ),
+        ("E%d93" % BASE_ID): (
             "Filter's (%s) docstring is missing the required trigger section or is badly formatted",
             DOCSTRING_MISSING_TRIGGER,
             "filters docstring is missing the required trigger section or is badly formatted",
@@ -52,7 +52,7 @@ class FiltersDocstringFormatChecker(BaseChecker):
     options = ()
 
     @utils.only_required_for_messages(
-        DOCSTRING_MISSING_DESCRIPTION,
+        DOCSTRING_MISSING_PURPOSE,
         DOCSTRING_MISSING_TYPE,
         DOCSTRING_MISSING_TRIGGER,
     )
@@ -103,7 +103,7 @@ class FiltersDocstringFormatChecker(BaseChecker):
         ```
         """
         required_sections = [
-            (r"Description:\s*.*\n", self.DOCSTRING_MISSING_DESCRIPTION),
+            (r"Purpose:\s*.*\n", self.DOCSTRING_MISSING_PURPOSE),
             (r"Filter Type:\s*.*\n", self.DOCSTRING_MISSING_TYPE),
             (
                 r"Trigger:\s*(NA|-\s*Repository:\s*[^\n]+\s*-\s*Path:\s*[^\n]+\s*-\s*Function\s*or\s*Method:\s*[^\n]+)",
