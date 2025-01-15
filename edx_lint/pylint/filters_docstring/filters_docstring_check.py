@@ -62,10 +62,7 @@ class FiltersDocstringFormatChecker(BaseChecker):
         OpenEdxPublicFilter class itself.
 
         """
-        if not node.is_subtype_of("openedx_filters.tooling.OpenEdxPublicFilter"):
-            return
-
-        if node.name == "OpenEdxPublicFilter":
+        if not node.is_subtype_of("openedx_filters.tooling.OpenEdxPublicFilter") or node.name == "OpenEdxPublicFilter":
             return
 
         docstring = node.doc_node.value if node.doc_node else ""
