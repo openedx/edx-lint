@@ -25,36 +25,34 @@ def register_checkers(linter):
 class FiltersDocstringFormatChecker(BaseChecker):
     """Pylint checker for the format of the docstrings of filters."""
 
-    name = "docstring-format-checker"
+    name = "filters-docstring-format"
 
-    DOCSTRING_MISSING_PURPOSE = "filter-docstring-missing-purpose"
-    DOCSTRING_MISSING_TYPE = "filter-docstring-missing-type"
-    DOCSTRING_MISSING_TRIGGER = "filter-docstring-missing-trigger"
+    DOCSTRING_MISSING_PURPOSE_OR_BADLY_FORMATTED = "filter-docstring-missing-purpose"
+    DOCSTRING_MISSING_OR_INCORRECT_TYPE = "filter-docstring-missing-or-incorrect-type"
+    DOCSTRING_MISSING_TRIGGER_OR_BADLY_FORMATTED = "filter-docstring-missing-trigger"
 
     msgs = {
         ("E%d91" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required purpose section or is badly formatted",
-            DOCSTRING_MISSING_PURPOSE,
-            "filters docstring is missing the required purpose section or is badly formatted",
-        ),
-        ("E%d92" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required type section or is badly formatted",
-            DOCSTRING_MISSING_TYPE,
-            "filters docstring is missing the required type section or is badly formatted",
+            "Filter's (%s) docstring is missing the required `Purpose` section or is badly formatted",
+            DOCSTRING_MISSING_PURPOSE_OR_BADLY_FORMATTED,
+            "filters docstring is missing the required `Purpose` section or is badly formatted",
         ),
         ("E%d93" % BASE_ID): (
-            "Filter's (%s) docstring is missing the required trigger section or is badly formatted",
-            DOCSTRING_MISSING_TRIGGER,
-            "filters docstring is missing the required trigger section or is badly formatted",
+            "Filter's (%s) docstring `Filter Type` section is missing or incorrect",
+            DOCSTRING_MISSING_OR_INCORRECT_TYPE,
+            "filters docstring `Filter Type` section is missing or incorrect",
+        ),
+        ("E%d94" % BASE_ID): (
+            "Filter's (%s) docstring is missing the required `Trigger` section or is badly formatted",
+            DOCSTRING_MISSING_TRIGGER_OR_BADLY_FORMATTED,
+            "filters docstring is missing the required `Trigger` section or is badly formatted",
         ),
     }
 
-    options = ()
-
     @utils.only_required_for_messages(
-        DOCSTRING_MISSING_PURPOSE,
-        DOCSTRING_MISSING_TYPE,
-        DOCSTRING_MISSING_TRIGGER,
+        DOCSTRING_MISSING_PURPOSE_OR_BADLY_FORMATTED,
+        DOCSTRING_MISSING_OR_INCORRECT_TYPE,
+        DOCSTRING_MISSING_TRIGGER_OR_BADLY_FORMATTED,
     )
     def visit_classdef(self, node):
         """
@@ -71,12 +69,12 @@ class FiltersDocstringFormatChecker(BaseChecker):
             return
 
         docstring = node.doc_node.value if node.doc_node else ""
-        if not (error_messages := self._check_docstring_format(docstring)):
+        if not (error_messages := self._check_docstring_format(node, docstring)):
             return
         for error_message in error_messages:
             self.add_message(error_message, node=node, args=(node.name,))
 
-    def _check_docstring_format(self, docstring):
+    def _check_docstring_format(self, node, docstring):
         """
         Check the format of the docstring for errors and return a list of error messages.
 
@@ -88,7 +86,7 @@ class FiltersDocstringFormatChecker(BaseChecker):
         For example:
 
         ```
-        Description:
+        Purpose:
         Filter used to modify the certificate rendering process.
 
         ... (more description)
@@ -102,16 +100,46 @@ class FiltersDocstringFormatChecker(BaseChecker):
             - Function or Method: render_html_view
         ```
         """
-        required_sections = [
-            (r"Purpose:\s*.*\n", self.DOCSTRING_MISSING_PURPOSE),
-            (r"Filter Type:\s*.*\n", self.DOCSTRING_MISSING_TYPE),
-            (
-                r"Trigger:\s*(NA|-\s*Repository:\s*[^\n]+\s*-\s*Path:\s*[^\n]+\s*-\s*Function\s*or\s*Method:\s*[^\n]+)",
-                self.DOCSTRING_MISSING_TRIGGER,
-            ),
-        ]
         error_messages = []
-        for pattern, error_message in required_sections:
-            if not re.search(pattern, docstring, re.MULTILINE):
-                error_messages.append(error_message)
+        if error_message := self._check_purpose_missing_or_badly_formatted(docstring):
+            error_messages.append(error_message)
+        if error_message := self._check_filter_type_missing_or_incorrect(node, docstring):
+            error_messages.append(error_message)
+        if error_message := self._check_trigger_missing_or_badly_formatted(docstring):
+            error_messages.append(error_message)
         return error_messages
+
+    def _check_purpose_missing_or_badly_formatted(self, docstring):
+        """
+        Check if the purpose is missing or badly formatted.
+
+        If the purpose is missing or badly formatted, return the error message. Otherwise, return.
+        """
+        if not re.search(r"Purpose:\s*.*\n", docstring):
+            return self.DOCSTRING_MISSING_PURPOSE_OR_BADLY_FORMATTED
+        return
+
+    def _check_filter_type_missing_or_incorrect(self, node, docstring):
+        """
+        Check if the filter type is missing or incorrect.
+
+        If the filter type is missing or incorrect, return the error message. Otherwise, return.
+        """
+        filter_type = node.locals["filter_type"][0].statement().value.value
+        if not re.search(r"Filter Type:\s*%s" % filter_type, docstring):
+            return self.DOCSTRING_MISSING_OR_INCORRECT_TYPE
+        return
+
+    def _check_trigger_missing_or_badly_formatted(self, docstring):
+        """
+        Check if the trigger is missing or badly formatted.
+
+        If the trigger is missing or badly formatted, return the error message. Otherwise, return.
+        """
+        if not re.search(
+            r"Trigger:\s*(NA|-\s*Repository:\s*[^\n]+\s*-\s*Path:\s*[^\n]+\s*-\s*Function\s*or\s*Method:\s*[^\n]+)",
+            docstring,
+            re.MULTILINE,
+        ):
+            return self.DOCSTRING_MISSING_TRIGGER_OR_BADLY_FORMATTED
+        return
