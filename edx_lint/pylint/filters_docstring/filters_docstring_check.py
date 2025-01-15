@@ -114,7 +114,7 @@ class FiltersDocstringFormatChecker(BaseChecker):
         """
         if not re.search(r"Purpose:\s*.*\n", docstring):
             return self.DOCSTRING_MISSING_PURPOSE_OR_BADLY_FORMATTED
-        return
+        return None
 
     def _check_filter_type_missing_or_incorrect(self, node, docstring):
         """
@@ -125,7 +125,7 @@ class FiltersDocstringFormatChecker(BaseChecker):
         filter_type = node.locals["filter_type"][0].statement().value.value
         if not re.search(r"Filter Type:\s*%s" % filter_type, docstring):
             return self.DOCSTRING_MISSING_OR_INCORRECT_TYPE
-        return
+        return None
 
     def _check_trigger_missing_or_badly_formatted(self, docstring):
         """
@@ -139,4 +139,4 @@ class FiltersDocstringFormatChecker(BaseChecker):
             re.MULTILINE,
         ):
             return self.DOCSTRING_MISSING_TRIGGER_OR_BADLY_FORMATTED
-        return
+        return None
