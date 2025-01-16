@@ -2,7 +2,7 @@
 Pylint plugin: checks that Open edX Events are properly annotated.
 """
 
-from astroid.nodes.node_classes import Const, Name
+from astroid.nodes.node_classes import Name
 from pylint.checkers import utils
 
 from edx_lint.pylint.annotations_check import AnnotationBaseChecker, check_all_messages
