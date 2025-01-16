@@ -108,8 +108,8 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
                 event_data = annotation["annotation_data"]
             elif annotation["annotation_token"] == ".. event_description:":
                 event_description = annotation["annotation_data"]
-            if event_type and event_data:
-                self.current_module_annotation_group_map[line_number] = (event_type, event_data,)
+            if event_type and event_data and event_name:
+                self.current_module_annotation_group_map[line_number] = (event_type, event_data, event_name,)
 
         if not event_type:
             self.add_message(
@@ -184,20 +184,21 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
 
         current_annotation_group = self.current_module_annotation_group_map[annotation_line_number]
         if not current_annotation_group:
-            # The annotation group with type and data for the line is empty, but should be caught by the annotation
-            # checks
+            # The annotation group with type or data or name for the line is empty, but should be caught by the
+            # annotation checks
             return False
 
-        current_event_type, current_event_data = current_annotation_group
+        event_type, event_data, event_name = current_annotation_group
         # All event definitions have two keyword arguments, the first is the event type and the second is the
-        # event data. For example:
-        # OpenEdxPublicSignal(
+        # event data. It also has a name associated with it. For example:
+        # MyEvent = OpenEdxPublicSignal(
         #     event_type="org.openedx.subdomain.action.emitted.v1",
         #     event_data={"my_data": MyEventData},
         # )
         node_event_type = node.keywords[0].value.value
         node_event_data = node.keywords[1].value.items[0][1].name
-        if node_event_type != current_event_type or node_event_data != current_event_data:
+        node_event_name = node.parent.targets[0].name
+        if node_event_type != event_type or node_event_data != event_data or node_event_name != event_name:
             return True
 
         return False
