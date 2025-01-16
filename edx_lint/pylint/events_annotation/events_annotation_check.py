@@ -30,40 +30,35 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
     NO_DATA_MESSAGE_ID = "event-no-data"
     NO_STATUS_MESSAGE_ID = "event-no-status"
     NO_DESCRIPTION_MESSAGE_ID = "event-empty-description"
-    MISSING_ANNOTATION = "event-missing-annotation"
+    MISSING_OR_INCORRECT_ANNOTATION = "missing-or-incorrect-annotation"
 
     msgs = {
         ("E%d80" % BASE_ID): (
-            "event annotation has no type",
+            "Event type must be present and be the first annotation",
             NO_TYPE_MESSAGE_ID,
-            "Events annotations type must be present and be the first annotation",
+            "event type must be present and be the first annotation",
         ),
         ("E%d81" % BASE_ID): (
-            "event annotation (%s) has no name",
+            "Event annotation (%s) has no name",
             NO_NAME_MESSAGE_ID,
-            "Events annotations name must be present",
+            "Event annotations must include a name",
         ),
         ("E%d82" % BASE_ID): (
-            "event annotation (%s) has no data argument",
+            "Event annotation (%s) has no data",
             NO_DATA_MESSAGE_ID,
-            "Events annotations must include data argument",
-        ),
-        ("E%d83" % BASE_ID): (
-            "event annotation (%s) has no status",
-            NO_STATUS_MESSAGE_ID,
-            "Events annotations must include the status of event",
+            "event annotations must include a data",
         ),
         ("E%d84" % BASE_ID): (
-            "event annotation (%s) does not have a description",
+            "Event annotation (%s) has no description",
             NO_DESCRIPTION_MESSAGE_ID,
             "Events annotations must include a short description",
         ),
         ("E%d85" % BASE_ID): (
-            "missing event annotation",
-            MISSING_ANNOTATION,
+            "Event annotation is missing or incorrect",
+            MISSING_OR_INCORRECT_ANNOTATION,
             (
                 "When an Open edX event object is created, a corresponding annotation must be present above in the"
-                " same module and with a matching name",
+                " same module and with a matching type",
             )
         ),
     }
@@ -72,8 +67,10 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.current_module_annotated_event_names = set()
+        self.current_module_annotated_event_types = []
+        self.current_module_event_data = []
         self.current_module_annotation_group_line_numbers = []
+        self.current_module_annotation_group_map = {}
 
     @check_all_messages(msgs)
     def visit_module(self, node):
@@ -83,8 +80,8 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
         self.check_module(node)
 
     def leave_module(self, _node):
-        self.current_module_annotated_event_names.clear()
         self.current_module_annotation_group_line_numbers.clear()
+        self.current_module_annotation_group_map.clear()
 
     def check_annotation_group(self, search, annotations, node):
         """
@@ -102,15 +99,17 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
             if line_number is None:
                 line_number = annotation["line_number"]
                 self.current_module_annotation_group_line_numbers.append(line_number)
+                self.current_module_annotation_group_map[line_number] = ()
             if annotation["annotation_token"] == ".. event_type:":
                 event_type = annotation["annotation_data"]
             elif annotation["annotation_token"] == ".. event_name:":
                 event_name = annotation["annotation_data"]
-                self.current_module_annotated_event_names.add(event_name)
             elif annotation["annotation_token"] == ".. event_data:":
                 event_data = annotation["annotation_data"]
             elif annotation["annotation_token"] == ".. event_description:":
                 event_description = annotation["annotation_data"]
+            if event_type and event_data:
+                self.current_module_annotation_group_map[line_number] = (event_type, event_data,)
 
         if not event_type:
             self.add_message(
@@ -143,20 +142,29 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
                 line=line_number,
             )
 
-    @utils.only_required_for_messages(MISSING_ANNOTATION)
+    @utils.only_required_for_messages(MISSING_OR_INCORRECT_ANNOTATION)
     def visit_call(self, node):
         """
         Check for missing annotations.
         """
-        if self.is_annotation_missing(node):
+        if self._is_annotation_missing_or_incorrect(node):
             self.add_message(
-                self.MISSING_ANNOTATION,
+                self.MISSING_OR_INCORRECT_ANNOTATION,
                 node=node,
             )
 
-    def is_annotation_missing(self, node):
+    def _is_annotation_missing_or_incorrect(self, node):
         """
-        Check whether the node corresponds to a toggle instance creation. if yes, check that it is annotated.
+        Check if an annotation is missing or incorrect for an event.
+
+        An annotation is considered missing when:
+        - The annotation is not present above the event object.
+
+        An annotation is considered incorrect when:
+        - The annotation is present above the event object but the type of the annotation does
+        not match the type of the event object.
+        - The annotation is present above the event object but the data of the annotation does
+        not match the data of the event object.
         """
         if (
             not isinstance(node.func, Name)
@@ -172,11 +180,24 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
         if annotation_line_number > node.tolineno:
             # The next annotation is located after the current node
             return True
-        self.current_module_annotation_group_line_numbers.pop(0)
+        annotation_line_number = self.current_module_annotation_group_line_numbers.pop(0)
 
-        # Check literal event name arguments
-        if node.args and isinstance(node.args[0], Const) and isinstance(node.args[0].value, str):
-            event_name = node.args[0].value
-            if event_name not in self.current_module_annotated_event_names:
-                return True
+        current_annotation_group = self.current_module_annotation_group_map[annotation_line_number]
+        if not current_annotation_group:
+            # The annotation group with type and data for the line is empty, but should be caught by the annotation
+            # checks
+            return False
+
+        current_event_type, current_event_data = current_annotation_group
+        # All event definitions have two keyword arguments, the first is the event type and the second is the
+        # event data. For example:
+        # OpenEdxPublicSignal(
+        #     event_type="org.openedx.subdomain.action.emitted.v1",
+        #     event_data={"my_data": MyEventData},
+        # )
+        node_event_type = node.keywords[0].value.value
+        node_event_data = node.keywords[1].value.items[0][1].name
+        if node_event_type != current_event_type or node_event_data != current_event_data:
+            return True
+
         return False
