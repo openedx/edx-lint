@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.5.0 - 2025-01-22
+~~~~~~~~~~~~~~~~~~
+
+* Add inline code annotation linter for Open edX Events.
+
 5.4.1 - 2024-10-28
 ~~~~~~~~~~~~~~~~~~
 
