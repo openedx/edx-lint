@@ -122,7 +122,11 @@ class FiltersDocstringFormatChecker(BaseChecker):
 
         If the filter type is missing or incorrect, return the error message. Otherwise, return.
         """
-        filter_type = node.locals["filter_type"][0].statement().value.value
+        filter_type = node.locals.get("filter_type")
+        if not filter_type:
+            return self.DOCSTRING_MISSING_OR_INCORRECT_TYPE
+
+        filter_type = filter_type[0].statement().value.value if filter_type else ""
         if not re.search(r"Filter Type:\s*%s" % filter_type, docstring):
             return self.DOCSTRING_MISSING_OR_INCORRECT_TYPE
         return None
