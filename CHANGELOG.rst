@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.6.0 - 2025-01-24
+~~~~~~~~~~~~~~~~~~
+
+* Add docstring linter for Open edX filters.
+
 5.5.0 - 2025-01-22
 ~~~~~~~~~~~~~~~~~~
 
