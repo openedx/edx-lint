@@ -1,4 +1,4 @@
-module.exports = {
+const Configuration = {
   extends: ['@commitlint/config-conventional'],
 
   helpUrl: 'https://open-edx-proposals.readthedocs.io/en/latest/oep-0051-bp-conventional-commits.html',
@@ -29,3 +29,5 @@ module.exports = {
     // https://github.com/conventional-changelog/commitlint/blob/master/%40commitlint/is-ignored/src/defaults.ts
   ],
 };
+
+export default Configuration;
