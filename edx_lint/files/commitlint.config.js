@@ -9,6 +9,9 @@ const Configuration = {
         'revert', 'feat', 'fix', 'perf', 'docs', 'test', 'build', 'refactor', 'style', 'chore', 'temp',
       ]],
 
+    // Increase the header max length to account for PR numbers on squash merges
+    'header-max-length': [2, 'always', 110], 
+
     // Default rules we want to suppress:
     'body-leading-blank': [0, "always"],
     'body-max-line-length': [0, "always"],
