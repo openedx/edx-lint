@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.12']
-        toxenv: [py312, pylint]
+        python-version: ['3.11' ,'3.12']
+        toxenv: [py311, py312, pylint, django42, django52]
 
     steps:
     - uses: actions/checkout@v4
