@@ -4,6 +4,4 @@ code-annotations
 click
 click-log
 pylint
-pylint-django
-pylint-celery
 six
