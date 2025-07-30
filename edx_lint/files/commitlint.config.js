@@ -1,4 +1,4 @@
-module.exports = {
+const Configuration = {
   extends: ['@commitlint/config-conventional'],
 
   helpUrl: 'https://open-edx-proposals.readthedocs.io/en/latest/oep-0051-bp-conventional-commits.html',
@@ -8,6 +8,9 @@ module.exports = {
       [2, 'always', [
         'revert', 'feat', 'fix', 'perf', 'docs', 'test', 'build', 'refactor', 'style', 'chore', 'temp',
       ]],
+
+    // Increase the header max length to account for PR numbers on squash merges
+    'header-max-length': [2, 'always', 110], 
 
     // Default rules we want to suppress:
     'body-leading-blank': [0, "always"],
@@ -29,3 +32,5 @@ module.exports = {
     // https://github.com/conventional-changelog/commitlint/blob/master/%40commitlint/is-ignored/src/defaults.ts
   ],
 };
+
+export default Configuration;

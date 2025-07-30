@@ -13,6 +13,16 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+5.6.0 - 2025-01-24
+~~~~~~~~~~~~~~~~~~
+
+* Add docstring linter for Open edX filters.
+
+5.5.0 - 2025-01-22
+~~~~~~~~~~~~~~~~~~
+
+* Add inline code annotation linter for Open edX Events.
+
 5.4.1 - 2024-10-28
 ~~~~~~~~~~~~~~~~~~
 
@@ -108,7 +118,7 @@ Unreleased
 ~~~~~~~~~~~~~~~~~~~~
 
 * BREAKING CHANGE: Add linter for invalid imports from Django Waffle (`import waffle` and `from waffle import ...`). Instead, developers should import toggle objects from `edx_toggles.toggles`.
-* BREAKING CHANGE: Add linter for missing feature toggle annotations ("toggle-missing-annotation"). Check `this howto <https://edx.readthedocs.io/projects/edx-toggles/en/latest/how_to/documenting_new_feature_toggles.html>`__ for more information on writing toggle annotations.
+* BREAKING CHANGE: Add linter for missing feature toggle annotations ("toggle-missing-annotation"). Check `this howto <https://docs.openedx.org/projects/edx-toggles/en/latest/how_to/documenting_new_feature_toggles.html>`__ for more information on writing toggle annotations.
 * Fix duplicate annotation errors.
 
 [4.1.1] - 2021-03-16
