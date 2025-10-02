@@ -13,7 +13,7 @@ A collection of code quality tools:
 
 import os
 import re
-import setuptools  # pylint: disable=E0401
+import setuptools
 
 
 def load_requirements(*requirements_paths):

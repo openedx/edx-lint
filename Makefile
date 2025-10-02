@@ -40,3 +40,9 @@ compile-requirements: ## compile the requirements/*.txt files with the latest pa
 upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	pip install -qr requirements/pip-tools.txt
 	$(MAKE) compile-requirements COMPILE_OPTS="--upgrade"
+
+	# Delete django, drf pins from test.txt so that tox can control
+	# Django version.
+	sed -i.tmp '/^[dD]jango==/d' requirements/test.txt
+	sed -i.tmp '/^djangorestframework==/d' requirements/test.txt
+	rm requirements/test.txt.tmp
