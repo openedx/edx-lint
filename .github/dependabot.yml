@@ -5,5 +5,5 @@ updates:
     directory: "/"
     schedule:
         interval: "weekly"
-    reviewers:
-      - "openedx/arbi-bom"
+#    reviewers:
+#      - "openedx/xxx"
