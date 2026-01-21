@@ -21,16 +21,14 @@ clean: ## remove all the unneeded artifacts
 	-rm -rf .coverage .coverage.* htmlcov
 
 requirements: ## install the developer requirements
-	pip install -qr requirements/pip.txt
+	pip install -qr requirements/pip-tools.txt
 	pip install -e .
 	pip install -r requirements/dev.txt
 
 compile-requirements: export CUSTOM_COMPILE_COMMAND=make upgrade
 compile-requirements: ## compile the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	# Make sure to compile files after any other files they include!
-	pip-compile -v ${COMPILE_OPTS} --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
-	pip-compile -v ${COMPILE_OPTS} -o requirements/pip-tools.txt requirements/pip-tools.in
-	pip install -qr requirements/pip.txt
+	pip-compile -v ${COMPILE_OPTS} --allow-unsafe --rebuild -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip install -qr requirements/pip-tools.txt
 	pip-compile -v ${COMPILE_OPTS} -o requirements/base.txt requirements/base.in
 	pip-compile -v ${COMPILE_OPTS} -o requirements/dev.txt requirements/dev.in
