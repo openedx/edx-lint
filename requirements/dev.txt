@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==4.0.3
+astroid==4.0.4
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -26,11 +26,11 @@ dill==0.4.1
     #   pylint
 distlib==0.4.0
     # via virtualenv
-filelock==3.20.3
+filelock==3.24.3
     # via
     #   tox
     #   virtualenv
-isort==7.0.0
+isort==8.0.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -46,11 +46,11 @@ mccabe==0.7.0
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==25.0
+packaging==26.0
     # via
     #   pyproject-api
     #   tox
-platformdirs==4.5.1
+platformdirs==4.9.2
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -59,7 +59,7 @@ pluggy==1.6.0
     # via tox
 py==1.11.0
     # via tox
-pylint==4.0.4
+pylint==4.0.5
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -86,7 +86,7 @@ six==1.17.0
     # via
     #   -r requirements/base.txt
     #   tox
-stevedore==5.6.0
+stevedore==5.7.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -104,5 +104,5 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.in
-virtualenv==20.36.1
+virtualenv==20.39.0
     # via tox
