@@ -4,9 +4,9 @@
 #
 #    make upgrade
 #
-asgiref==3.11.0
+asgiref==3.11.1
     # via django
-astroid==4.0.3
+astroid==4.0.4
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -22,7 +22,7 @@ code-annotations==2.3.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.txt
-coverage==7.13.1
+coverage==7.13.4
     # via -r requirements/test.in
 dill==0.4.1
     # via
@@ -35,14 +35,15 @@ distlib==0.4.0
     # via
     #   -c edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
-filelock==3.20.3
+filelock==3.25.0
     # via
     #   -r requirements/dev.txt
+    #   python-discovery
     #   tox
     #   virtualenv
 iniconfig==2.3.0
     # via pytest
-isort==7.0.0
+isort==8.0.1
     # via
     #   -r requirements/dev.txt
     #   pylint
@@ -58,15 +59,16 @@ mccabe==0.7.0
     # via
     #   -r requirements/dev.txt
     #   pylint
-packaging==25.0
+packaging==26.0
     # via
     #   -r requirements/dev.txt
     #   pytest
     #   tox
-platformdirs==4.5.1
+platformdirs==4.9.2
     # via
     #   -r requirements/dev.txt
     #   pylint
+    #   python-discovery
     #   virtualenv
 pluggy==1.6.0
     # via
@@ -79,7 +81,7 @@ py==1.11.0
     #   tox
 pygments==2.19.2
     # via pytest
-pylint==4.0.4
+pylint==4.0.5
     # via
     #   -r requirements/dev.txt
     #   pylint-celery
@@ -96,6 +98,10 @@ pylint-plugin-utils==0.9.0
     #   pylint-django
 pytest==9.0.2
     # via -r requirements/test.in
+python-discovery==1.1.0
+    # via
+    #   -r requirements/dev.txt
+    #   virtualenv
 python-slugify==8.0.4
     # via
     #   -r requirements/dev.txt
@@ -110,7 +116,7 @@ six==1.17.0
     #   tox
 sqlparse==0.5.5
     # via django
-stevedore==5.6.0
+stevedore==5.7.0
     # via
     #   -r requirements/dev.txt
     #   code-annotations
@@ -128,7 +134,7 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.txt
-virtualenv==20.36.1
+virtualenv==21.1.0
     # via
     #   -r requirements/dev.txt
     #   tox
