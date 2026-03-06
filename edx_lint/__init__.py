@@ -2,4 +2,4 @@
 edx_lint standardizes lint configuration and additional plugins for use in
 Open edX code.
 """
-__version__ = "5.7.0"
+__version__ = "6.0.0"
