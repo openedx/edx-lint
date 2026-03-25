@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ['3.12']
-        toxenv: [pylint, django42, django52]
+        toxenv: [pylint, django52]
 
     steps:
     - uses: actions/checkout@v4
