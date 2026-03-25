@@ -13,6 +13,8 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+* Dropped Django 4.2 support; bumped code-annotations to 3.0.0
+
 5.7.0 - 2025-04-21
 ~~~~~~~~~~~~~~~~~~
 
