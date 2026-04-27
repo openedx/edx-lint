@@ -1,6 +1,7 @@
 """ Tests for the command line executable. """
 
 import contextlib
+import importlib.resources
 import io
 import os
 import shutil
@@ -8,7 +9,10 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+import tomlkit
+
 from edx_lint.cmd import main
+from edx_lint.cmd.write_uv_constraints import _parse_constraints
 
 
 PYLINTRC = "pylintrc"
@@ -225,3 +229,100 @@ class CheckCommandTest(CommandTest):
         with capture_output() as output:
             self.assertEqual(2, self.call_command(["check", "xyzzy.foo"]))
         self.assertEqual(output.getvalue(), "xyzzy.foo doesn't exist\n")
+
+
+PYPROJECT_MINIMAL = '[project]\nname = "test"\n'
+# Read the actual bundled constraints so tests stay in sync with the file automatically.
+_GLOBAL_CONSTRAINTS_TEXT = (
+    importlib.resources.files("edx_lint")
+    .joinpath("files/common_constraints.txt")
+    .read_text(encoding="utf-8")
+)
+GLOBAL_CONSTRAINTS, _ = _parse_constraints(_GLOBAL_CONSTRAINTS_TEXT)
+# Use the first entry as a representative value for presence checks.
+GLOBAL_CONSTRAINT = GLOBAL_CONSTRAINTS[0]
+
+
+class WriteUvConstraintsCommandTest(CommandTest):
+    """Tests for the write_uv_constraints command."""
+
+    def _make_pyproject(self, path="pyproject.toml", content=PYPROJECT_MINIMAL):
+        with open(path, "w") as f:
+            f.write(content)
+
+    def test_no_args_updates_default(self):
+        self._make_pyproject()
+        self.assertEqual(0, self.call_command(["write_uv_constraints"]))
+        self.assert_file("pyproject.toml", contains=GLOBAL_CONSTRAINT)
+
+    def test_explicit_pyproject_path(self):
+        self._make_pyproject("other.toml")
+        self.assertEqual(0, self.call_command(["write_uv_constraints", "other.toml"]))
+        self.assert_file("other.toml", contains=GLOBAL_CONSTRAINT)
+
+    def test_local_merges_global_and_local(self):
+        self._make_pyproject(
+            content=PYPROJECT_MINIMAL + '[tool.edx_lint]\nuv_constraints = ["mypackage<2.0"]\n'
+        )
+        assert self.call_command(["write_uv_constraints"]) == 0
+        written = self._read_constraint_dependencies()
+        assert GLOBAL_CONSTRAINT in written
+        assert "mypackage<2.0" in written
+
+    def test_idempotent(self):
+        self._make_pyproject()
+        self.assertEqual(0, self.call_command(["write_uv_constraints"]))
+        with open("pyproject.toml") as f:
+            first = f.read()
+        self.assertEqual(0, self.call_command(["write_uv_constraints"]))
+        with open("pyproject.toml") as f:
+            second = f.read()
+        self.assertEqual(first, second)
+
+    def test_preserves_existing_content(self):
+        self._make_pyproject(
+            content='[project]\nname = "myproject"\nversion = "1.0"\n\n[tool.ruff]\nline-length = 88\n'
+        )
+        self.assertEqual(0, self.call_command(["write_uv_constraints"]))
+        self.assert_file("pyproject.toml", contains='name = "myproject"')
+        self.assert_file("pyproject.toml", contains="line-length = 88")
+        self.assert_file("pyproject.toml", contains=GLOBAL_CONSTRAINT)
+
+    def test_missing_pyproject_returns_2(self):
+        # No pyproject.toml created in temp dir
+        with capture_output():
+            self.assertEqual(2, self.call_command(["write_uv_constraints"]))
+
+    def test_unknown_args_returns_nonzero(self):
+        self._make_pyproject()
+        ret = self.call_command(["write_uv_constraints", "--bogus-flag"])
+        self.assertNotEqual(0, ret)
+
+    def _read_constraint_dependencies(self, path="pyproject.toml"):
+        """Read [tool.uv].constraint-dependencies from a pyproject.toml."""
+        with open(path) as f:
+            data = tomlkit.load(f)
+        return list(data["tool"]["uv"]["constraint-dependencies"])
+
+    def test_local_overrides_global_for_same_package(self):
+        # Extract the package name from the first global constraint and write a
+        # stricter local version.  The local pin should win.
+        first_global = GLOBAL_CONSTRAINTS[0]
+        pkg = first_global.split("<")[0].split(">")[0].split("=")[0].split("!")[0].strip()
+        local_pin = f"{pkg}==0.0.1"
+        self._make_pyproject(
+            content=PYPROJECT_MINIMAL + f'[tool.edx_lint]\nuv_constraints = ["{local_pin}"]\n'
+        )
+        assert self.call_command(["write_uv_constraints"]) == 0
+        written = self._read_constraint_dependencies()
+        assert local_pin in written
+        assert first_global not in written
+
+    def test_deduplicates_exact_duplicates(self):
+        # Exact duplicate in [tool.edx_lint].uv_constraints should appear only once.
+        self._make_pyproject(
+            content=PYPROJECT_MINIMAL + f'[tool.edx_lint]\nuv_constraints = ["{GLOBAL_CONSTRAINTS[0]}"]\n'
+        )
+        assert self.call_command(["write_uv_constraints"]) == 0
+        written = self._read_constraint_dependencies()
+        assert written.count(GLOBAL_CONSTRAINTS[0]) == 1
