@@ -8,14 +8,14 @@ astroid==4.0.4
     # via
     #   pylint
     #   pylint-celery
-click==8.3.1
+click==8.3.3
     # via
     #   -r requirements/base.in
     #   click-log
     #   code-annotations
 click-log==0.4.0
     # via -r requirements/base.in
-code-annotations==2.3.2
+code-annotations==3.0.0
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
@@ -29,7 +29,7 @@ markupsafe==3.0.3
     # via jinja2
 mccabe==0.7.0
     # via pylint
-platformdirs==4.9.4
+platformdirs==4.9.6
     # via pylint
 pylint==4.0.5
     # via
