@@ -47,7 +47,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==26.1
+packaging==26.2
     # via
     #   pyproject-api
     #   tox
@@ -110,5 +110,5 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.in
-virtualenv==21.2.4
+virtualenv==21.3.0
     # via tox
