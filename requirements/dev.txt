@@ -9,7 +9,7 @@ astroid==4.0.4
     #   -r requirements/base.txt
     #   pylint
     #   pylint-celery
-click==8.3.3
+click==8.4.0
     # via
     #   -r requirements/base.txt
     #   click-log
@@ -47,7 +47,7 @@ mccabe==0.7.0
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==26.1
+packaging==26.2
     # via
     #   pyproject-api
     #   tox
@@ -76,7 +76,7 @@ pylint-plugin-utils==0.9.0
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-python-discovery==1.2.2
+python-discovery==1.3.1
     # via
     #   tox
     #   virtualenv
@@ -100,7 +100,7 @@ text-unidecode==1.3
     # via
     #   -r requirements/base.txt
     #   python-slugify
-tomlkit==0.14.0
+tomlkit==0.15.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -110,5 +110,5 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.in
-virtualenv==21.2.4
+virtualenv==21.3.3
     # via tox
