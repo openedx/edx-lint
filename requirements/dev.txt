@@ -9,7 +9,7 @@ astroid==4.0.4
     #   -r requirements/base.txt
     #   pylint
     #   pylint-celery
-click==8.3.3
+click==8.4.1
     # via
     #   -r requirements/base.txt
     #   click-log
@@ -24,9 +24,9 @@ dill==0.4.1
     # via
     #   -r requirements/base.txt
     #   pylint
-distlib==0.4.0
+distlib==0.4.3
     # via virtualenv
-filelock==3.29.0
+filelock==3.29.4
     # via
     #   python-discovery
     #   tox
@@ -47,11 +47,11 @@ mccabe==0.7.0
     # via
     #   -r requirements/base.txt
     #   pylint
-packaging==26.1
+packaging==26.2
     # via
     #   pyproject-api
     #   tox
-platformdirs==4.9.6
+platformdirs==4.10.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -61,7 +61,7 @@ pluggy==1.6.0
     # via tox
 py==1.11.0
     # via tox
-pylint==4.0.5
+pylint==4.0.6
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -76,7 +76,7 @@ pylint-plugin-utils==0.9.0
     #   -r requirements/base.txt
     #   pylint-celery
     #   pylint-django
-python-discovery==1.2.2
+python-discovery==1.4.2
     # via
     #   tox
     #   virtualenv
@@ -92,7 +92,7 @@ six==1.17.0
     # via
     #   -r requirements/base.txt
     #   tox
-stevedore==5.7.0
+stevedore==5.8.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -100,7 +100,7 @@ text-unidecode==1.3
     # via
     #   -r requirements/base.txt
     #   python-slugify
-tomlkit==0.14.0
+tomlkit==0.15.0
     # via
     #   -r requirements/base.txt
     #   pylint
@@ -110,5 +110,5 @@ tox==3.28.0
     #   tox-battery
 tox-battery==0.6.2
     # via -r requirements/dev.in
-virtualenv==21.2.4
+virtualenv==21.5.1
     # via tox
