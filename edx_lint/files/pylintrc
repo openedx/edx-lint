@@ -224,6 +224,10 @@ enable=
     unrecognized-inline-option,
     useless-suppression,
 
+    # PII safety checks (edx-lint built-in)
+    pii-missing-squelch,
+    pii-invalid-no-pii-annotation,
+
 # Disable the message, report, category or checker with the given id(s). You
 # can either give multiple identifiers separated by comma (,) or put this
 # option multiple times (only on the command line, not in the configuration
@@ -263,6 +267,7 @@ disable=
     # These are repo-specific
     feature-toggle-needs-doc,
     illegal-waffle-usage,
+    pii-invalid-no-pii-annotation,
 
     # We want to allow developers to use f-strings for readability
     logging-fstring-interpolation,
@@ -510,3 +515,23 @@ int-import-graph=
 # Exceptions that will emit a warning when being caught. Defaults to
 # "builtins.Exception"
 overgeneral-exceptions=builtins.Exception
+
+
+[PII]
+
+# Comma-separated list of identifier substrings treated as likely PII.
+# Substring matching is used, so 'email' will match 'user_email_address'.
+pii-terms=email,secondary_email,username,password,name,full_name,first_name,last_name,phone,phone_number,birth_date,ip,ip_address,location,address,mailing_address,gender,sex,bio,biography,profile_image,image,video,token,secret,retired_username
+
+# Functions that safely transform or redact PII. PII passed through these
+# functions will not trigger warnings.
+pii-safe-functions=redact,redact_pii,mask,mask_pii,hash_pii,obfuscate,obfuscate_pii
+
+# Exact identifiers that superficially match PII terms but are approved
+# as non-sensitive (surrogate keys, anonymous IDs, etc.).
+pii-safe-key-patterns=user_id,course_id,thread_id,comment_id,block_id,usage_id,usage_key,anonymous_user_id
+
+# Name of the feature toggle that guards PII-inclusive log/print/exception
+# output. Any PII sink must be inside an if-block testing this flag.
+# See: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/monitoring/README.rst
+pii-squelch-flag=SQUELCH_PII_IN_LOGS
