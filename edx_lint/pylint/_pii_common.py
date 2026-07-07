@@ -180,9 +180,12 @@ class PiiConfigMixin:
         # Pattern 4: if settings.FEATURES['SQUELCH_PII_IN_LOGS']:
         if isinstance(test, astroid_nodes.Subscript):
             slc = test.slice
-            # astroid wraps index in an Index node in older versions
-            if hasattr(astroid_nodes, "Index") and isinstance(slc, astroid_nodes.Index):
-                slc = slc.value  # type: ignore[attr-defined]
+            # astroid < 2.x wrapped subscript slices in an Index node; later
+            # versions removed it.  Use getattr so pylint's static analysis
+            # (no-member / E1101) does not flag the reference on newer astroid.
+            _IndexNode = getattr(astroid_nodes, "Index", None)
+            if _IndexNode is not None and isinstance(slc, _IndexNode):  # pylint: disable=isinstance-second-argument-not-valid-type
+                slc = slc.value
             if isinstance(slc, astroid_nodes.Const) and slc.value == flag:
                 return True
 

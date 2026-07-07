@@ -194,8 +194,12 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         super().__init__(*args, **kwargs)
         # Cached per-module source lines for comment-style annotation lookup.
         self._source_lines = []
-        # Config caches — reset per module, populated lazily on first use.
-        self._init_pii_caches()
+        # Config caches — explicitly initialised here so pylint knows they
+        # exist; reset per-module via _init_pii_caches() in visit_module.
+        self._pii_terms_cache = None
+        self._safe_functions_cache = None
+        self._safe_keys_cache = None
+        self._django_model_bases_cache = None
         # Per-module mapping of class name → ClassDef node, used by
         # _raw_ast_is_model_subclass to resolve same-module ancestors.
         self._module_classdefs = {}
@@ -210,10 +214,7 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
     def visit_module(self, node):
         """Cache source lines and reset all per-module state."""
         # Reset config caches so options are re-read for each module.
-        self._pii_terms_cache = None
-        self._safe_functions_cache = None
-        self._safe_keys_cache = None
-        self._django_model_bases_cache = None
+        self._init_pii_caches()
         self._module_classdefs = {}
         try:
             module_bytes = node.stream().read()

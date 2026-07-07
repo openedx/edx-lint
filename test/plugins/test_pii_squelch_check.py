@@ -19,8 +19,6 @@ Message format produced by run_pylint:
 e.g.  "A:pii-missing-squelch:Log call exposes PII term 'email' without ..."
 """
 
-import pytest
-
 from .pylint_test import run_pylint
 
 
