@@ -1,34 +1,6 @@
 """
-PII Annotation Checker for edx-lint.
-
-Detects Django model classes annotated with ``.. no_pii:`` (in their docstring
-or in a comment immediately above the class) that still contain likely-PII
-fields or instance attributes.
-
-Message ID: ``pii-invalid-no-pii-annotation`` (W7633)
-Checker name: ``pii-annotation-checker``
-
-Only Django model classes that are annotation-eligible are checked — i.e.
-classes that are a non-abstract, non-proxy subclass of
-``django.db.models.Model``.  This exactly mirrors the set of models
-considered by ``code_annotations django_find_annotations`` (the
-``DjangoSearch.requires_annotations()`` predicate).
-
-Usage
------
-Enable or disable on the command line::
-
-    pylint --enable=pii-invalid-no-pii-annotation  src/
-    pylint --disable=pii-annotation-checker        src/   # disables whole checker
-
-Inline suppression::
-
-    class MyModel(Model):  # pylint: disable=pii-invalid-no-pii-annotation
-        '''.. no_pii:'''
-        email = None  # genuinely safe in this context
-
-Reference: OEP-30 — PII Markup and Auditing
-https://open-edx-proposals.readthedocs.io/en/latest/best-practices/oep-0030-bp-personally-identifiable-information.html
+PII Annotation Checker — flags Django models annotated ``.. no_pii:`` that
+still contain likely-PII fields or instance attributes (W7633).
 """
 
 from pylint.checkers import BaseChecker, utils
@@ -44,25 +16,10 @@ def register_checkers(linter):
 
 @check_visitors
 class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
-    """Checks for stale ``.. no_pii:`` annotations on Django model classes.
+    """Fires ``pii-invalid-no-pii-annotation`` (W7633) when a concrete Django model
 
-    Fires ``pii-invalid-no-pii-annotation`` (W7633) when a concrete
-    (non-abstract, non-proxy) Django model class is annotated with
-    ``.. no_pii:`` yet still contains fields or instance attributes whose
-    names match the configured PII terms.
-
-    Annotation forms recognised:
-
-    * Docstring containing ``.. no_pii:`` (primary — edx-platform convention).
-    * Comment ``# .. no_pii:`` appearing within ``_ANNOTATION_LOOKAHEAD`` lines
-      above the ``class`` keyword (fallback).
-
-    This checker does **not** define its own options.  All PII-related options
-    (``pii-terms``, ``pii-safe-key-patterns``, ``pii-django-model-bases``, etc.)
-    are defined by :class:`~edx_lint.pylint.pii_squelch_check.PiiMissingSquelchChecker`
-    and are read from ``linter.config`` via :class:`~._pii_common.PiiConfigMixin`
-    with safe defaults, so this checker is independently usable even if the
-    squelch checker is not loaded.
+    is annotated ``.. no_pii:`` but still has fields matching the PII terms list.
+    Abstract and proxy models are skipped, mirroring django_find_annotations scope.
     """
 
     name = "pii-annotation-checker"

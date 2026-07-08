@@ -1,47 +1,6 @@
 """
-PII Missing Squelch Checker for edx-lint.
-
-Detects logging calls, ``print``/stdout/stderr writes, and raised exceptions
-that contain likely-PII variable references but are **not** wrapped by a
-``SQUELCH_PII_IN_LOGS`` guard.
-
-All three message IDs are grouped under the single checker name
-``pii-missing-squelch``.  This means:
-
-* Enabling/disabling the checker on the command line controls all three
-  messages at once::
-
-      pylint --enable=pii-missing-squelch  src/
-      pylint --disable=pii-missing-squelch src/
-
-* Individual messages can still be targeted (or suppressed inline) using
-  their own symbolic IDs::
-
-      # pylint: disable=pii-missing-squelch
-      log.info("email=%s", email)
-
-Message IDs
------------
-
-====================  ======  ================================================================
-Symbol                Code    Description
-====================  ======  ================================================================
-pii-missing-squelch   W7630   Log, print, or exception exposes PII without a SQUELCH guard
-====================  ======  ================================================================
-
-A "guard" is any ``if`` statement (at any ancestor level) whose test
-references the configured squelch flag in one of the recognised patterns::
-
-    settings.FEATURES['SQUELCH_PII_IN_LOGS']
-    settings.FEATURES.get('SQUELCH_PII_IN_LOGS')
-    settings.SQUELCH_PII_IN_LOGS
-    SQUELCH_PII_IN_LOGS                         (bare name)
-    not SQUELCH_PII_IN_LOGS                     (negated)
-    SQUELCH_PII_IN_LOGS.is_enabled()
-    SQUELCH_PII_IN_LOGS.is_active()
-
-Reference: OEP-30 — PII Markup and Auditing
-https://open-edx-proposals.readthedocs.io/en/latest/best-practices/oep-0030-bp-personally-identifiable-information.html
+PII Missing Squelch Checker — flags log/print/exception calls inside Django
+model methods that expose PII without a SQUELCH_PII_IN_LOGS guard (W7630).
 """
 
 from astroid import nodes as astroid_nodes
@@ -58,22 +17,10 @@ def register_checkers(linter):
 
 @check_visitors
 class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
-    """Checks for unsafe PII exposure in logs, print statements, and raised exceptions.
+    """Flags unguarded PII in log/print/exception calls inside Django model methods.
 
-    A single message ``pii-missing-squelch`` is emitted for all three sink
-    types (logging, print/stdout/stderr, raised exception), so viewers see
-    only ``pii-missing-squelch`` in pylint output and never need to know the
-    three underlying patterns — they simply add a ``SQUELCH_PII_IN_LOGS``
-    guard to the flagged line.
-
-    Enable/disable the entire family with one command::
-
-        pylint --enable=pii-missing-squelch  src/
-        pylint --disable=pii-missing-squelch src/
-
-    Squelch checks are **only enforced** inside non-abstract, non-proxy Django
-    model classes that are *not* annotated with ``.. no_pii:``.  Standalone
-    functions and ``.. no_pii:`` models are completely exempt.
+    Fires ``pii-missing-squelch`` (W7630). Skips .. no_pii: models, abstract/proxy
+    models, standalone functions, and any call wrapped in a SQUELCH_PII_IN_LOGS guard.
     """
 
     name = "pii-missing-squelch"
