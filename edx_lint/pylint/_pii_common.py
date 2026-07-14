@@ -1,23 +1,9 @@
 """
 Shared constants and helpers for the PII pylint checkers.
 
-This module is an *internal* library — it is not a checker and has no
-``register_checkers`` entry point.  It is imported by:
-
-* :mod:`edx_lint.pylint.pii_squelch_check`  — the missing-squelch checker
-* :mod:`edx_lint.pylint.pii_annotation_check` — the annotation checker
-
-Contents
---------
-* Module-level constants (``_LOG_METHODS``, regexes, look-ahead distance,
-  default squelch-flag name).
-* :class:`PiiConfigMixin` — a mixin that provides cached access to pylint
-  config options and all shared helper methods (PII-name matching,
-  SQUELCH guard detection, Django model eligibility, annotation detection,
-  field scanning).
-
-Both concrete checker classes inherit from this mixin so that every helper
-is implemented exactly once.
+Imported by pii_squelch_check and pii_annotation_check; not a checker itself.
+Contains PiiConfigMixin, which provides cached config access and all shared
+PII-detection helpers used by both checkers.
 """
 
 import re
@@ -87,19 +73,30 @@ class PiiConfigMixin:
         cfg = self.linter.config
 
         raw_terms = getattr(cfg, "pii_terms", [
+            # email_address (OEP-0030)
             "email", "secondary_email",
+            # username (OEP-0030)
             "username", "retired_username",
+            # password (OEP-0030)
             "password",
-            "name", "full_name", "first_name", "last_name",
+            # name (OEP-0030) -- explicit compound forms only; bare 'name' excluded
+            "full_name", "first_name", "last_name",
+            # phone_number (OEP-0030)
             "phone", "phone_number",
+            # birth_date (OEP-0030)
             "birth_date",
-            "ip", "ip_address",
+            # ip (OEP-0030) -- bare 'ip' excluded (too short); ip_address only
+            "ip_address",
+            # location (OEP-0030)
             "location", "address", "mailing_address",
-            "gender", "sex",
-            "bio", "biography",
-            "profile_image", "image", "video",
-            "title", "job_title",
-            "social", "website",
+            # gender (OEP-0030) -- bare 'sex' excluded (substring false positives)
+            "gender",
+            # image (OEP-0030) -- generic 'image' excluded; profile_image only
+            "profile_image",
+            # job_title (OEP-0030) -- generic 'title' excluded
+            "job_title",
+            # external_service (OEP-0030) -- bare 'social' and 'website' excluded
+            "social_link",
         ])
         self._pii_terms_cache = [t.strip().lower() for t in raw_terms if t.strip()]
 
@@ -211,16 +208,10 @@ class PiiConfigMixin:
     # ------------------------------------------------------------------
 
     def _contains_pii(self, node):
-        """Recursively inspect *node* for likely PII.
+        """Recursively inspect *node* for likely PII; return the first matching term or None.
 
-        Returns the first matching PII term string, or ``None``.
-
-        NOTE: String literals (Const nodes) are intentionally NOT checked.
-        A log message like ``log.info("user email: unknown")`` contains the
-        word "email" in the message text, but no actual PII value is leaking.
-        Only variable names (Name) and attribute accesses (Attribute) carry
-        real user data and are checked.  Matching Const nodes caused false
-        positives on every log message that described a PII field.
+        Checks Name, Attribute, f-strings, binary ops, dicts, and nested calls.
+        String literals, repr() output, and runtime-constructed strings are NOT checked.
         """
         if node is None:
             return None

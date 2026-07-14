@@ -273,24 +273,8 @@ class ProfileModel(Model):
     assert _has(_run(source), "A")
 
 
-def test_pii_in_log_title_attribute_fires():
-    """self.title fires (OEP-0030: Job title is PII)."""
-    source = """\
-import logging
-log = logging.getLogger(__name__)
-class Model:
-    pass
-class ProfileModel(Model):
-    '''.. pii: Stores learner profile PII.'''
-    title = None
-    def log_profile(self):
-        log.info("user: %s", self.title)         #=A
-"""
-    assert _has(_run(source), "A")
-
-
-def test_pii_in_log_social_fires():
-    """social_link fires (OEP-0030 PII term)."""
+def test_pii_in_log_social_link_fires():
+    """social_link fires (OEP-0030 PII term — explicit form)."""
     source = """\
 import logging
 log = logging.getLogger(__name__)
@@ -304,8 +288,8 @@ class ProfileModel(Model):
     assert _has(_run(source), "A")
 
 
-def test_pii_in_log_website_fires():
-    """user_website fires (OEP-0030 PII term)."""
+def test_pii_in_log_profile_image_fires():
+    """profile_image fires (OEP-0030 PII term — explicit form)."""
     source = """\
 import logging
 log = logging.getLogger(__name__)
@@ -313,10 +297,93 @@ class Model:
     pass
 class ProfileModel(Model):
     '''.. pii: Stores learner profile PII.'''
+    profile_image = None
     def log_profile(self):
-        log.info("site: %s", user_website)       #=A
+        log.info("img: %s", self.profile_image)  #=A
 """
     assert _has(_run(source), "A")
+
+
+def test_pii_in_log_ip_address_fires():
+    """ip_address fires (OEP-0030 PII term — explicit form)."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class SessionModel(Model):
+    '''.. pii: Stores session PII.'''
+    ip_address = None
+    def log_session(self):
+        log.info("ip: %s", self.ip_address)      #=A
+"""
+    assert _has(_run(source), "A")
+
+
+# -- Curated exclusions: formerly-generic terms no longer fire by default -----
+
+def test_bare_name_not_flagged():
+    """self.name inside a PII model does NOT fire — 'name' removed from defaults."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class UserModel(Model):
+    '''.. pii: Stores user PII.'''
+    name = None
+    def log_action(self):
+        log.info("item: %s", self.name)
+"""
+    assert not _run(source)
+
+
+def test_bare_title_not_flagged():
+    """self.title inside a PII model does NOT fire — bare 'title' removed from defaults."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class ProfileModel(Model):
+    '''.. pii: Stores learner profile PII.'''
+    title = None
+    def log_profile(self):
+        log.info("user: %s", self.title)
+"""
+    assert not _run(source)
+
+
+def test_bare_image_not_flagged():
+    """self.image inside a PII model does NOT fire — generic 'image' removed from defaults."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class CourseModel(Model):
+    '''.. pii: Stores course data.'''
+    image = None
+    def log_course(self):
+        log.info("img: %s", self.image)
+"""
+    assert not _run(source)
+
+
+def test_bare_ip_not_flagged():
+    """self.ip inside a PII model does NOT fire — bare 'ip' removed from defaults."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class SessionModel(Model):
+    '''.. pii: Stores session PII.'''
+    ip = None
+    def log_session(self):
+        log.info("ip: %s", self.ip)
+"""
+    assert not _run(source)
 
 
 def test_token_not_flagged_not_in_oep30():

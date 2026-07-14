@@ -521,7 +521,7 @@ overgeneral-exceptions=builtins.Exception
 
 # Comma-separated list of identifier substrings treated as likely PII.
 # Substring matching is used, so 'email' will match 'user_email_address'.
-pii-terms=email,secondary_email,username,password,name,full_name,first_name,last_name,phone,phone_number,birth_date,ip,ip_address,location,address,mailing_address,gender,sex,bio,biography,profile_image,image,video,token,secret,retired_username
+pii-terms=email,secondary_email,username,retired_username,password,full_name,first_name,last_name,phone,phone_number,birth_date,ip_address,location,address,mailing_address,gender,profile_image,job_title,social_link
 
 # Functions that safely transform or redact PII. PII passed through these
 # functions will not trigger warnings.

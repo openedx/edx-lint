@@ -49,32 +49,33 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
             "pii-terms",
             {
                 "default": (
-                    # OEP-0030 PII fields (https://open-edx-proposals.readthedocs.io/en/latest/
-                    # architectural-decisions/oep-0030-arch-pii-markup-and-auditing.html)
-                    "email,secondary_email,"           # email_address
-                    "username,retired_username,"       # username
-                    "password,"                        # password
-                    "name,full_name,first_name,last_name,"  # name
-                    "phone,phone_number,"              # phone_number
-                    "birth_date,"                      # birth_date
-                    "ip,ip_address,"                   # ip
-                    "location,address,mailing_address,"  # location
-                    "gender,sex,"                      # gender / sex
-                    "bio,biography,"                   # biography
-                    "profile_image,image,video,"       # image / video
-                    "title,job_title,"                 # job title
-                    "social,website"                   # external_service (social media, website)
+                    # Curated OEP-0030 PII identifiers. Generic terms (name, ip, sex,
+                    # image, video, title, bio, social, website) excluded to avoid false
+                    # positives; add them back via this option in your pylintrc if needed.
+                    "email,secondary_email,"
+                    "username,retired_username,"
+                    "password,"
+                    "full_name,first_name,last_name,"
+                    "phone,phone_number,"
+                    "birth_date,"
+                    "ip_address,"
+                    "location,address,mailing_address,"
+                    "gender,"
+                    "profile_image,"
+                    "job_title,"
+                    "social_link"
                 ),
                 "type": "csv",
                 "metavar": "<comma-separated PII terms>",
                 "help": (
-                    "Comma-separated list of identifier substrings treated as PII per OEP-0030. "
-                    "Matches variable names and attribute accesses passed to log/print/exception "
-                    "sinks. String literals in log messages are NOT matched — only actual PII "
-                    "variable and attribute references are flagged."
+                    "Comma-separated OEP-0030 PII identifier substrings matched against variable "
+                    "names and attribute accesses passed to log/print/exception sinks. "
+                    "String literals are NOT matched — only actual variable/attribute references."
                 ),
             },
         ),
+
+
         (
             "pii-safe-functions",
             {
