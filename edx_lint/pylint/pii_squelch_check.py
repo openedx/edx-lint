@@ -95,7 +95,14 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
             {
                 "default": (
                     "user_id,course_id,thread_id,comment_id,block_id,"
-                    "usage_id,usage_key,anonymous_user_id"
+                    "usage_id,usage_key,anonymous_user_id,service_username,"
+                    "email_enabled,email_sent_on,email_scheduled,"
+                    "require_course_email_auth,reported_content_email_notifications,"
+                    "email_reminder_sent,eligibility_email_message,receipt_email_message,"
+                    "attr_full_name,default_full_name,attr_first_name,default_first_name,"
+                    "attr_last_name,default_last_name,attr_username,default_username,"
+                    "attr_email,default_email,skip_email_verification,location,"
+                    "example_full_name"
                 ),
                 "type": "csv",
                 "metavar": "<comma-separated safe key patterns>",

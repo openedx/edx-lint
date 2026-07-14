@@ -676,3 +676,29 @@ class UnsafeModel(Model):
             log.info(self.email)
 """
     assert not _run(source)
+
+
+def test_pii_in_log_new_safe_keys_not_flagged():
+    """CI-discovered safe keys do not trigger a warning."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class SafeKeyModel(Model):
+    '''.. pii: Stores user PII.'''
+    service_username = None
+    email_enabled = None
+    email_sent_on = None
+    require_course_email_auth = None
+    attr_full_name = None
+    location = None
+    def notify(self):
+        log.info(self.service_username)
+        log.info(self.email_enabled)
+        log.info(self.email_sent_on)
+        log.info(self.require_course_email_auth)
+        log.info(self.attr_full_name)
+        log.info(self.location)
+"""
+    assert not _run(source)
