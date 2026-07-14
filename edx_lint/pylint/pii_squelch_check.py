@@ -99,9 +99,10 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
                     "email_enabled,email_sent_on,email_scheduled,"
                     "require_course_email_auth,reported_content_email_notifications,"
                     "email_reminder_sent,eligibility_email_message,receipt_email_message,"
+                    "proctoring_escalation_email,email_cadence,"
                     "attr_full_name,default_full_name,attr_first_name,default_first_name,"
                     "attr_last_name,default_last_name,attr_username,default_username,"
-                    "attr_email,default_email,skip_email_verification,location,"
+                    "attr_email,default_email,skip_email_verification,location,_location,"
                     "example_full_name"
                 ),
                 "type": "csv",

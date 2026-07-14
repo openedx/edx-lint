@@ -693,6 +693,9 @@ class SafeKeyModel(Model):
     require_course_email_auth = None
     attr_full_name = None
     location = None
+    _location = None
+    proctoring_escalation_email = None
+    email_cadence = None
     def notify(self):
         log.info(self.service_username)
         log.info(self.email_enabled)
@@ -700,5 +703,8 @@ class SafeKeyModel(Model):
         log.info(self.require_course_email_auth)
         log.info(self.attr_full_name)
         log.info(self.location)
+        log.info(self._location)
+        log.info(self.proctoring_escalation_email)
+        log.info(self.email_cadence)
 """
     assert not _run(source)
