@@ -2,19 +2,6 @@
 
 This module imports all our plugins, and creates the register function that
 will register them with pylint.
-
-PII checking is split into two separate checkers:
-
-* ``pii_squelch_check`` — ``PiiMissingSquelchChecker`` (checker name:
-  ``pii-missing-squelch``) handles the single missing-squelch-guard rule
-  (also named ``pii-missing-squelch``).
-  It also owns all shared PII options (``pii-terms``, ``pii-safe-functions``,
-  ``pii-safe-key-patterns``, ``pii-squelch-flag``, ``pii-django-model-bases``).
-
-* ``pii_annotation_check`` — ``PiiAnnotationChecker`` (checker name:
-  ``pii-annotation-checker``) handles the ``pii-invalid-no-pii-annotation``
-  rule.  It reads shared options from the linter config populated by the
-  squelch checker above, so registration order matters: squelch first.
 """
 
 from edx_lint.pylint import (

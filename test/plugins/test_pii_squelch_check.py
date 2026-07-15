@@ -180,6 +180,38 @@ class UserModel(Model):
     assert not _run(source)
 
 
+def test_pii_in_log_guarded_by_getattr_settings():
+    """getattr(settings, 'SQUELCH_PII_IN_LOGS', False) guard is recognised."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class UserModel(Model):
+    '''.. pii: Stores user PII.'''
+    def notify(self):
+        if getattr(settings, 'SQUELCH_PII_IN_LOGS', False):
+            log.info("email=%s", email)
+"""
+    assert not _run(source)
+
+
+def test_pii_in_log_guarded_by_not_getattr_settings():
+    """``if not getattr(settings, 'SQUELCH_PII_IN_LOGS', False):`` guard is recognised."""
+    source = """\
+import logging
+log = logging.getLogger(__name__)
+class Model:
+    pass
+class UserModel(Model):
+    '''.. pii: Stores user PII.'''
+    def notify(self):
+        if not getattr(settings, 'SQUELCH_PII_IN_LOGS', False):
+            log.info("username=%s", username)
+"""
+    assert not _run(source)
+
+
 def test_pii_in_log_safe_function_wrapping():
     """PII wrapped in redact() is not flagged."""
     source = """\

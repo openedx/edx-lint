@@ -11,17 +11,13 @@ import re
 from astroid import nodes as astroid_nodes
 
 
-# ---------------------------------------------------------------------------
 # Logging method names that are treated as output sinks.
-# ---------------------------------------------------------------------------
 _LOG_METHODS = frozenset({
     "debug", "info", "warning", "warn", "error",
     "critical", "exception", "log",
 })
 
-# ---------------------------------------------------------------------------
 # Regex patterns used to detect ``.. no_pii:`` in docstrings / comments.
-# ---------------------------------------------------------------------------
 _NO_PII_DOCSTRING_RE = re.compile(r"\.\.\s*no_pii", re.IGNORECASE)
 _NO_PII_COMMENT_RE = re.compile(r"[\s]*#[\s]*\.\.\s*no_pii", re.IGNORECASE)
 
@@ -33,22 +29,11 @@ _DEFAULT_SQUELCH_FLAG = "SQUELCH_PII_IN_LOGS"
 
 
 class PiiConfigMixin:
-    """Mixin that provides cached access to PII-related pylint config options.
-
-    Both :class:`~edx_lint.pylint.pii_squelch_check.PiiMissingSquelchChecker`
-    and :class:`~edx_lint.pylint.pii_annotation_check.PiiAnnotationChecker`
-    inherit from this mixin.
-
-    All options (``pii-terms``, ``pii-safe-functions``, etc.) are defined
-    on ``PiiMissingSquelchChecker``.  The annotation checker reads those
-    values from ``self.linter.config`` via ``getattr`` with safe defaults, so
-    it works correctly whether or not the squelch checker is also loaded.
+    """
+    Mixin that provides cached access to PII-related pylint config options.
     """
 
-    # ------------------------------------------------------------------
     # Initialisation helpers (call from __init__ of each concrete checker)
-    # ------------------------------------------------------------------
-
     def _init_pii_caches(self):
         """Initialise the per-module config cache slots to ``None``."""
         self._pii_terms_cache = None
@@ -56,16 +41,10 @@ class PiiConfigMixin:
         self._safe_keys_cache = None
         self._django_model_bases_cache = None
 
-    # ------------------------------------------------------------------
     # Cached config helpers
-    # ------------------------------------------------------------------
-
     def _ensure_config_cached(self):
-        """Populate the config caches on the first call within a module.
-
-        Reads option values from ``self.linter.config`` using ``getattr``
-        with sensible defaults so that each checker is independently usable
-        even if the other checker (and its options) is not loaded.
+        """
+        Populate the config caches on the first call within a module.
         """
         if self._pii_terms_cache is not None:
             return
@@ -73,29 +52,17 @@ class PiiConfigMixin:
         cfg = self.linter.config
 
         raw_terms = getattr(cfg, "pii_terms", [
-            # email_address (OEP-0030)
             "email", "secondary_email",
-            # username (OEP-0030)
             "username", "retired_username",
-            # password (OEP-0030)
             "password",
-            # name (OEP-0030) -- explicit compound forms only; bare 'name' excluded
             "full_name", "first_name", "last_name",
-            # phone_number (OEP-0030)
             "phone", "phone_number",
-            # birth_date (OEP-0030)
             "birth_date",
-            # ip (OEP-0030) -- bare 'ip' excluded (too short); ip_address only
             "ip_address",
-            # location (OEP-0030)
             "location", "address", "mailing_address",
-            # gender (OEP-0030) -- bare 'sex' excluded (substring false positives)
             "gender",
-            # image (OEP-0030) -- generic 'image' excluded; profile_image only
             "profile_image",
-            # job_title (OEP-0030) -- generic 'title' excluded
             "job_title",
-            # external_service (OEP-0030) -- bare 'social' and 'website' excluded
             "social_link",
         ])
         self._pii_terms_cache = [t.strip().lower() for t in raw_terms if t.strip()]
@@ -139,12 +106,10 @@ class PiiConfigMixin:
     def _squelch_flag(self):
         return getattr(self.linter.config, "pii_squelch_flag", _DEFAULT_SQUELCH_FLAG)
 
-    # ------------------------------------------------------------------
     # SQUELCH_PII_IN_LOGS guard detection
-    # ------------------------------------------------------------------
-
     def _is_inside_squelch_guard(self, node):
-        """Walk up the AST parent chain and return True if *node* is nested
+        """
+        Walk up the AST parent chain and return True if *node* is nested
         inside an ``if`` block that tests the configured squelch flag.
 
         Recognised patterns (flag name is configurable via pii-squelch-flag):
@@ -156,6 +121,7 @@ class PiiConfigMixin:
         5. ``if settings.FEATURES.get('SQUELCH_PII_IN_LOGS'):``
         6. ``if SQUELCH_PII_IN_LOGS.is_enabled():``
         7. ``if not SQUELCH_PII_IN_LOGS.is_active():``
+        8. ``if getattr(settings, 'SQUELCH_PII_IN_LOGS', False):``
         """
         flag = self._squelch_flag()
         current = node.parent
@@ -169,7 +135,9 @@ class PiiConfigMixin:
         return False
 
     def _test_references_flag(self, test, flag):
-        """Return True if AST node *test* references the squelch *flag*."""
+        """
+        Return True if AST node *test* references the squelch *flag*.
+        """
         # Pattern 1: if SQUELCH_PII_IN_LOGS:
         if isinstance(test, astroid_nodes.Name):
             return test.name == flag
@@ -186,9 +154,6 @@ class PiiConfigMixin:
         # Pattern 4: if settings.FEATURES['SQUELCH_PII_IN_LOGS']:
         if isinstance(test, astroid_nodes.Subscript):
             slc = test.slice
-            # astroid < 2.x wrapped subscript slices in an Index node; later
-            # versions removed it.  Use getattr so pylint's static analysis
-            # (no-member / E1101) does not flag the reference on newer astroid.
             _IndexNode = getattr(astroid_nodes, "Index", None)
             if _IndexNode is not None and isinstance(slc, _IndexNode):  # pylint: disable=isinstance-second-argument-not-valid-type
                 slc = slc.value
@@ -210,14 +175,22 @@ class PiiConfigMixin:
                     if self._test_references_flag(func.expr, flag):
                         return True
 
+            # Pattern 8: getattr(settings, 'SQUELCH_PII_IN_LOGS', False)
+            if (
+                isinstance(func, astroid_nodes.Name)
+                and func.name == "getattr"
+                and len(test.args) >= 2
+            ):
+                second_arg = test.args[1]
+                if isinstance(second_arg, astroid_nodes.Const) and second_arg.value == flag:
+                        return True
+
         return False
 
-    # ------------------------------------------------------------------
     # Recursive PII detection inside AST subtrees
-    # ------------------------------------------------------------------
-
     def _contains_pii(self, node):
-        """Recursively inspect *node* for likely PII; return the first matching term or None.
+        """
+        Recursively inspect *node* for likely PII; return the first matching term or None.
 
         Checks Name, Attribute, f-strings, binary ops, dicts, and nested calls.
         String literals, repr() output, and runtime-constructed strings are NOT checked.
@@ -277,12 +250,10 @@ class PiiConfigMixin:
 
         return None
 
-    # ------------------------------------------------------------------
     # PII name matching
-    # ------------------------------------------------------------------
-
     def _is_pii_name(self, name):
-        """Return True if *name* is a likely PII identifier.
+        """
+        Return True if *name* is a likely PII identifier.
 
         Rules:
 
@@ -299,30 +270,19 @@ class PiiConfigMixin:
 
     @staticmethod
     def _call_func_name(node):
-        """Return the simple function name for a Call node, or ``None``."""
+        """
+        Return the simple function name for a Call node, or ``None``.
+        """
         if isinstance(node.func, astroid_nodes.Name):
             return node.func.name
         if isinstance(node.func, astroid_nodes.Attribute):
             return node.func.attrname
         return None
 
-    # ------------------------------------------------------------------
     # Django model eligibility detection
-    # ------------------------------------------------------------------
-
     def _is_annotation_eligible_django_model(self, node):
-        """Return True if *node* is an annotation-eligible Django model.
-
-        Replicates the exact predicate used by
-        ``code_annotations.find_django.DjangoSearch.requires_annotations()``:
-
-        1. The class must be a subclass of ``django.db.models.Model`` (detected
-           via astroid's ancestor walking when Django is importable, or via a
-           raw AST base-name BFS over the module's class definitions otherwise).
-        2. The class must **not** be abstract: its inner ``Meta`` class must not
-           contain ``abstract = True``.
-        3. The class must **not** be a proxy model: its inner ``Meta`` class must
-           not contain ``proxy = True``.
+        """
+        Return True if *node* is an annotation-eligible Django model.
         """
         self._ensure_config_cached()
         model_bases = self._django_model_bases_cache
@@ -338,10 +298,8 @@ class PiiConfigMixin:
         except Exception:  # pylint: disable=broad-except
             pass
 
-        # 1b. Fallback: walk raw AST base names.  Handles standalone pylint
-        #     runs where Django is not importable and astroid cannot resolve
-        #     the MRO.  We do a BFS over module-level class definitions
-        #     collected in ``self._module_classdefs``.
+        # 1b. Fallback: walk raw AST base names.Handles standalone pylint
+        #     runs where Django is not importable.
         if not is_model_subclass:
             is_model_subclass = self._raw_ast_is_model_subclass(node)
 
@@ -357,12 +315,8 @@ class PiiConfigMixin:
         return True
 
     def _raw_ast_is_model_subclass(self, node):
-        """Return True if *node* inherits from a known model base via raw AST names.
-
-        BFS over the module-level class definitions.  At each step checks
-        whether any direct base name matches a configured
-        ``pii-django-model-bases`` name, or a class in the same module that
-        is itself a model subclass.
+        """
+        Return True if *node* inherits from a known model base via raw AST names.
         """
         model_bases = self._django_model_bases_cache
         visited = set()
@@ -381,12 +335,8 @@ class PiiConfigMixin:
 
     @staticmethod
     def _direct_base_names(classdef_node):
-        """Yield the simple names of each direct base in *classdef_node*.
-
-        Handles two common forms:
-
-        - ``class Foo(Model):``        → ``Name(name='Model')``
-        - ``class Foo(models.Model):`` → ``Attribute(attrname='Model')``
+        """
+        Yield the simple names of each direct base in *classdef_node*.
         """
         for base in classdef_node.bases:
             if isinstance(base, astroid_nodes.Name):
@@ -396,12 +346,9 @@ class PiiConfigMixin:
 
     @staticmethod
     def _meta_has_true_flag(classdef_node, flag_name):
-        """Return True if the inner ``Meta`` class of *classdef_node* sets
+        """
+        Return True if the inner ``Meta`` class of *classdef_node* sets
         *flag_name* to ``True``.
-
-        Looks for an assignment of the form ``<flag_name> = True`` inside a
-        nested class named ``Meta``.  This is the AST-level equivalent of
-        checking ``model._meta.abstract`` or ``model._meta.proxy`` at runtime.
         """
         for child in classdef_node.body:
             if not (
@@ -422,18 +369,10 @@ class PiiConfigMixin:
                         return True
         return False
 
-    # ------------------------------------------------------------------
     # Class annotation detection (.. no_pii:)
-    # ------------------------------------------------------------------
-
     def _class_has_no_pii_annotation(self, node):
-        """Return True if *node* carries a ``.. no_pii:`` annotation.
-
-        Checks two locations:
-
-        A. The class docstring (primary — edx-platform model convention).
-        B. Comment lines up to ``_ANNOTATION_LOOKAHEAD`` lines above the class
-           keyword (fallback — used in some repos).
+        """
+        Return True if *node* carries a ``.. no_pii:`` annotation.
         """
         return self._docstring_has_no_pii(node) or self._comment_has_no_pii(node)
 
@@ -454,18 +393,10 @@ class PiiConfigMixin:
                 return True
         return False
 
-    # ------------------------------------------------------------------
     # Field scanning inside a class body
-    # ------------------------------------------------------------------
-
     def _collect_pii_fields(self, node):
-        """Return a list of PII-like field names found in the class body.
-
-        Scans three locations:
-
-        1. Class-level ``Assign`` (Django model fields, class variables).
-        2. Class-level ``AnnAssign`` (PEP 526 annotated attributes).
-        3. ``self.attr =`` assignments inside method bodies.
+        """
+        Return a list of PII-like field names found in the class body.
         """
         found = []
         for child in node.body:

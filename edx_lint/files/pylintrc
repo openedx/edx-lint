@@ -533,5 +533,4 @@ pii-safe-key-patterns=user_id,course_id,thread_id,comment_id,block_id,usage_id,u
 
 # Name of the feature toggle that guards PII-inclusive log/print/exception
 # output. Any PII sink must be inside an if-block testing this flag.
-# See: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/monitoring/README.rst
 pii-squelch-flag=SQUELCH_PII_IN_LOGS

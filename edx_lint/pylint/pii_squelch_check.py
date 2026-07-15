@@ -17,17 +17,13 @@ def register_checkers(linter):
 
 @check_visitors
 class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
-    """Flags unguarded PII in log/print/exception calls inside Django model methods.
-
-    Fires ``pii-missing-squelch`` (W7630). Skips .. no_pii: models, abstract/proxy
-    models, standalone functions, and any call wrapped in a SQUELCH_PII_IN_LOGS guard.
+    """
+    Flags unguarded PII in log/print/exception calls inside Django model methods.
     """
 
     name = "pii-missing-squelch"
 
-    # ------------------------------------------------------------------
     # Message definitions — one symbol covers log + print + exception
-    # ------------------------------------------------------------------
     msgs = {
         ("W%d30" % BASE_ID): (
             "PII term '%s' exposed in %s without a SQUELCH_PII_IN_LOGS guard. "
@@ -39,11 +35,9 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         ),
     }
 
-    # ------------------------------------------------------------------
     # Configurable options
     # NOTE: All shared PII options are defined here.  PiiAnnotationChecker
     #       reads them from linter.config via getattr() with safe defaults.
-    # ------------------------------------------------------------------
     options = (
         (
             "pii-terms",
@@ -142,10 +136,7 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         ),
     )
 
-    # ------------------------------------------------------------------
     # Lifecycle
-    # ------------------------------------------------------------------
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Cached per-module source lines for comment-style annotation lookup.
@@ -160,10 +151,7 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         # _raw_ast_is_model_subclass to resolve same-module ancestors.
         self._module_classdefs = {}
 
-    # ------------------------------------------------------------------
     # AST Visitors
-    # ------------------------------------------------------------------
-
     @utils.only_required_for_messages(
         "pii-missing-squelch"
     )
@@ -181,18 +169,16 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
 
     @utils.only_required_for_messages("pii-missing-squelch")
     def visit_classdef(self, node):
-        """Index every class definition for same-module ancestry resolution.
-
-        This is required so that ``_raw_ast_is_model_subclass`` can walk the
-        inheritance chain of classes defined in the same module without
-        relying on astroid's import resolution (which requires Django to be
-        installed in the linting environment).
+        """
+        Index every class definition for same-module ancestry resolution.
         """
         self._module_classdefs[node.name] = node
 
     @utils.only_required_for_messages("pii-missing-squelch")
     def visit_call(self, node):
-        """Check logging and print/stdout/stderr calls for unguarded PII."""
+        """
+        Check logging and print/stdout/stderr calls for unguarded PII.
+        """
         if self._is_log_call(node):
             self._check_sink(node, "log call")
         elif self._is_print_call(node):
@@ -200,12 +186,8 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
 
     @utils.only_required_for_messages("pii-missing-squelch")
     def visit_raise(self, node):
-        """Check raised exceptions for unguarded PII in their messages.
-
-        Only fires when the raise statement is inside an annotation-eligible
-        Django model method that is not annotated ``.. no_pii:``.
-        Raises outside a Django model (standalone code, module-level) are
-        entirely out of scope.
+        """
+        Check raised exceptions for unguarded PII in their messages.
         """
         if not self._requires_squelch_check(node):
             return
@@ -226,18 +208,19 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
                     )
                 return  # at most one message per raise
 
-    # ------------------------------------------------------------------
     # Sink identification helpers
-    # ------------------------------------------------------------------
-
     def _is_log_call(self, node):
-        """Return True if *node* is a call to a standard logging method."""
+        """
+        Return True if *node* is a call to a standard logging method.
+        """
         if not isinstance(node.func, astroid_nodes.Attribute):
             return False
         return node.func.attrname in _LOG_METHODS
 
     def _is_print_call(self, node):
-        """Return True if *node* is a print() or stdout/stderr write() call."""
+        """
+        Return True if *node* is a print() or stdout/stderr write() call.
+        """
         # bare print()
         if isinstance(node.func, astroid_nodes.Name) and node.func.name == "print":
             return True
@@ -247,16 +230,9 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         return False
 
     def _check_sink(self, node, sink_label):
-        """Emit ``pii-missing-squelch`` if any argument of *node* contains PII
+        """
+        Emit ``pii-missing-squelch`` if any argument of *node* contains PII
         and the call is not inside a SQUELCH_PII_IN_LOGS guard.
-
-        *sink_label* is a human-readable description of the sink type
-        (e.g. ``'log call'``, ``'print/stdout/stderr'``) included in the
-        emitted message so the developer knows what to fix.
-
-        Squelch checks are ONLY enforced inside Django model classes that do
-        not carry a ``.. no_pii:`` annotation.  Standalone functions and
-        ``.. no_pii:``-annotated models are entirely skipped.
         """
         if not self._requires_squelch_check(node):
             return
@@ -276,18 +252,9 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
                 return  # at most one message per call
 
     def _requires_squelch_check(self, node):
-        """Return True if *node* is inside an eligible Django model that is
+        """
+        Return True if *node* is inside an eligible Django model that is
         NOT annotated with ``.. no_pii:``.
-
-        Scope rules:
-
-        * Inside a Django model annotated ``.. no_pii:``  → **SKIP** (safe model).
-        * Inside a Django model with ``.. pii:`` or no annotation → **CHECK**.
-        * Standalone functions, module-level code, non-model classes → **SKIP**.
-
-        This mirrors the original scope: only Django model methods are subject
-        to squelch-guard enforcement.  Code outside a model is not in scope
-        because it is not subject to OEP-0030 annotation requirements.
         """
         current = node.parent
         while current is not None:

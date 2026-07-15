@@ -16,7 +16,8 @@ def register_checkers(linter):
 
 @check_visitors
 class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
-    """Fires ``pii-invalid-no-pii-annotation`` (W7633) when a concrete Django model
+    """
+    Fires ``pii-invalid-no-pii-annotation`` (W7633) when a concrete Django model
 
     is annotated ``.. no_pii:`` but still has fields matching the PII terms list.
     Abstract and proxy models are skipped, mirroring django_find_annotations scope.
@@ -39,13 +40,7 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
         ),
     }
 
-    # No options are defined here — all shared PII options live on
-    # PiiMissingSquelchChecker and are accessed through self.linter.config.
-
-    # ------------------------------------------------------------------
     # Lifecycle
-    # ------------------------------------------------------------------
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Cached per-module source lines for comment-style annotation lookup.
@@ -60,10 +55,7 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
         # _raw_ast_is_model_subclass to resolve same-module ancestors.
         self._module_classdefs = {}
 
-    # ------------------------------------------------------------------
     # AST Visitors
-    # ------------------------------------------------------------------
-
     @utils.only_required_for_messages("pii-invalid-no-pii-annotation")
     def visit_module(self, node):
         """Cache source lines and reset all per-module state."""
@@ -79,15 +71,8 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
 
     @utils.only_required_for_messages("pii-invalid-no-pii-annotation")
     def visit_classdef(self, node):
-        """Detect PII fields in Django model classes annotated with ``.. no_pii:``.
-
-        Only checks classes that are annotation-eligible Django models, mirroring
-        the ``DjangoSearch.requires_annotations()`` predicate used by
-        ``code_annotations django_find_annotations``:
-
-        - Must be a subclass of ``django.db.models.Model`` (or a configured base).
-        - Must **not** be abstract (no ``abstract = True`` in the inner ``Meta``).
-        - Must **not** be a proxy model (no ``proxy = True`` in the inner ``Meta``).
+        """
+        Detect PII fields in Django model classes annotated with ``.. no_pii:``.
         """
         # Index every class definition in the module for same-module ancestry BFS.
         self._module_classdefs[node.name] = node
