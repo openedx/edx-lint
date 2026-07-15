@@ -521,7 +521,7 @@ overgeneral-exceptions=builtins.Exception
 
 # Comma-separated list of identifier substrings treated as likely PII.
 # Substring matching is used, so 'email' will match 'user_email_address'.
-pii-terms=
+pii-terms =
     email,
     secondary_email,
     username,
@@ -544,11 +544,18 @@ pii-terms=
 
 # Functions that safely transform or redact PII. PII passed through these
 # functions will not trigger warnings.
-pii-safe-functions=redact,redact_pii,mask,mask_pii,hash_pii,obfuscate,obfuscate_pii
+pii-safe-functions =
+    redact,
+    redact_pii,
+    mask,
+    mask_pii,
+    hash_pii,
+    obfuscate,
+    obfuscate_pii
 
 # Exact identifiers that superficially match PII terms but are approved
 # as non-sensitive (surrogate keys, anonymous IDs, etc.).
-pii-safe-key-patterns=
+pii-safe-key-patterns =
     user_id,
     course_id,
     thread_id,
@@ -585,4 +592,4 @@ pii-safe-key-patterns=
 
 # Name of the feature toggle that guards PII-inclusive log/print/exception
 # output. Any PII sink must be inside an if-block testing this flag.
-pii-squelch-flag=SQUELCH_PII_IN_LOGS
+pii-squelch-flag = SQUELCH_PII_IN_LOGS

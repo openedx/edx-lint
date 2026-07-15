@@ -46,17 +46,17 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
                     # Curated OEP-0030 PII identifiers. Generic terms (name, ip, sex,
                     # image, video, title, bio, social, website) excluded to avoid false
                     # positives; add them back via this option in your pylintrc if needed.
-                    "email,secondary_email,"
-                    "username,retired_username,"
-                    "password,"
-                    "full_name,first_name,last_name,"
-                    "phone,phone_number,"
-                    "birth_date,"
-                    "ip_address,"
-                    "location,address,mailing_address,"
-                    "gender,"
-                    "profile_image,"
-                    "job_title,"
+                    "email, secondary_email, "
+                    "username, retired_username, "
+                    "password, "
+                    "full_name, first_name, last_name, "
+                    "phone, phone_number, "
+                    "birth_date, "
+                    "ip_address, "
+                    "location, address, mailing_address, "
+                    "gender, "
+                    "profile_image, "
+                    "job_title, "
                     "social_link"
                 ),
                 "type": "csv",
@@ -72,7 +72,7 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
             "pii-safe-functions",
             {
                 "default": (
-                    "redact,redact_pii,mask,mask_pii,hash_pii,obfuscate,obfuscate_pii"
+                    "redact, redact_pii, mask, mask_pii, hash_pii, obfuscate, obfuscate_pii"
                 ),
                 "type": "csv",
                 "metavar": "<comma-separated safe function names>",
@@ -86,15 +86,15 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
             "pii-safe-key-patterns",
             {
                 "default": (
-                    "user_id,course_id,thread_id,comment_id,block_id,"
-                    "usage_id,usage_key,anonymous_user_id,service_username,"
-                    "email_enabled,email_sent_on,email_scheduled,"
-                    "require_course_email_auth,reported_content_email_notifications,"
-                    "email_reminder_sent,eligibility_email_message,receipt_email_message,"
-                    "proctoring_escalation_email,email_cadence,"
-                    "attr_full_name,default_full_name,attr_first_name,default_first_name,"
-                    "attr_last_name,default_last_name,attr_username,default_username,"
-                    "attr_email,default_email,skip_email_verification,location,_location,"
+                    "user_id, course_id, thread_id, comment_id, block_id, "
+                    "usage_id, usage_key, anonymous_user_id, service_username, "
+                    "email_enabled, email_sent_on, email_scheduled, "
+                    "require_course_email_auth, reported_content_email_notifications, "
+                    "email_reminder_sent, eligibility_email_message, receipt_email_message, "
+                    "proctoring_escalation_email, email_cadence, "
+                    "attr_full_name, default_full_name, attr_first_name, default_first_name, "
+                    "attr_last_name, default_last_name, attr_username, default_username, "
+                    "attr_email, default_email, skip_email_verification, location, _location, "
                     "example_full_name"
                 ),
                 "type": "csv",
