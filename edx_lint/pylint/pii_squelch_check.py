@@ -68,8 +68,6 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
                 ),
             },
         ),
-
-
         (
             "pii-safe-functions",
             {

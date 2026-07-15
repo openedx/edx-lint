@@ -65,13 +65,13 @@ class PiiConfigMixin:
             "job_title",
             "social_link",
         ])
-        self._pii_terms_cache = [t.strip().lower() for t in raw_terms if t.strip()]
+        self._pii_terms_cache = [term.strip().lower() for term in raw_terms if term.strip()]
 
         raw_fns = getattr(
             cfg, "pii_safe_functions",
             ["redact", "redact_pii", "mask", "mask_pii", "hash_pii", "obfuscate", "obfuscate_pii"],
         )
-        self._safe_functions_cache = {f.strip() for f in raw_fns if f.strip()}
+        self._safe_functions_cache = {func_name.strip() for func_name in raw_fns if func_name.strip()}
 
         raw_keys = getattr(cfg, "pii_safe_key_patterns", [
             "user_id", "course_id", "thread_id", "comment_id",
@@ -86,10 +86,10 @@ class PiiConfigMixin:
             "attr_email", "default_email", "skip_email_verification",
             "location", "_location", "example_full_name"
         ])
-        self._safe_keys_cache = {k.strip().lower() for k in raw_keys if k.strip()}
+        self._safe_keys_cache = {key.strip().lower() for key in raw_keys if key.strip()}
 
         raw_bases = getattr(cfg, "pii_django_model_bases", ["Model"])
-        self._django_model_bases_cache = {b.strip() for b in raw_bases if b.strip()}
+        self._django_model_bases_cache = {base.strip() for base in raw_bases if base.strip()}
 
     def _pii_terms(self):
         self._ensure_config_cached()

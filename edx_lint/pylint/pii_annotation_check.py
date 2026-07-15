@@ -18,16 +18,13 @@ def register_checkers(linter):
 class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
     """
     Fires ``pii-invalid-no-pii-annotation`` (W7633) when a concrete Django model
-
     is annotated ``.. no_pii:`` but still has fields matching the PII terms list.
     Abstract and proxy models are skipped, mirroring django_find_annotations scope.
     """
 
     name = "pii-annotation-checker"
 
-    # ------------------------------------------------------------------
     # Message definitions
-    # ------------------------------------------------------------------
     msgs = {
         ("W%d33" % BASE_ID): (
             "Django model '%s' is annotated as no_pii but contains likely PII field(s): %s",
