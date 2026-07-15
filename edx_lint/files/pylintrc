@@ -542,17 +542,6 @@ pii-terms =
     job_title,
     social_link
 
-# Functions that safely transform or redact PII. PII passed through these
-# functions will not trigger warnings.
-pii-safe-functions =
-    redact,
-    redact_pii,
-    mask,
-    mask_pii,
-    hash_pii,
-    obfuscate,
-    obfuscate_pii
-
 # Exact identifiers that superficially match PII terms but are approved
 # as non-sensitive (surrogate keys, anonymous IDs, etc.).
 pii-safe-key-patterns =

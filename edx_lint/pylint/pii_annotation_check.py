@@ -45,7 +45,6 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
         # Config caches — explicitly initialised here so pylint knows they
         # exist; reset per-module via _init_pii_caches() in visit_module.
         self._pii_terms_cache = None
-        self._safe_functions_cache = None
         self._safe_keys_cache = None
         self._django_model_bases_cache = None
         # Per-module mapping of class name → ClassDef node, used by

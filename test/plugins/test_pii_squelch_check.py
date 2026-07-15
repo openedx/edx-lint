@@ -212,21 +212,6 @@ class UserModel(Model):
     assert not _run(source)
 
 
-def test_pii_in_log_safe_function_wrapping():
-    """PII wrapped in redact() is not flagged."""
-    source = """\
-import logging
-log = logging.getLogger(__name__)
-class Model:
-    pass
-class UserModel(Model):
-    '''.. pii: Stores user PII.'''
-    def notify(self):
-        log.info("value=%s", redact(email))
-"""
-    assert not _run(source)
-
-
 def test_pii_in_log_safe_key_not_flagged():
     """Surrogate key user_id is not flagged."""
     source = """\
@@ -571,19 +556,6 @@ class PaymentModel(Model):
     def validate(self):
         if not SQUELCH_PII_IN_LOGS:
             raise ValueError(email)
-"""
-    assert not _run(source)
-
-
-def test_pii_in_exception_safe_function():
-    """raise ValueError(redact(pii)) does not fire."""
-    source = """\
-class Model:
-    pass
-class PaymentModel(Model):
-    '''.. pii: Stores payment PII.'''
-    def validate(self):
-        raise ValueError(redact(email))
 """
     assert not _run(source)
 

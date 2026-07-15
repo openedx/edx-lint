@@ -37,7 +37,6 @@ class PiiConfigMixin:
     def _init_pii_caches(self):
         """Initialise the per-module config cache slots to ``None``."""
         self._pii_terms_cache = None
-        self._safe_functions_cache = None
         self._safe_keys_cache = None
         self._django_model_bases_cache = None
 
@@ -67,12 +66,6 @@ class PiiConfigMixin:
         ])
         self._pii_terms_cache = [term.strip().lower() for term in raw_terms if term.strip()]
 
-        raw_fns = getattr(
-            cfg, "pii_safe_functions",
-            ["redact", "redact_pii", "mask", "mask_pii", "hash_pii", "obfuscate", "obfuscate_pii"],
-        )
-        self._safe_functions_cache = {func_name.strip() for func_name in raw_fns if func_name.strip()}
-
         raw_keys = getattr(cfg, "pii_safe_key_patterns", [
             "user_id", "course_id", "thread_id", "comment_id",
             "block_id", "usage_id", "usage_key", "anonymous_user_id",
@@ -94,10 +87,6 @@ class PiiConfigMixin:
     def _pii_terms(self):
         self._ensure_config_cached()
         return self._pii_terms_cache
-
-    def _safe_functions(self):
-        self._ensure_config_cached()
-        return self._safe_functions_cache
 
     def _safe_keys(self):
         self._ensure_config_cached()
@@ -208,11 +197,8 @@ class PiiConfigMixin:
             if self._is_pii_name(node.attrname):
                 return node.attrname
 
-        # A call: if it's a safe function, stop; otherwise recurse into args.
+        # A call: recurse into args and keyword values.
         elif isinstance(node, astroid_nodes.Call):
-            func_name = self._call_func_name(node)
-            if func_name and func_name in self._safe_functions():
-                return None
             for arg in node.args:
                 found = self._contains_pii(arg)
                 if found:
@@ -267,17 +253,6 @@ class PiiConfigMixin:
             if term in lower:
                 return True
         return False
-
-    @staticmethod
-    def _call_func_name(node):
-        """
-        Return the simple function name for a Call node, or ``None``.
-        """
-        if isinstance(node.func, astroid_nodes.Name):
-            return node.func.name
-        if isinstance(node.func, astroid_nodes.Attribute):
-            return node.func.attrname
-        return None
 
     # Django model eligibility detection
     def _is_annotation_eligible_django_model(self, node):
