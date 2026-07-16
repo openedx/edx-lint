@@ -224,9 +224,8 @@ enable=
     unrecognized-inline-option,
     useless-suppression,
 
-    # PII safety checks (edx-lint built-in)
+    # PII safety check (edx-lint built-in)
     pii-missing-squelch,
-    pii-invalid-no-pii-annotation,
 
 # Disable the message, report, category or checker with the given id(s). You
 # can either give multiple identifiers separated by comma (,) or put this
@@ -534,7 +533,6 @@ pii-terms =
     phone_number,
     birth_date,
     ip_address,
-    location,
     address,
     mailing_address,
     gender,
@@ -543,7 +541,7 @@ pii-terms =
     social_link
 
 # Exact identifiers that superficially match PII terms but are approved
-# as non-sensitive (surrogate keys, anonymous IDs, etc.).
+# as non-sensitive (surrogate keys, flag fields, system fields).
 pii-safe-key-patterns =
     user_id,
     course_id,

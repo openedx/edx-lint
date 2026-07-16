@@ -5,6 +5,7 @@ will register them with pylint.
 """
 
 from edx_lint.pylint import (
+    _pii_common,
     annotations_check,
     getattr_check,
     i18n_check,
@@ -23,9 +24,7 @@ MODS = [
     getattr_check,
     i18n_check,
     module_trace,
-    # pii_squelch_check MUST come before pii_annotation_check so that the
-    # shared PII options are registered in linter.config before the annotation
-    # checker's _ensure_config_cached() reads them.
+    _pii_common,
     pii_squelch_check,
     pii_annotation_check,
     range_check,

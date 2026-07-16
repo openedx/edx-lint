@@ -10,7 +10,9 @@ from ._pii_common import PiiConfigMixin
 
 
 def register_checkers(linter):
-    """Register the PII annotation checker."""
+    """
+    Register the PII annotation checker.
+    """
     linter.register_checker(PiiAnnotationChecker(linter))
 
 
@@ -24,7 +26,6 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
 
     name = "pii-annotation-checker"
 
-    # Message definitions
     msgs = {
         ("W%d33" % BASE_ID): (
             "Django model '%s' is annotated as no_pii but contains likely PII field(s): %s",
@@ -37,25 +38,20 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
         ),
     }
 
-    # Lifecycle
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Cached per-module source lines for comment-style annotation lookup.
-        self._source_lines = []
-        # Config caches — explicitly initialised here so pylint knows they
-        # exist; reset per-module via _init_pii_caches() in visit_module.
+        self._source_lines = []           # source lines for comment-annotation lookup
+        # Config caches — reset each module via _init_pii_caches() in visit_module.
         self._pii_terms_cache = None
         self._safe_keys_cache = None
         self._django_model_bases_cache = None
-        # Per-module mapping of class name → ClassDef node, used by
-        # _raw_ast_is_model_subclass to resolve same-module ancestors.
-        self._module_classdefs = {}
+        self._module_classdefs = {}       # class name → ClassDef for BFS ancestry
 
-    # AST Visitors
     @utils.only_required_for_messages("pii-invalid-no-pii-annotation")
     def visit_module(self, node):
-        """Cache source lines and reset all per-module state."""
-        # Reset config caches so option values are re-read for each module.
+        """
+        Reset all per-module state and cache source lines for annotation lookup.
+        """
         self._init_pii_caches()
         self._module_classdefs = {}
         try:
@@ -68,9 +64,9 @@ class PiiAnnotationChecker(PiiConfigMixin, BaseChecker):
     @utils.only_required_for_messages("pii-invalid-no-pii-annotation")
     def visit_classdef(self, node):
         """
-        Detect PII fields in Django model classes annotated with ``.. no_pii:``.
+        Flag PII fields in ``.. no_pii:``-annotated Django model classes.
         """
-        # Index every class definition in the module for same-module ancestry BFS.
+        # Index for same-module ancestry BFS.
         self._module_classdefs[node.name] = node
 
         if not self._is_annotation_eligible_django_model(node):

@@ -7,11 +7,13 @@ from astroid import nodes as astroid_nodes
 from pylint.checkers import BaseChecker, utils
 
 from .common import BASE_ID, check_visitors
-from ._pii_common import _LOG_METHODS, _DEFAULT_SQUELCH_FLAG, PiiConfigMixin
+from ._pii_common import _LOG_METHODS, PiiConfigMixin
 
 
 def register_checkers(linter):
-    """Register the PII missing-squelch checker."""
+    """
+    Register the PII missing-squelch checker.
+    """
     linter.register_checker(PiiMissingSquelchChecker(linter))
 
 
@@ -23,7 +25,6 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
 
     name = "pii-missing-squelch"
 
-    # Message definitions — one symbol covers log + print + exception
     msgs = {
         ("W%d30" % BASE_ID): (
             "PII term '%s' exposed in %s without a SQUELCH_PII_IN_LOGS guard. "
@@ -31,116 +32,24 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
             "pii-missing-squelch",
             "A log call, print/stdout/stderr write, or raised exception inside a "
             "Django model method exposes likely PII without a SQUELCH_PII_IN_LOGS "
-            "guard.  Wrap the offending line with: if not SQUELCH_PII_IN_LOGS: ...",
+            "guard. Wrap the offending line with: if not SQUELCH_PII_IN_LOGS: ...",
         ),
     }
 
-    # Configurable options
-    # NOTE: All shared PII options are defined here.  PiiAnnotationChecker
-    #       reads them from linter.config via getattr() with safe defaults.
-    options = (
-        (
-            "pii-terms",
-            {
-                "default": (
-                    # Curated OEP-0030 PII identifiers. Generic terms (name, ip, sex,
-                    # image, video, title, bio, social, website) excluded to avoid false
-                    # positives; add them back via this option in your pylintrc if needed.
-                    "email, secondary_email, "
-                    "username, retired_username, "
-                    "password, "
-                    "full_name, first_name, last_name, "
-                    "phone, phone_number, "
-                    "birth_date, "
-                    "ip_address, "
-                    "location, address, mailing_address, "
-                    "gender, "
-                    "profile_image, "
-                    "job_title, "
-                    "social_link"
-                ),
-                "type": "csv",
-                "metavar": "<comma-separated PII terms>",
-                "help": (
-                    "Comma-separated OEP-0030 PII identifier substrings matched against variable "
-                    "names and attribute accesses passed to log/print/exception sinks. "
-                    "String literals are NOT matched — only actual variable/attribute references."
-                ),
-            },
-        ),
-        (
-            "pii-safe-key-patterns",
-            {
-                "default": (
-                    "user_id, course_id, thread_id, comment_id, block_id, "
-                    "usage_id, usage_key, anonymous_user_id, service_username, "
-                    "email_enabled, email_sent_on, email_scheduled, "
-                    "require_course_email_auth, reported_content_email_notifications, "
-                    "email_reminder_sent, eligibility_email_message, receipt_email_message, "
-                    "proctoring_escalation_email, email_cadence, "
-                    "attr_full_name, default_full_name, attr_first_name, default_first_name, "
-                    "attr_last_name, default_last_name, attr_username, default_username, "
-                    "attr_email, default_email, skip_email_verification, location, _location, "
-                    "example_full_name"
-                ),
-                "type": "csv",
-                "metavar": "<comma-separated safe key patterns>",
-                "help": (
-                    "Exact identifiers that look like PII terms but are approved as "
-                    "non-sensitive (e.g. surrogate keys). Exact match only."
-                ),
-            },
-        ),
-        (
-            "pii-squelch-flag",
-            {
-                "default": _DEFAULT_SQUELCH_FLAG,
-                "type": "string",
-                "metavar": "<flag name>",
-                "help": (
-                    "Name of the feature toggle that gates PII-inclusive log/print/exception "
-                    "output. PII sinks must be inside an if-block that tests this flag. "
-                    "Default: SQUELCH_PII_IN_LOGS."
-                ),
-            },
-        ),
-        (
-            "pii-django-model-bases",
-            {
-                "default": "Model",
-                "type": "csv",
-                "metavar": "<comma-separated base class names>",
-                "help": (
-                    "Comma-separated list of base class *names* that identify a Django model. "
-                    "The squelch checks only fire inside non-abstract, non-proxy subclasses of "
-                    "these bases (mirroring 'code_annotations django_find_annotations'). "
-                    "Default: Model."
-                ),
-            },
-        ),
-    )
-
-    # Lifecycle
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Cached per-module source lines for comment-style annotation lookup.
-        self._source_lines = []
-        # Config caches — explicitly initialised here so pylint knows they
-        # exist; reset per-module via _init_pii_caches() in visit_module.
+        self._source_lines = []           # source lines for comment-annotation lookup
+        # Config caches — reset each module via _init_pii_caches() in visit_module.
         self._pii_terms_cache = None
         self._safe_keys_cache = None
         self._django_model_bases_cache = None
-        # Per-module mapping of class name → ClassDef node, used by
-        # _raw_ast_is_model_subclass to resolve same-module ancestors.
-        self._module_classdefs = {}
+        self._module_classdefs = {}       # class name → ClassDef for BFS ancestry
 
-    # AST Visitors
-    @utils.only_required_for_messages(
-        "pii-missing-squelch"
-    )
+    @utils.only_required_for_messages("pii-missing-squelch")
     def visit_module(self, node):
-        """Cache source lines and reset all per-module state."""
-        # Reset config caches so options are re-read for each module.
+        """
+        Reset all per-module state and cache source lines for annotation lookup.
+        """
         self._init_pii_caches()
         self._module_classdefs = {}
         try:
@@ -153,14 +62,14 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
     @utils.only_required_for_messages("pii-missing-squelch")
     def visit_classdef(self, node):
         """
-        Index every class definition for same-module ancestry resolution.
+        Index class definitions for same-module ancestry resolution.
         """
         self._module_classdefs[node.name] = node
 
     @utils.only_required_for_messages("pii-missing-squelch")
     def visit_call(self, node):
         """
-        Check logging and print/stdout/stderr calls for unguarded PII.
+        Check log and print/stdout/stderr calls for unguarded PII.
         """
         if self._is_log_call(node):
             self._check_sink(node, "log call")
@@ -170,14 +79,10 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
     @utils.only_required_for_messages("pii-missing-squelch")
     def visit_raise(self, node):
         """
-        Check raised exceptions for unguarded PII in their messages.
+        Check raised exceptions for unguarded PII.
         """
-        if not self._requires_squelch_check(node):
-            return
-        if node.exc is None:
-            return
         exc = node.exc
-        if not isinstance(exc, astroid_nodes.Call):
+        if not self._requires_squelch_check(node) or exc is None or not isinstance(exc, astroid_nodes.Call):
             return
         all_args = list(exc.args) + [kw.value for kw in (exc.keywords or [])]
         for arg in all_args:
@@ -191,10 +96,9 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
                     )
                 return  # at most one message per raise
 
-    # Sink identification helpers
     def _is_log_call(self, node):
         """
-        Return True if *node* is a call to a standard logging method.
+        Return True if *node* is a standard logging method call.
         """
         if not isinstance(node.func, astroid_nodes.Attribute):
             return False
@@ -202,27 +106,29 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
 
     def _is_print_call(self, node):
         """
-        Return True if *node* is a print() or stdout/stderr write() call.
+        Return True if *node* is a print() or sys.stdout/stderr write() call.
         """
         # bare print()
         if isinstance(node.func, astroid_nodes.Name) and node.func.name == "print":
             return True
-        # self.stdout.write(...)  /  sys.stdout.write(...)  /  stderr.write(...)
-        if isinstance(node.func, astroid_nodes.Attribute) and node.func.attrname == "write":
+        # sys.stdout.write(...) / sys.stderr.write(...) / self.stdout.write(...)
+        if (
+            isinstance(node.func, astroid_nodes.Attribute)
+            and node.func.attrname == "write"
+            and isinstance(node.func.expr, astroid_nodes.Attribute)
+            and node.func.expr.attrname in ("stdout", "stderr")
+        ):
             return True
         return False
 
     def _check_sink(self, node, sink_label):
         """
-        Emit ``pii-missing-squelch`` if any argument of *node* contains PII
-        and the call is not inside a SQUELCH_PII_IN_LOGS guard.
+        Emit ``pii-missing-squelch`` if *node* has a PII argument outside a squelch guard.
         """
         if not self._requires_squelch_check(node):
             return
 
-        all_args = list(node.args)
-        for kw in node.keywords or []:
-            all_args.append(kw.value)
+        all_args = list(node.args) + [kw.value for kw in (node.keywords or [])]
         for arg in all_args:
             pii_term = self._contains_pii(arg)
             if pii_term:
@@ -236,14 +142,13 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
 
     def _requires_squelch_check(self, node):
         """
-        Return True if *node* is inside an eligible Django model that is
-        NOT annotated with ``.. no_pii:``.
+        Return True if *node* is inside an eligible Django model without ``.. no_pii:``.
         """
         current = node.parent
         while current is not None:
             if isinstance(current, astroid_nodes.ClassDef):
                 if self._is_annotation_eligible_django_model(current):
-                    # Inside an eligible model — require guard ONLY if not safe.
+                    # Require squelch guard only when the model lacks .. no_pii:.
                     return not self._class_has_no_pii_annotation(current)
                 # Inside a non-model class — keep walking up.
             current = current.parent
