@@ -9,6 +9,7 @@ Shared PII checker infrastructure: constants, option defaults, and helpers.
 
 import re
 
+from astroid import exceptions as astroid_exceptions
 from astroid import nodes as astroid_nodes
 from pylint.checkers import BaseChecker
 
@@ -26,21 +27,22 @@ _NO_PII_DOCSTRING_RE = re.compile(r"\.\.\s*no_pii", re.IGNORECASE)
 _NO_PII_COMMENT_RE = re.compile(r"[\s]*#[\s]*\.\.\s*no_pii", re.IGNORECASE)
 
 # Lines above ``class`` to scan for a comment-style annotation.
-_ANNOTATION_LOOKAHEAD = 5
+_ANNOTATION_LOOKAHEAD = 10
 
 # Default squelch feature-flag name.
 _DEFAULT_SQUELCH_FLAG = "SQUELCH_PII_IN_LOGS"
 
 # OEP-0030 PII identifier substrings — substring-matched against variable names.
 _DEFAULT_PII_TERMS = [
-    "email", "secondary_email",
-    "username", "retired_username",
+    "email",
+    "username",
     "password",
     "full_name", "first_name", "last_name",
-    "phone", "phone_number",
+    "phone",
     "birth_date",
     "ip_address",
-    "address", "mailing_address",
+    "location",
+    "address",
     "gender",
     "profile_image",
     "job_title",
@@ -59,7 +61,6 @@ _DEFAULT_SAFE_KEYS = [
     "attr_full_name", "default_full_name", "attr_first_name", "default_first_name",
     "attr_last_name", "default_last_name", "attr_username", "default_username",
     "attr_email", "default_email", "skip_email_verification",
-    "location", "_location",
     "example_full_name",
 ]
 
@@ -192,14 +193,14 @@ class PiiConfigMixin:
         Return True if *node* is nested inside an ``if`` block that tests the
         configured squelch flag.  Recognised patterns:
 
-        1. ``if SQUELCH_PII_IN_LOGS:``
-        2. ``if not SQUELCH_PII_IN_LOGS:``
-        3. ``if settings.SQUELCH_PII_IN_LOGS:``
+        1. ``if getattr(settings, 'SQUELCH_PII_IN_LOGS', False):``
+        2. ``if settings.SQUELCH_PII_IN_LOGS:``
+        3. ``if settings.FEATURES.get('SQUELCH_PII_IN_LOGS'):``
         4. ``if settings.FEATURES['SQUELCH_PII_IN_LOGS']:``
-        5. ``if settings.FEATURES.get('SQUELCH_PII_IN_LOGS'):``
-        6. ``if SQUELCH_PII_IN_LOGS.is_enabled():``
-        7. ``if not SQUELCH_PII_IN_LOGS.is_active():``
-        8. ``if getattr(settings, 'SQUELCH_PII_IN_LOGS', False):``
+        5. ``if SQUELCH_PII_IN_LOGS.is_enabled():``
+        6. ``if SQUELCH_PII_IN_LOGS:``
+        7. ``if not SQUELCH_PII_IN_LOGS:``
+        8. ``if not SQUELCH_PII_IN_LOGS.is_active():``
         """
         flag = self._squelch_flag()
         current = node.parent
@@ -216,20 +217,30 @@ class PiiConfigMixin:
         """
         Return True if AST node *test* references the squelch *flag*.
         """
-        # Pattern 1: if SQUELCH_PII_IN_LOGS:
-        if isinstance(test, astroid_nodes.Name):
-            return test.name == flag
+        # Pattern 1: if getattr(settings, 'SQUELCH_PII_IN_LOGS', False)
+        if isinstance(test, astroid_nodes.Call):
+            func = test.func
+            if (
+                isinstance(func, astroid_nodes.Name)
+                and func.name == "getattr"
+                and len(test.args) >= 2
+            ):
+                second_arg = test.args[1]
+                if isinstance(second_arg, astroid_nodes.Const) and second_arg.value == flag:
+                    return True
 
-        # Pattern 2: if not <X>:  — recurse into the operand
-        if isinstance(test, astroid_nodes.UnaryOp) and test.op == "not":
-            return self._test_references_flag(test.operand, flag)
+        # Pattern 2: if settings.SQUELCH_PII_IN_LOGS
+        if isinstance(test, astroid_nodes.Attribute) and test.attrname == flag:
+            return True
 
-        # Pattern 3: if settings.SQUELCH_PII_IN_LOGS:
-        if isinstance(test, astroid_nodes.Attribute):
-            if test.attrname == flag:
-                return True
+        # Pattern 3: if settings.FEATURES.get('SQUELCH_PII_IN_LOGS')
+        if isinstance(test, astroid_nodes.Call) and isinstance(test.func, astroid_nodes.Attribute):
+            if test.func.attrname == "get" and test.args:
+                first_arg = test.args[0]
+                if isinstance(first_arg, astroid_nodes.Const) and first_arg.value == flag:
+                    return True
 
-        # Pattern 4: if settings.FEATURES['SQUELCH_PII_IN_LOGS']:
+        # Pattern 4: if settings.FEATURES['SQUELCH_PII_IN_LOGS']
         if isinstance(test, astroid_nodes.Subscript):
             slc = test.slice
             _IndexNode = getattr(astroid_nodes, "Index", None)
@@ -238,29 +249,24 @@ class PiiConfigMixin:
             if isinstance(slc, astroid_nodes.Const) and slc.value == flag:
                 return True
 
-        # Pattern 5 & 6: method calls — dict.get(flag) or flag_obj.is_enabled()
-        if isinstance(test, astroid_nodes.Call):
-            func = test.func
-            if isinstance(func, astroid_nodes.Attribute):
-                method = func.attrname
-                if method in ("get", "is_enabled", "is_active", "is_waffle_flag_active"):
-                    # dict.get('SQUELCH_PII_IN_LOGS') — check first arg
-                    if test.args:
-                        first_arg = test.args[0]
-                        if isinstance(first_arg, astroid_nodes.Const) and first_arg.value == flag:
-                            return True
-                    # flag_obj.is_enabled() — check the receiver
-                    if self._test_references_flag(func.expr, flag):
-                        return True
+        # Pattern 5: if SQUELCH_PII_IN_LOGS.is_enabled()
+        if isinstance(test, astroid_nodes.Call) and isinstance(test.func, astroid_nodes.Attribute):
+            if test.func.attrname in ("is_enabled", "is_waffle_flag_active"):
+                if self._test_references_flag(test.func.expr, flag):
+                    return True
 
-            # Pattern 8: getattr(settings, 'SQUELCH_PII_IN_LOGS', False)
-            if (
-                isinstance(func, astroid_nodes.Name)
-                and func.name == "getattr"
-                and len(test.args) >= 2
-            ):
-                second_arg = test.args[1]
-                if isinstance(second_arg, astroid_nodes.Const) and second_arg.value == flag:
+        # Pattern 6: if SQUELCH_PII_IN_LOGS
+        if isinstance(test, astroid_nodes.Name) and test.name == flag:
+            return True
+
+        # Pattern 7 & 8: negated forms
+        if isinstance(test, astroid_nodes.UnaryOp) and test.op == "not":
+            return self._test_references_flag(test.operand, flag)
+
+        # Backward-compatible method-call forms that still reference the flag.
+        if isinstance(test, astroid_nodes.Call) and isinstance(test.func, astroid_nodes.Attribute):
+            if test.func.attrname in ("is_active",):
+                if self._test_references_flag(test.func.expr, flag):
                     return True
 
         return False
@@ -271,55 +277,56 @@ class PiiConfigMixin:
         Checks Name, Attribute, f-strings, binary ops, dicts, and nested calls.
         String literals are NOT checked.
         """
-        if node is None:
-            return None
+        match node:
+            case None:
+                return None
 
-        # A plain name: check it directly.
-        if isinstance(node, astroid_nodes.Name):
-            if self._is_pii_name(node.name):
-                return node.name
+            # A plain name: check it directly.
+            case astroid_nodes.Name():
+                if self._is_pii_name(node.name):
+                    return node.name
 
-        # An attribute access (e.g. user.email, request.user.username).
-        elif isinstance(node, astroid_nodes.Attribute):
-            if self._is_pii_name(node.attrname):
-                return node.attrname
+            # An attribute access (e.g. user.email, request.user.username).
+            case astroid_nodes.Attribute():
+                if self._is_pii_name(node.attrname):
+                    return node.attrname
 
-        # A call: recurse into args and keyword values.
-        elif isinstance(node, astroid_nodes.Call):
-            for arg in node.args:
-                found = self._contains_pii(arg)
-                if found:
-                    return found
-            for kw in node.keywords or []:
-                found = self._contains_pii(kw.value)
-                if found:
-                    return found
-
-        # f-string: recurse into each formatted value.
-        elif isinstance(node, astroid_nodes.JoinedStr):
-            for value in node.values:
-                if isinstance(value, astroid_nodes.FormattedValue):
-                    found = self._contains_pii(value.value)
+            # A call: recurse into args and keyword values.
+            case astroid_nodes.Call():
+                for arg in node.args:
+                    found = self._contains_pii(arg)
+                    if found:
+                        return found
+                for kw in node.keywords or []:
+                    found = self._contains_pii(kw.value)
                     if found:
                         return found
 
-        # Binary operation (e.g. "hello " + username  or  "email: %s" % email).
-        elif isinstance(node, astroid_nodes.BinOp):
-            return self._contains_pii(node.left) or self._contains_pii(node.right)
+            # f-string: recurse into each formatted value.
+            case astroid_nodes.JoinedStr():
+                for value in node.values:
+                    if isinstance(value, astroid_nodes.FormattedValue):
+                        found = self._contains_pii(value.value)
+                        if found:
+                            return found
 
-        # Tuple / List / Set: recurse into each element.
-        elif isinstance(node, (astroid_nodes.Tuple, astroid_nodes.List, astroid_nodes.Set)):
-            for elt in node.elts:
-                found = self._contains_pii(elt)
-                if found:
-                    return found
+            # Binary operation (e.g. "hello " + username  or  "email: %s" % email).
+            case astroid_nodes.BinOp():
+                return self._contains_pii(node.left) or self._contains_pii(node.right)
 
-        # Dict: recurse into values (keys are usually string identifiers).
-        elif isinstance(node, astroid_nodes.Dict):
-            for _key, value in node.items:
-                found = self._contains_pii(value)
-                if found:
-                    return found
+            # Tuple / List / Set: recurse into each element.
+            case astroid_nodes.Tuple() | astroid_nodes.List() | astroid_nodes.Set():
+                for elt in node.elts:
+                    found = self._contains_pii(elt)
+                    if found:
+                        return found
+
+            # Dict: recurse into values (keys are usually string identifiers).
+            case astroid_nodes.Dict():
+                for _key, value in node.items:
+                    found = self._contains_pii(value)
+                    if found:
+                        return found
 
         return None
 
@@ -351,7 +358,8 @@ class PiiConfigMixin:
                 if ancestor.name in model_bases:
                     is_model_subclass = True
                     break
-        except Exception:  # pylint: disable=broad-except
+        except astroid_exceptions.AstroidError:
+            # Ancestor inference failed; fallback to raw AST base-name walk below.
             pass
 
         # Fallback: walk raw AST base names for standalone pylint runs.

@@ -696,8 +696,6 @@ def test_pii_in_log_new_safe_keys_not_flagged():
             email_sent_on = None
             require_course_email_auth = None
             attr_full_name = None
-            location = None
-            _location = None
             proctoring_escalation_email = None
             email_cadence = None
             def notify(self):
@@ -706,9 +704,27 @@ def test_pii_in_log_new_safe_keys_not_flagged():
                 log.info(self.email_sent_on)
                 log.info(self.require_course_email_auth)
                 log.info(self.attr_full_name)
-                log.info(self.location)
-                log.info(self._location)
                 log.info(self.proctoring_escalation_email)
                 log.info(self.email_cadence)
     """
     assert not _run(source)
+
+
+def test_pii_in_log_location_and__location_flagged():
+    """location and _location are treated as PII terms and should fire."""
+    source = """\
+        import logging
+        log = logging.getLogger(__name__)
+        class Model:
+            pass
+        class ProfileModel(Model):
+            '''.. pii: Stores learner profile PII.'''
+            location = None
+            _location = None
+            def log_profile(self):
+                log.info(self.location)             #=A
+                log.info(self._location)            #=B
+    """
+    messages = _run(source)
+    assert _has(messages, "A")
+    assert _has(messages, "B")
