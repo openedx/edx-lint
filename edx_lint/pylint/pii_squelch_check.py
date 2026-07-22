@@ -226,52 +226,53 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         if node is None:
             return None
 
-        # A plain name: check it directly.
-        if isinstance(node, astroid_nodes.Name):
-            if self._is_pii_name(node.name):
-                return node.name
+        match node:
+            # A plain name: check it directly.
+            case astroid_nodes.Name():
+                if self._is_pii_name(node.name):
+                    return node.name
 
-        # An attribute access (e.g. user.email, request.user.username).
-        elif isinstance(node, astroid_nodes.Attribute):
-            if self._is_pii_name(node.attrname):
-                return node.attrname
+            # An attribute access (e.g. user.email, request.user.username).
+            case astroid_nodes.Attribute():
+                if self._is_pii_name(node.attrname):
+                    return node.attrname
 
-        # A call: recurse into args and keyword values.
-        elif isinstance(node, astroid_nodes.Call):
-            for arg in node.args:
-                found = self._contains_pii(arg)
-                if found:
-                    return found
-            for kw in node.keywords or []:
-                found = self._contains_pii(kw.value)
-                if found:
-                    return found
-
-        # f-string: recurse into each interpolated {expr}.
-        elif isinstance(node, astroid_nodes.JoinedStr):
-            for child in node.values:
-                if isinstance(child, astroid_nodes.FormattedValue):
-                    found = self._contains_pii(child.value)
+            # A call: recurse into args and keyword values.
+            case astroid_nodes.Call():
+                for arg in node.args:
+                    found = self._contains_pii(arg)
+                    if found:
+                        return found
+                for kw in node.keywords or []:
+                    found = self._contains_pii(kw.value)
                     if found:
                         return found
 
-        # Binary op (e.g. "hello " + username  or  "email: %s" % email).
-        elif isinstance(node, astroid_nodes.BinOp):
-            return self._contains_pii(node.left) or self._contains_pii(node.right)
+            # f-string: recurse into each interpolated {expr}.
+            case astroid_nodes.JoinedStr():
+                for child in node.values:
+                    if isinstance(child, astroid_nodes.FormattedValue):
+                        found = self._contains_pii(child.value)
+                        if found:
+                            return found
 
-        # Tuple / List / Set: recurse into each element.
-        elif isinstance(node, (astroid_nodes.Tuple, astroid_nodes.List, astroid_nodes.Set)):
-            for elt in node.elts:
-                found = self._contains_pii(elt)
-                if found:
-                    return found
+            # Binary op (e.g. "hello " + username  or  "email: %s" % email).
+            case astroid_nodes.BinOp():
+                return self._contains_pii(node.left) or self._contains_pii(node.right)
 
-        # Dict: recurse into values (keys are usually string identifiers).
-        elif isinstance(node, astroid_nodes.Dict):
-            for _key, value in node.items:
-                found = self._contains_pii(value)
-                if found:
-                    return found
+            # Tuple / List / Set: recurse into each element.
+            case astroid_nodes.Tuple() | astroid_nodes.List() | astroid_nodes.Set():
+                for elt in node.elts:
+                    found = self._contains_pii(elt)
+                    if found:
+                        return found
+
+            # Dict: recurse into values (keys are usually string identifiers).
+            case astroid_nodes.Dict():
+                for _key, value in node.items:
+                    found = self._contains_pii(value)
+                    if found:
+                        return found
 
         return None
 
@@ -310,10 +311,10 @@ class PiiMissingSquelchChecker(PiiConfigMixin, BaseChecker):
         if (isinstance(test, astroid_nodes.Call)
                 and isinstance(test.func, astroid_nodes.Attribute)
                 and test.func.attrname == "get"
-                and test.args
-                and isinstance(test.args[0], astroid_nodes.Const)
-                and test.args[0].value == flag):
-            return True
+                and test.args):
+            first_arg = test.args[0]
+            if isinstance(first_arg, astroid_nodes.Const) and first_arg.value == flag:
+                return True
 
         # Pattern 4: settings.FEATURES['FLAG']  (Subscript)
         if isinstance(test, astroid_nodes.Subscript):
