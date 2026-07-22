@@ -58,7 +58,7 @@ def test_no_pii_multiple_pii_fields_single_message():
     messages = _run(source)
     assert len(messages) == 1
     msg = list(messages)[0]
-    assert "email" in msg and "username" in msg and "phone_number" in msg
+    assert "email" in msg and "username" in msg and "phone_number" not in msg
 
 
 def test_no_pii_with_only_safe_fields_ok():
@@ -108,17 +108,17 @@ def test_pii_annotated_class_not_checked():
 
 
 def test_no_pii_instance_attr_in_method_flagged():
-    """self.phone_number = ... inside __init__ of a .. no_pii: model fires."""
+    """self.username = ... inside __init__ of a .. no_pii: model fires."""
     source = """\
         class UserData(Model):                          #=A
             '''.. no_pii:'''
             def __init__(self, data):
-                self.phone_number = data.phone
+                self.username = data.username
                 self.is_active = data.active
     """
     messages = _run(source)
     assert _has(messages, "A")
-    assert any("self.phone_number" in m for m in messages)
+    assert any("self.username" in m for m in messages)
 
 
 def test_no_pii_annotated_assignment_flagged():

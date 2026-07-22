@@ -5,7 +5,6 @@ will register them with pylint.
 """
 
 from edx_lint.pylint import (
-    _pii_common,
     annotations_check,
     getattr_check,
     i18n_check,
@@ -24,7 +23,6 @@ MODS = [
     getattr_check,
     i18n_check,
     module_trace,
-    _pii_common,
     pii_squelch_check,
     pii_annotation_check,
     range_check,

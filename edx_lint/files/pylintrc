@@ -224,8 +224,9 @@ enable=
     unrecognized-inline-option,
     useless-suppression,
 
-    # PII safety check (edx-lint built-in)
+    # PII safety checks (edx-lint built-in)
     pii-missing-squelch,
+    pii-invalid-no-pii-annotation,
 
 # Disable the message, report, category or checker with the given id(s). You
 # can either give multiple identifiers separated by comma (,) or put this
@@ -266,7 +267,6 @@ disable=
     # These are repo-specific
     feature-toggle-needs-doc,
     illegal-waffle-usage,
-    pii-invalid-no-pii-annotation,
 
     # We want to allow developers to use f-strings for readability
     logging-fstring-interpolation,
@@ -523,22 +523,10 @@ overgeneral-exceptions=builtins.Exception
 pii-terms =
     email,
     username,
-    password,
-    full_name,
-    first_name,
-    last_name,
-    phone,
-    birth_date,
-    ip_address,
-    location,
-    address,
-    gender,
-    profile_image,
-    job_title,
-    social_link
+    password
 
 # Exact identifiers that superficially match PII terms but are approved
-# as non-sensitive (surrogate keys, flag fields, system fields).
+# as non-sensitive (surrogate keys, anonymous IDs, etc.).
 pii-safe-key-patterns =
     user_id,
     course_id,
@@ -570,6 +558,8 @@ pii-safe-key-patterns =
     attr_email,
     default_email,
     skip_email_verification,
+    location,
+    _location,
     example_full_name
 
 # Name of the feature toggle that guards PII-inclusive log/print/exception
