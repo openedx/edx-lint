@@ -27,19 +27,7 @@ class PiiConfigMixin:
         cfg = self.linter.config
         raw_terms = getattr(cfg, "pii_terms", ["email", "username", "password"])
         self._pii_terms_cache = [t.strip().lower() for t in raw_terms if t.strip()]
-        raw_keys = getattr(cfg, "pii_safe_key_patterns", [
-            "user_id", "course_id", "thread_id", "comment_id",
-            "block_id", "usage_id", "usage_key", "anonymous_user_id",
-            "service_username",
-            "email_enabled", "email_sent_on", "email_scheduled",
-            "require_course_email_auth", "reported_content_email_notifications",
-            "email_reminder_sent", "eligibility_email_message", "receipt_email_message",
-            "proctoring_escalation_email", "email_cadence",
-            "attr_full_name", "default_full_name", "attr_first_name", "default_first_name",
-            "attr_last_name", "default_last_name", "attr_username", "default_username",
-            "attr_email", "default_email", "skip_email_verification",
-            "location", "_location", "example_full_name",
-        ])
+        raw_keys = getattr(cfg, "pii_safe_key_patterns", [])
         self._safe_keys_cache = {k.strip().lower() for k in raw_keys if k.strip()}
 
     def _pii_terms(self):
