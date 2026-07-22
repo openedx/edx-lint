@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+6.2.0 - 2026-06-26
+~~~~~~~~~~~~~~~~~~~
+
+* Add PII safety checker for logs, print statements, exceptions, and stale ``.. no_pii:`` annotations.
+
 5.7.0 - 2025-04-21
 ~~~~~~~~~~~~~~~~~~
 
