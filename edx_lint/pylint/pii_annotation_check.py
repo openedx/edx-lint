@@ -66,7 +66,7 @@ class PiiAnnotationChecker(BaseChecker):
             module_bytes = node.stream().read()
             encoding = node.file_encoding or "utf-8"
             self._source_lines = module_bytes.decode(encoding).splitlines()
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self._source_lines = []
 
     def _init_pii_caches(self):

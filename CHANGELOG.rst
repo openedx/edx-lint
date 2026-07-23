@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+6.2.0 - 2026-06-26
+~~~~~~~~~~~~~~~~~~~
+
+Add `pii-invalid-no-pii-annotation` checker to fail when a new tentative PII field is introduced in a Django model annotated as `.. no_pii:`.
+
 5.7.0 - 2025-04-21
 ~~~~~~~~~~~~~~~~~~
 
