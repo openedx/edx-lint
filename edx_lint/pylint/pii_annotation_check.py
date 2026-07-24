@@ -78,7 +78,7 @@ class PiiAnnotationChecker(BaseChecker):
         if self._pii_terms_cache is not None:
             return
         cfg = self.linter.config
-        raw_terms = getattr(cfg, "pii_terms", ["email", "username", "password"])
+        raw_terms = getattr(cfg, "pii_terms", ["email", "username"])
         self._pii_terms_cache = [t.strip().lower() for t in raw_terms if t.strip()]
 
     def _pii_terms(self):

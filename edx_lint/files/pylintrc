@@ -521,5 +521,4 @@ overgeneral-exceptions=builtins.Exception
 # Substring matching is used, so 'email' will match 'user_email_address'.
 pii-terms =
     email,
-    username,
-    password
+    username
