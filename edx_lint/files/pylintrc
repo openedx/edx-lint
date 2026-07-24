@@ -224,6 +224,9 @@ enable=
     unrecognized-inline-option,
     useless-suppression,
 
+    # PII safety checks
+    pii-invalid-no-pii-annotation,
+
 # Disable the message, report, category or checker with the given id(s). You
 # can either give multiple identifiers separated by comma (,) or put this
 # option multiple times (only on the command line, not in the configuration
@@ -510,3 +513,12 @@ int-import-graph=
 # Exceptions that will emit a warning when being caught. Defaults to
 # "builtins.Exception"
 overgeneral-exceptions=builtins.Exception
+
+
+[PII]
+
+# Comma-separated list of identifier substrings treated as likely PII.
+# Substring matching is used, so 'email' will match 'user_email_address'.
+pii-terms =
+    email,
+    username
