@@ -53,8 +53,51 @@ exclude = ["test*"]
     "files/.*",
 ]
 
+[dependency-groups]
+test-base = [
+    "coverage",
+    "pytest",
+]
+test = [
+    {include-group = "test-base"},
+    "Django>=5.2,<6.0",
+]
+django42 = [
+    {include-group = "test-base"},
+    "Django>=4.2,<4.3",
+]
+quality = [
+    {include-group = "test"},
+    "edx-lint",
+    "pylint",
+    "pycodestyle",
+]
+ci = [
+    "tox",
+    "tox-uv>=1",
+]
+dev = [
+    {include-group = "quality"},
+    {include-group = "ci"},
+]
+
 [tool.uv]
 package = true
+conflicts = [
+    [{group = "test"}, {group = "django42"}],
+]
+
+#  DO NOT EDIT constraint-dependencies DIRECTLY.
+#  This list is managed by `edx_lint write_uv_constraints`
+#  and will be overwritten the next time `make upgrade` is run.
+#  - GLOBAL constraints: edit edx_lint/files/common_constraints.txt
+#  - REPO-SPECIFIC constraints: edit [tool.edx_lint].uv_constraints in this file
+constraint-dependencies = [
+    "Django<6.0",
+    "elasticsearch<7.14.0",
+    "social-auth-app-django<6.0.0",
+    "social-auth-core<5.0.0",
+]
 
 [tool.coverage.run]
 branch = true
