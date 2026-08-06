@@ -1,0 +1,56 @@
+name: Semantic Release
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  run_tests:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  release:
+    needs: run_tests
+    if: github.ref_name == 'master'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-release
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref_name }}
+    - run: git reset --hard ${{ github.sha }}
+    - name: Python Semantic Release
+      id: release
+      uses: python-semantic-release/python-semantic-release@350c48fcb3ffcdfd2e0a235206bc2ecea6b69df0 # v10.5.3
+      with:
+        git_committer_name: "github-actions"
+        git_committer_email: "github-actions@github.com"
+        changelog: "false"
+    - name: Upload dist
+      if: steps.release.outputs.released == 'true'
+      uses: actions/upload-artifact@601987b96cf95d5f9a5fe5e0ec0e34c5583d7fc6 # v4.4.3
+      with:
+        name: dist
+        path: dist/
+    outputs:
+      released: ${{ steps.release.outputs.released }}
+      version: ${{ steps.release.outputs.version }}
+
+  publish_to_pypi:
+    needs: release
+    if: needs.release.outputs.released == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - uses: actions/download-artifact@fa0a91b85d4f404e444306234e16dac3d6cce7b0 # v4.1.8
+      with:
+        name: dist
+        path: dist/
+    - uses: pypa/gh-action-pypi-publish@release/v1

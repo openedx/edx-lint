@@ -81,6 +81,12 @@ dev = [
     {include-group = "ci"},
 ]
 
+[tool.semantic_release]
+# No version_toml — version is dynamic via setuptools-scm
+build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
+allow_zero_version = true
+major_on_zero = false
+
 [tool.uv]
 package = true
 conflicts = [
