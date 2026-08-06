@@ -2,4 +2,5 @@
 edx_lint standardizes lint configuration and additional plugins for use in
 Open edX code.
 """
-__version__ = "6.1.0"
+from importlib.metadata import version
+__version__ = version("edx-lint")

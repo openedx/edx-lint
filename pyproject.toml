@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm>8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edx-lint"
+dynamic = ["version"]
+description = "edX-authored pylint checkers"
+readme = "README.rst"
+license = "Apache-2.0"
+license-files = ["LICENSE.txt"]
+requires-python = ">=3.12"
+authors = [
+    {name = "edX", email = "oscm@edx.org"},
+]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "code-annotations>=1.1.0",
+    "click>=8.0",
+    "click-log>=0.4.0",
+    "pylint>=4.0",
+    "pylint-django>=2.6",
+    "pylint-celery>=0.3",
+    "six>=1.16.0",
+    "tomlkit>=0.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/openedx/edx-lint"
+
+[project.scripts]
+edx_lint = "edx_lint.cmd.main:main"
+lint-amnesty = "edx_lint.cmd.amnesty:pylint_amnesty"
+
+[tool.setuptools_scm]
+version_scheme = "only-version"
+local_scheme = "no-local-version"
+fallback_version = "0.0.0.dev0"
+
+[tool.setuptools.packages.find]
+include = ["edx_lint*"]
+exclude = ["test*"]
+
+[tool.setuptools.package-data]
+"edx_lint" = [
+    "files/*",
+    "files/.*",
+]
+
+[tool.uv]
+package = true
+
+[tool.coverage.run]
+branch = true
+source = ["edx_lint"]
+omit = ["*/tests/*", "*/migrations/*", "*/__pycache__/*", "test/input/*"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
