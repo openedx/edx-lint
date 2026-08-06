@@ -44,6 +44,7 @@ local_scheme = "no-local-version"
 fallback_version = "0.0.0.dev0"
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["edx_lint*"]
 exclude = ["test*"]
 

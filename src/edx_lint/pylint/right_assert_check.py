@@ -87,7 +87,7 @@ class AssertChecker(BaseChecker):
 
             compare = first_arg.ops[0][0]
             right = first_arg.ops[0][1]
-            if isinstance(right, astroid.Const) and right.value is None:
+            if isinstance(right, astroid.Const) and right.value is None:  # pylint: disable=isinstance-second-argument-not-valid-type
                 # Comparing to None, handle specially.
                 better = self.BETTER_NONE_COMPARES[compare]
             else:

@@ -10,7 +10,7 @@ test: ## run all the tests
 	uv run --group test pytest
 
 pylint: ## check our own code with pylint
-	uv run --group quality pylint edx_lint test
+	uv run --group quality pylint src/edx_lint test
 
 clean: ## remove all the unneeded artifacts
 	-rm -rf .tox

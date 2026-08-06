@@ -26,7 +26,7 @@ def is_test_case_class(node):
     if dunder_test:
         if isinstance(dunder_test[0], astroid.AssignName):
             value = list(dunder_test[0].assigned_stmts())
-            if len(value) == 1 and isinstance(value[0], astroid.Const):
+            if len(value) == 1 and isinstance(value[0], astroid.Const):  # pylint: disable=isinstance-second-argument-not-valid-type
                 return bool(value[0].value)
 
     return True

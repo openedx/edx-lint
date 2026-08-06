@@ -49,7 +49,7 @@ class RangeChecker(BaseChecker):
             return
 
         first = node.args[0]
-        if not isinstance(first, astroid.Const):
+        if not isinstance(first, astroid.Const):  # pylint: disable=isinstance-second-argument-not-valid-type
             # Computed first argument, can't tell what it is.
             return
 
@@ -61,7 +61,7 @@ class RangeChecker(BaseChecker):
         three1 = False
         if len(node.args) == 3:
             third = node.args[2]
-            if isinstance(third, astroid.Const):
+            if isinstance(third, astroid.Const):  # pylint: disable=isinstance-second-argument-not-valid-type
                 if isinstance(third.value, int) and third.value == 1:
                     three1 = True
 
