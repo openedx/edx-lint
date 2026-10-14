@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+6.2.0 - 2026-06-26
+~~~~~~~~~~~~~~~~~~~
+
+* Added the `pii-invalid-no-pii-annotation` checker to validate that Django models claiming `.. no_pii:` do not actually contain PII fields.
+
 5.7.0 - 2025-04-21
 ~~~~~~~~~~~~~~~~~~
 
