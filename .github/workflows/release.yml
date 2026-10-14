@@ -30,10 +30,9 @@ jobs:
       with:
         git_committer_name: "github-actions"
         git_committer_email: "github-actions@github.com"
-        changelog: "false"
     - name: Upload dist
       if: steps.release.outputs.released == 'true'
-      uses: actions/upload-artifact@601987b96cf95d5f9a5fe5e0ec0e34c5583d7fc6 # v4.4.3
+      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
       with:
         name: dist
         path: dist/
@@ -49,7 +48,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-    - uses: actions/download-artifact@fa0a91b85d4f404e444306234e16dac3d6cce7b0 # v4.1.8
+    - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
       with:
         name: dist
         path: dist/

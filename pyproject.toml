@@ -41,7 +41,7 @@ lint-amnesty = "edx_lint.cmd.amnesty:pylint_amnesty"
 [tool.setuptools_scm]
 version_scheme = "only-version"
 local_scheme = "no-local-version"
-fallback_version = "0.0.0.dev0"
+fallback_version = "0.0.0"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -88,8 +88,17 @@ build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND
 allow_zero_version = true
 major_on_zero = false
 
+[tool.semantic_release.changelog]
+mode = "update"
+insertion_flag = ".. changelog-insertion-marker"
+
+[tool.semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.rst"
+output_format = "rst"
+
 [tool.uv]
 package = true
+default-groups = []
 conflicts = [
     [{group = "test"}, {group = "django42"}],
 ]
