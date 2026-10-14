@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "edX-authored pylint checkers"
 readme = "README.rst"
 license = "Apache-2.0"
-license-files = ["LICENSE.txt"]
+license-files = ["LICENSE.txt", "NOTICE.txt"]
 requires-python = ">=3.12"
 authors = [
     {name = "edX", email = "oscm@edx.org"},
@@ -41,7 +41,6 @@ lint-amnesty = "edx_lint.cmd.amnesty:pylint_amnesty"
 [tool.setuptools_scm]
 version_scheme = "only-version"
 local_scheme = "no-local-version"
-fallback_version = "0.0.0"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -85,8 +84,6 @@ dev = [
 [tool.semantic_release]
 # No version_toml — version is dynamic via setuptools-scm
 build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
-allow_zero_version = true
-major_on_zero = false
 
 [tool.semantic_release.changelog]
 mode = "update"
@@ -95,6 +92,9 @@ insertion_flag = ".. changelog-insertion-marker"
 [tool.semantic_release.changelog.default_templates]
 changelog_file = "CHANGELOG.rst"
 output_format = "rst"
+
+[tool.edx_lint]
+uv_constraints = []
 
 [tool.uv]
 package = true

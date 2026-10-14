@@ -7,10 +7,10 @@ help: ## display this help message
 	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | sort | awk -F ':.*?## ' 'NF==2 {printf "\033[36m  %-25s\033[0m %s\n", $$1, $$2}'
 
 test: ## run all the tests
-	uv run --group test pytest
+	tox
 
 pylint: ## check our own code with pylint
-	uv run --group quality pylint src/edx_lint test
+	tox -e pylint
 
 clean: ## remove all the unneeded artifacts
 	-rm -rf .tox
