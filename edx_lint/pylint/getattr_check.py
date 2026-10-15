@@ -66,7 +66,7 @@ class GetSetAttrLiteralChecker(BaseChecker):
             return
 
         second = node.args[1]
-        if isinstance(second, astroid.Const):
+        if isinstance(second, astroid.Const):  # pylint: disable=isinstance-second-argument-not-valid-type
             if isinstance(second.value, str):
                 # The second argument is a constant string! Might be bad!
                 # Check the string value: if it's an identifier, then no need

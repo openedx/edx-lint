@@ -1,0 +1,126 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm>8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edx-lint"
+dynamic = ["version"]
+description = "edX-authored pylint checkers"
+readme = "README.rst"
+license = "Apache-2.0"
+license-files = ["LICENSE.txt", "NOTICE.txt"]
+requires-python = ">=3.12"
+authors = [
+    {name = "edX", email = "oscm@edx.org"},
+]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "code-annotations>=1.1.0",
+    "click>=8.0",
+    "click-log>=0.4.0",
+    "pylint>=4.0",
+    "pylint-django>=2.6",
+    "pylint-celery>=0.3",
+    "six>=1.16.0",
+    "tomlkit>=0.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/openedx/edx-lint"
+
+[project.scripts]
+edx_lint = "edx_lint.cmd.main:main"
+lint-amnesty = "edx_lint.cmd.amnesty:pylint_amnesty"
+
+[tool.setuptools_scm]
+version_scheme = "only-version"
+local_scheme = "no-local-version"
+
+[tool.setuptools.packages.find]
+include = ["edx_lint*"]
+exclude = ["test*"]
+
+[tool.setuptools.package-data]
+"edx_lint" = [
+    "files/*",
+    "files/.*",
+]
+
+[dependency-groups]
+test-base = [
+    "coverage",
+    "pytest",
+]
+test = [
+    {include-group = "test-base"},
+    "Django>=5.2,<6.0",
+]
+django42 = [
+    {include-group = "test-base"},
+    "Django>=4.2,<4.3",
+]
+quality = [
+    {include-group = "test"},
+    "edx-lint",
+    "pylint",
+    "pycodestyle",
+]
+ci = [
+    "tox",
+    "tox-uv>=1",
+]
+dev = [
+    {include-group = "quality"},
+    {include-group = "ci"},
+]
+
+[tool.semantic_release]
+# No version_toml — version is dynamic via setuptools-scm
+build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
+
+[tool.edx_lint]
+uv_constraints = []
+
+[tool.uv]
+package = true
+default-groups = []
+conflicts = [
+    [{group = "test"}, {group = "django42"}],
+]
+
+#  DO NOT EDIT constraint-dependencies DIRECTLY.
+#  This list is managed by `edx_lint write_uv_constraints`
+#  and will be overwritten the next time `make upgrade` is run.
+#  - GLOBAL constraints: edit edx_lint/files/common_constraints.txt
+#  - REPO-SPECIFIC constraints: edit [tool.edx_lint].uv_constraints in this file
+constraint-dependencies = [
+    "Django<6.0",
+    "elasticsearch<7.14.0",
+    "social-auth-app-django<6.0.0",
+    "social-auth-core<5.0.0",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["edx_lint"]
+omit = ["*/tests/*", "*/migrations/*", "*/__pycache__/*", "test/input/*"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"

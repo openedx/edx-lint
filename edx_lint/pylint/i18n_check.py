@@ -68,7 +68,7 @@ class TranslationStringConstantsChecker(BaseChecker):
             return
 
         first = node.args[0]
-        if isinstance(first, astroid.Const):
+        if isinstance(first, astroid.Const):  # pylint: disable=isinstance-second-argument-not-valid-type
             if isinstance(first.value, str):
                 # The first argument is a constant string! All is well!
                 return
