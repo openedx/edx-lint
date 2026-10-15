@@ -43,7 +43,6 @@ version_scheme = "only-version"
 local_scheme = "no-local-version"
 
 [tool.setuptools.packages.find]
-where = ["src"]
 include = ["edx_lint*"]
 exclude = ["test*"]
 
@@ -84,14 +83,6 @@ dev = [
 [tool.semantic_release]
 # No version_toml — version is dynamic via setuptools-scm
 build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
-
-[tool.semantic_release.changelog]
-mode = "update"
-insertion_flag = ".. changelog-insertion-marker"
-
-[tool.semantic_release.changelog.default_templates]
-changelog_file = "CHANGELOG.rst"
-output_format = "rst"
 
 [tool.edx_lint]
 uv_constraints = []
