@@ -2,7 +2,7 @@
 Pylint plugin: checks that Open edX Events are properly annotated.
 """
 
-from astroid.nodes.node_classes import Name
+from astroid.nodes.node_classes import AnnAssign, Name
 from pylint.checkers import utils
 
 from edx_lint.pylint.annotations_check import AnnotationBaseChecker, check_all_messages
@@ -59,7 +59,7 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
             (
                 "When an Open edX event object is created, a corresponding annotation must be present above in the"
                 " same module and with a matching type",
-            )
+            ),
         ),
     }
 
@@ -109,7 +109,11 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
             elif annotation["annotation_token"] == ".. event_description:":
                 event_description = annotation["annotation_data"]
             if event_type and event_data and event_name:
-                self.current_module_annotation_group_map[line_number] = (event_type, event_data, event_name,)
+                self.current_module_annotation_group_map[line_number] = (
+                    event_type,
+                    event_data,
+                    event_name,
+                )
 
         if not event_type:
             self.add_message(
@@ -180,9 +184,13 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
         if annotation_line_number > node.tolineno:
             # The next annotation is located after the current node
             return True
-        annotation_line_number = self.current_module_annotation_group_line_numbers.pop(0)
+        annotation_line_number = self.current_module_annotation_group_line_numbers.pop(
+            0
+        )
 
-        current_annotation_group = self.current_module_annotation_group_map[annotation_line_number]
+        current_annotation_group = self.current_module_annotation_group_map[
+            annotation_line_number
+        ]
         if not current_annotation_group:
             # The annotation group with type or data or name for the line is empty, but should be caught by the
             # annotation checks
@@ -195,10 +203,28 @@ class EventsAnnotationChecker(AnnotationBaseChecker):
         #     event_type="org.openedx.subdomain.action.emitted.v1",
         #     event_data={"my_data": MyEventData},
         # )
+        #
+        # A type annotated event like this needs slightly different handling
+        # MyEvnet: OpenEdxPublicSignal = OpenEdxPublicSignal(
+        #    event_type="org.openedx.analytics.tracking.event.emitted.v1",
+        #    data={
+        #        "tracking_log": TrackingLogData,
+        #    },
+        # )
+
+        # If the node is type annotated it will be an AnnAssign
+        if isinstance(node.parent, AnnAssign):
+            node_event_name = node.parent.target.name
+        else:
+            node_event_name = node.parent.targets[0].name
+
         node_event_type = node.keywords[0].value.value
         node_event_data = node.keywords[1].value.items[0][1].name
-        node_event_name = node.parent.targets[0].name
-        if node_event_type != event_type or node_event_data != event_data or node_event_name != event_name:
+        if (
+            node_event_type != event_type
+            or node_event_data != event_data
+            or node_event_name != event_name
+        ):
             return True
 
         return False
