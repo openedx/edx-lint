@@ -32,6 +32,7 @@ distlib==0.4.0
     # via
     #   -r requirements/dev.txt
     #   virtualenv
+django==5.2.18
     # via
     #   -c edx_lint/files/common_constraints.txt
     #   -r requirements/test.in
@@ -81,7 +82,7 @@ py==1.11.0
     #   tox
 pygments==2.20.0
     # via pytest
-pylint==4.0.5
+pylint==4.0.9
     # via
     #   -r requirements/dev.txt
     #   pylint-celery

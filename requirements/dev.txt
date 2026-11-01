@@ -48,9 +48,7 @@ mccabe==0.7.0
     #   -r requirements/base.txt
     #   pylint
 packaging==26.1
-    # via
-    #   pyproject-api
-    #   tox
+    # via tox
 platformdirs==4.9.6
     # via
     #   -r requirements/base.txt
@@ -61,7 +59,7 @@ pluggy==1.6.0
     # via tox
 py==1.11.0
     # via tox
-pylint==4.0.5
+pylint==4.0.9
     # via
     #   -r requirements/base.txt
     #   pylint-celery
@@ -77,9 +75,7 @@ pylint-plugin-utils==0.9.0
     #   pylint-celery
     #   pylint-django
 python-discovery==1.2.2
-    # via
-    #   tox
-    #   virtualenv
+    # via virtualenv
 python-slugify==8.0.4
     # via
     #   -r requirements/base.txt
