@@ -31,7 +31,7 @@ mccabe==0.7.0
     # via pylint
 platformdirs==4.9.6
     # via pylint
-pylint==4.0.5
+pylint==4.0.9
     # via
     #   -r requirements/base.in
     #   pylint-celery
