@@ -1,6 +1,0 @@
--c constraints.txt
--r dev.txt
-
-coverage
-Django
-pytest
