@@ -21,14 +21,14 @@ classifiers = [
     "Topic :: Software Development :: Quality Assurance",
 ]
 dependencies = [
+    "click",
+    "click-log",
     "code-annotations>=1.1.0",
-    "click>=8.0",
-    "click-log>=0.4.0",
-    "pylint>=4.0",
-    "pylint-django>=2.6",
-    "pylint-celery>=0.3",
-    "six>=1.16.0",
-    "tomlkit>=0.10.0",
+    "pylint",
+    "pylint-celery",
+    "pylint-django",
+    "six",
+    "tomlkit",
 ]
 
 [project.urls]
@@ -41,6 +41,7 @@ lint-amnesty = "edx_lint.cmd.amnesty:pylint_amnesty"
 [tool.setuptools_scm]
 version_scheme = "only-version"
 local_scheme = "no-local-version"
+fallback_version = "0.0.0"
 
 [tool.setuptools.packages.find]
 include = ["edx_lint*"]
@@ -67,7 +68,6 @@ django42 = [
 ]
 quality = [
     {include-group = "test"},
-    "edx-lint",
     "pylint",
     "pycodestyle",
 ]
@@ -83,6 +83,9 @@ dev = [
 [tool.semantic_release]
 # No version_toml — version is dynamic via setuptools-scm
 build_command = "python -m pip install --upgrade build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
+tag_format = "v{version}"
+major_on_zero = false
+allow_zero_version = true
 
 [tool.edx_lint]
 uv_constraints = []
@@ -104,6 +107,7 @@ constraint-dependencies = [
     "elasticsearch<7.14.0",
     "social-auth-app-django<6.0.0",
     "social-auth-core<5.0.0",
+    "pip<=26.2.2",
 ]
 
 [tool.coverage.run]
