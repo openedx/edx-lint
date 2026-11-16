@@ -13,6 +13,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+6.3.1 - 2026-11-16
+~~~~~~~~~~~~~~~~~~
+
+* Release the ``mysqlclient!=2.3.1`` common constraint so ``write_uv_constraints`` applies it. 2.3.1 serializes ``str`` Enum subclasses (e.g. Django ``TextChoices``) as ``Class.MEMBER``. See `#590 <https://github.com/openedx/edx-lint/issues/590>`_.
+
 6.2.0 - 2026-06-26
 ~~~~~~~~~~~~~~~~~~~
 
